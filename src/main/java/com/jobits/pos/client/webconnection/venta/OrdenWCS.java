@@ -10,15 +10,13 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.temporal.ProductoVentaWrapper;
+
 import java.util.List;
-import java.util.Optional;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class OrdenWCS extends BaseConnection implements OrdenService {
 
@@ -35,7 +33,7 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
     }
 
     @Override
-    public ProductovOrden addProduct(String codOrden, String codProducto, Float cantidad, Optional<Integer> productoOrdenAgregar) {
+    public ProductovOrden addProduct(String codOrden, String codProducto, Float cantidad, int productoOrdenAgregar) {
         return handleCall(service.addProduct(codOrden, codProducto, cantidad, productoOrdenAgregar));
     }
 
@@ -81,7 +79,7 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
 
     @Override
     public Orden enviarACocina(String codOrden) {
-        return handleCall(service.enviarACocina(codOrden));
+        return handleCall(service.enviarACocina(codOrden, "127.0.0.1"));
     }
 
     @Override
@@ -126,13 +124,13 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
 
     @Override
     public Orden enviarACocina(String codOrden, String uuid) {
-    return handleCall(service.enviarACocina(codOrden));
+        return handleCall(service.enviarACocina(codOrden, uuid));
     }
 
 
     @Override
     public Orden setPagadoPorTarjeta(String string, boolean bln) {
-    return  handleCall(service.setPagadoPorTarjeta(string,bln));
+        return handleCall(service.setPagadoPorTarjeta(string, bln));
     }
 
 

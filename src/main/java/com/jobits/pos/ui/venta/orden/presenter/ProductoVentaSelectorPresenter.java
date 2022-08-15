@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jobits.pos.core.repo.impl.SeccionDAO;
 import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
@@ -19,30 +18,29 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.AgregarProductoView;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<ProductoVentaSelectorViewModel> {
 
+    public static final String ACTION_MOSTRAR_SECCION = "Mostrar Seccion";
+    public static final String ACTION_OCULTAR_SECCION = "Ocultar Seccion";
+    public static final String PROP_PRODUCTO_SELECCIONADO = "PROP_PRODUCTO_SELECCIONADO";
+    public static final String PROP_MOSTRAR_SECCIONES = "Mostrar Secciones";
     private OrdenService service;
     private Mesa mesaSeleccionada;
     private String codOrdenEnlazada;
     private SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
 
-    public static final String ACTION_MOSTRAR_SECCION = "Mostrar Seccion";
-    public static final String ACTION_OCULTAR_SECCION = "Ocultar Seccion";
-
-    public static final String PROP_PRODUCTO_SELECCIONADO = "PROP_PRODUCTO_SELECCIONADO";
-    public static final String PROP_MOSTRAR_SECCIONES = "Mostrar Secciones";
+    private List<Seccion> seccionesActivas = new ArrayList<>();
 
     public ProductoVentaSelectorPresenter(OrdenService ordenService) {
         super(new ProductoVentaSelectorViewModel());
@@ -59,7 +57,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
                 Float cantidad = new NumberPad().showView();
                 if (cantidad != null) {
                     if (producto.getSeccionnombreSeccion().getAgregadoEn().isEmpty() || getBean().getProductoAgregar() != null) {
-                        service.addProduct(codOrdenEnlazada, producto.getCodigoProducto(), cantidad, Optional.of(getBean().getProductoAgregar().getId()));
+                        service.addProduct(codOrdenEnlazada, producto.getCodigoProducto(), cantidad, -1);
                     } else {
                         Application.getInstance().getNavigator().navigateTo(
                                 AgregarProductoView.VIEW_NAME,
@@ -75,36 +73,38 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
             }
         });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PV_FILTRADO, (PropertyChangeEvent evt) -> {
-            if (evt.getNewValue() != null) {
-                List<ProductoVenta> pvList = new ArrayList<>();
-                List<Seccion> secList = new ArrayList<>();
-                List<Seccion> auxList = getBean().getLista_elementos();
-
-                auxList.forEach((x) -> {
-                    boolean add = false;
-                    for (ProductoVenta pv : x.getProductoVentaList()) {
-                        if (pv.toString().toLowerCase().contains(getBean().getPv_filtrado().toLowerCase())) {
-                            pvList.add(pv);
-                            add = true;
-                        }
-                    }
-                        if (add) {
-                            secList.add(x);
-                        }
-                    });
-                    getBean().setLista_elementos(secList);
-                    if (evt.getNewValue().equals("")) {
-                        getBean().setListaProductos(new ArrayList<>());
-                    } else {
-                        getBean().setListaProductos(pvList);
-                    }
-                } else {
+            if (evt.getNewValue() == null) {
                 getBean().setElemento_seleccionado(null);
                 getBean().setListaProductos(new ArrayList<>());
+                getBean().setLista_elementos(new ArrayList<>(seccionesActivas));
+                return;
             }
+            List<ProductoVenta> pvList = new ArrayList<>();
+            List<Seccion> secList = new ArrayList<>();
+            List<Seccion> auxList = new ArrayList<>(getBean().getLista_elementos());
+
+            auxList.forEach((x) -> {
+                boolean add = false;
+                for (ProductoVenta pv : x.getProductoVentaList()) {
+                    if (pv.toString().toLowerCase().contains(getBean().getPv_filtrado().toLowerCase())) {
+                        pvList.add(pv);
+                        add = true;
+                    }
+                }
+                if (add) {
+                    secList.add(x);
+                }
             });
-            refreshState();
-        }
+            getBean().setLista_elementos(secList);
+            if (evt.getNewValue().equals("")) {
+                getBean().setListaProductos(new ArrayList<>());
+                getBean().setLista_elementos(new ArrayList<>(seccionesActivas));
+            } else {
+                getBean().setListaProductos(pvList);
+            }
+        });
+        refreshState();
+    }
 
     public Mesa getMesaSeleccionada() {
         return mesaSeleccionada;
@@ -155,7 +155,8 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     @Override
     public Optional refreshState() {
         if (mesaSeleccionada != null) {
-            getBean().setLista_elementos(seccionService.findSeccionesByMesa(mesaSeleccionada.getCodMesa()));//TODO: pifia logica en los presenters
+            seccionesActivas = seccionService.findSeccionesByMesa(mesaSeleccionada.getCodMesa());
+            getBean().setLista_elementos(seccionesActivas);//TODO: pifia logica en los presenters
             getBean().setElemento_seleccionado(null);
             getBean().setListaProductos(new ArrayList());
             onMostrarSeccionClick();

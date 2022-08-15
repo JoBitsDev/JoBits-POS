@@ -5,25 +5,22 @@
  */
 package com.jobits.pos.ui.venta.mesas.presenter;
 
-import com.jobits.pos.controller.venta.OrdenService;
+import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.mesas.MesaListView;
-import com.jobits.pos.usecase.mesa.MesaUseCase;
+
 import java.beans.PropertyChangeEvent;
 import java.util.Optional;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewModel> {
 
@@ -31,7 +28,7 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_CAMBIAR_AREA = "Cambiar area";
 
-    private MesaUseCase controller = PosDesktopUiModule.getInstance().getImplementation(MesaUseCase.class);
+    private MesaService controller = PosDesktopUiModule.getInstance().getImplementation(MesaService.class);
 
     public MesaListViewPresenter() {
         super(new MesaListViewModel());
@@ -94,7 +91,7 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
     }
 
     private void onCambiarAreaClick() {
-        getBean().setLista_elementos(controller.getListaMesas(getBean().getArea_seleccionada()));
+        getBean().setLista_elementos(controller.getListaMesas(getBean().getArea_seleccionada().getCodArea()));
     }
 
 }

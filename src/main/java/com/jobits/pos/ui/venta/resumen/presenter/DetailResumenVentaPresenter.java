@@ -6,8 +6,6 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.ui.module.PosDesktopUiModule;
-import com.jobits.pos.controller.resumen.VentaResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
@@ -16,12 +14,12 @@ import com.jobits.pos.servicios.impresion.formatter.VentaResumenFormatter;
 import com.jobits.pos.ui.filter.presenter.FilterType;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
 /**
- *
  * @author Home
  */
 public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<DetailResumenVentaModel> {
@@ -58,8 +56,8 @@ public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<De
     protected void printToTicketPrinter() {
         Impresion i = new Impresion();
         Optional<Boolean> precios = Application.getInstance().getNotificationService().showDialog("Desea Imprimir con percios los productos", TipoNotificacion.DIALOG_CONFIRM);
-        i.print(VentaResumenFormatter.of(getBean().getSince_date(),
-                getBean().getTo_date(), getBean().getListaDetail(), precios.orElse(true)), null);
+        i.print(VentaResumenFormatter.of(utils.toLocalDate(getBean().getSince_date()),
+                utils.toLocalDate(getBean().getTo_date()), getBean().getListaDetail(), precios.orElse(true)), null);
     }
 
 }

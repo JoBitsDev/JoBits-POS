@@ -8,6 +8,7 @@ package com.jobits.pos.ui.venta.orden.presenter;
 import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.cliente.core.domain.DireccionEnvioDomain;
 import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -15,35 +16,31 @@ import com.jobits.pos.core.domain.models.DireccionEnvio;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.ProductovOrden;
-import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.clientes.containers.ClienteViewContainer;
+import com.jobits.pos.ui.clientes.containers.DireccionEnvioDetailContainer;
 import com.jobits.pos.ui.clientes.containers.DireccionEnvioListContainer;
+import com.jobits.pos.ui.clientes.containers.DomicilioViewContainer;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
-import com.jobits.pos.ui.venta.orden.CalcularCambioView;
-import com.jobits.pos.ui.clientes.containers.DireccionEnvioDetailContainer;
-import com.jobits.pos.ui.clientes.containers.DomicilioViewContainer;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
+import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
 
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 /**
  * JoBits
@@ -52,8 +49,8 @@ import javax.swing.JOptionPane;
  */
 public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailViewModel> {
 
+    public static final String PROP_CHANGES = "Changes";
     public static String ACTION_ADD_NOTA = "Agregar Nota";
-
     public static String ACTION_ADD_PRODUCTO = "Agregar";
     public static String ACTION_ADD_PRODUCTO_IN_HOT = "Producto Caliente";
     public static String ACTION_CERRAR_ORDEN = "Cerrar Orden";
@@ -72,11 +69,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_MOVER_A_MESA = "Mover a mesa";
     private String codOrden;
     private Map<String, Boolean> isCardValueTemportal = new HashMap<>();
-
     private OrdenService ordenService = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
-
-    public static final String PROP_CHANGES = "Changes";
-
     private ClienteUseCase clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
 
     public OrdenDetailViewPresenter(OrdenService controller) {
@@ -114,6 +107,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             nota = JOptionPane.showInputDialog(null, "Introduzca la nota a adjuntar", p.getNota().getDescripcion());
         }
         ordenService.addNota(getCodOrden(), p.getId(), nota);
+        firePropertyChange(PROP_CHANGES, null, 1);
+
     }
 
     private void fireAddProducto() {
@@ -127,11 +122,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             if (getBean().isModo_agrego_activado()) {
-                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta().getCodigoProducto(), cantidad, Optional.of(getBean().getProducto_orden_seleccionado().getId()));
+                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta().getCodigoProducto(), cantidad, getBean().getProducto_orden_seleccionado().getId());
             } else {
-                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta().getCodigoProducto(), cantidad, Optional.empty());
+                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta().getCodigoProducto(), cantidad, -1);
             }
             getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
+            firePropertyChange(PROP_CHANGES, null, 1);
+
         }
 
     }
@@ -150,6 +147,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                     !getBean().isEs_card() ? total : 0,
                     getBean().isEs_card() ? total : 0);
             if (o != null) {
+                firePropertyChange(PROP_CHANGES, null, 1);
                 NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
                         new CalcularCambioViewPresenter(o), DisplayType.POPUP);
             }
@@ -179,6 +177,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                     getBean().getProducto_orden_seleccionado().getCantidad());
             getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            firePropertyChange(PROP_CHANGES, null, 1);
         }
     }
 
@@ -195,6 +194,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 ordenService.removeProduct(getCodOrden(), selected.getId(), value);
                 getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
                 Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                firePropertyChange(PROP_CHANGES, null, 1);
+
             }
         }
     }
@@ -287,6 +288,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private void onAddProductoInHotClick() {
         Application.getInstance().getNavigator().navigateTo(
                 ProductoEnCalienteView.VIEW_NAME, new ProductoEnCalienteViewPresenter(codOrden), DisplayType.POPUP);
+        firePropertyChange(PROP_CHANGES, null, 1);
     }
 
     @Override
@@ -346,9 +348,10 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setBotton_agrego_enabled(false);
             }
         }
-//        getBean().setCierre_parcial_enabled(
-//                ConfiguracionDAO.getInstance().find(
-//                        R.SettingID.IMPRESION_CIERRE_PARCIAL_ENABLED).getValor() == 1);//TODO: habilitar nuevamente
+        ConfiguracionService service = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class);
+        getBean().setCierre_parcial_enabled(
+                service.getConfiguracion(
+                        R.SettingID.IMPRESION_CIERRE_PARCIAL_ENABLED).getValor() == 1);//TODO: habilitar nuevamente
         return Optional.empty();
     }
 
@@ -516,7 +519,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                     }
                     var o = ordenService.setPorciento(getCodOrden(), value);
                     getBean().setTotal_orden(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
-                    refreshState();
+                    firePropertyChange(PROP_CHANGES, null, 1);
                 }
         );
 //        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {

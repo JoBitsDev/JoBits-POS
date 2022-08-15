@@ -5,18 +5,14 @@
  */
 package com.jobits.pos.client.webconnection.area;
 
+import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
-import java.util.List;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
+import retrofit2.http.*;
+
+import java.util.List;
 
 /**
- *
  * @author Jorge
  */
 public interface MesaWCI {
@@ -35,5 +31,12 @@ public interface MesaWCI {
 
     @GET("pos/mesa/list")
     public Call<List<Mesa>> findAll();
+
+    @GET("pos/mesa/lista-por-area/{codArea}")
+    public Call<List<Mesa>> getListaMesas(@Path("codArea") String delArea);
+
+
+    @GET("pos/mesa/listar-areas")
+    public Call<List<Area>> getListaAreasDisponibles();
 
 }

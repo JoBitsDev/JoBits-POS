@@ -7,15 +7,15 @@ package com.jobits.pos.client.webconnection.area;
 
 import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.areaventa.MesaService;
+import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
+
 import java.util.List;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class MesaWCS extends BaseConnection implements MesaService {
 
@@ -54,6 +54,16 @@ public class MesaWCS extends BaseConnection implements MesaService {
     @Override
     public List<Mesa> getListaMesasDisponibles() {
         return handleCall(service.findAll());
+    }
+
+    @Override
+    public List<Mesa> getListaMesas(String delArea) {
+        return handleCall(service.getListaMesas(delArea));
+    }
+
+    @Override
+    public List<Area> getListaAreasDisponibles() {
+        return handleCall(service.getListaAreasDisponibles());
     }
 
 }

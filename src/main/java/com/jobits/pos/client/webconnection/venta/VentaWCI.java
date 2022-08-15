@@ -8,22 +8,15 @@ package com.jobits.pos.client.webconnection.venta;
 import com.jobits.pos.core.domain.VentaResourcesWrapper;
 import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Venta;
-import java.io.File;
+import retrofit2.Call;
+import retrofit2.http.*;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
- *
  * @author Jorge
  */
 public interface VentaWCI {
@@ -47,13 +40,13 @@ public interface VentaWCI {
     public Call<Venta> cambiarTurno(@Path("id") int idTurnoTerminar);
 
     @GET("pos/venta/can-open-nuevo-turno/{dateISO}")
-    public Call<Boolean> canOpenNuevoTurno(@Path("dateISO") LocalDate fecha);
+    public Call<Integer> canOpenNuevoTurno(@Path("dateISO") LocalDate fecha);
 
     @GET("pos/venta/{id}/can-open-nuevo-turno")
-    public Call<Boolean> canOpenNuevoTurno(@Path("id") int idVenta);
+    public Call<Integer> canOpenNuevoTurno(@Path("id") int idVenta);
 
     @GET("pos/venta/{id}/can-reabrir")
-    public Call<Boolean> canReabrirVenta(@Path("id") int idVenta);
+    public Call<Integer> canReabrirVenta(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/create-new-orden/{idMesa}")
     public Call<Orden> createNewOrden(@Path("id") int idVenta, @Path("idMesa") Object idMesa);
@@ -95,10 +88,10 @@ public interface VentaWCI {
     public Call<Float> printZ(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/reabrir-ventas")
-    public Call<Boolean> reabrirVentas(@Path("id") int idVenta);
+    public Call<Venta> reabrirVentas(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/terminar-ventas")
-    public Call<Boolean> terminarVentas(@Path("id") int idVenta);
+    public Call<Venta> terminarVentas(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/terminar-y-exportar")
     public Call<String> terminarYExportar(@Path("id") int idVenta);
@@ -109,43 +102,24 @@ public interface VentaWCI {
     @POST("pos/venta/{id}/print/area-resumen/{codArea}")
     public Call<Float> printAreaResumen(@Path("id") int idVenta, @Path("codArea") String codArea);
 
-    @POST("pos/venta/{id}/print/personal-resumen/{usuario}")
+    @POST("pos/venta/{id}/print/personal-resumen/{usuario}/{printValues}")
     public Call<Float> printPersonalResumenRow(@Path("id") int idVenta,
-            @Path("usuario") String codPersonal, @Query("printValues") boolean printValores);
+                                               @Path("usuario") String codPersonal,
+                                               @Path("printValues") boolean printValores);
 
-    @POST("pos/venta/{id}/print/cocina-resumen/{idCocina}")
-    public Call<Float> printCocinaResumen(@Path("id") int idVenta, @Path("idCocina") String idCocina, @Query("printValues") boolean printValores);
+    @POST("pos/venta/{id}/print/cocina-resumen/{idCocina}/{printValues}")
+    public Call<Float> printCocinaResumen(@Path("id") int idVenta,
+                                          @Path("idCocina") String idCocina,
+                                          @Path("printValues") boolean printValores);
 
     @GET("pos/venta/{id}/get-resources")
     public Call<VentaResourcesWrapper> getVentaResources(@Path("id") int idVenta);
 
-    @GET("pos/venta/{id}/get-resumen-por-mesa/{codMesa}")
-    public Call<List<ProductovOrden>> getResumenPorMesa(@Path("id") int idVenta, @Path("codMesa") String codMesa);
-
-    @GET("pos/venta/{id}/get-resumen-por-personal/{usuario}")
-    public Call<List<ProductovOrden>> getResumenPorPersonal(@Path("id") int idVenta, @Path("usuario") String codPersonal);
-
-    @GET("pos/venta/{id}/get-resumen-por-cocina/{ptoElaboracion}")
-    public Call<List<ProductovOrden>> getResumenPorCocina(@Path("id") int idVenta, @Path("ptoElaboracion") String codCocina);
-
-    @GET("pos/venta/{id}/get-resumen-por-area/{codArea}")
-    public Call<List<ProductovOrden>> getResumenPorArea(@Path("id") int idVenta, @Path("codArea") String codArea);
-
-    @GET("pos/venta/{id}/get-total-resumen-por-mesa/{codMesa}")
-    public Call<String> getTotalResumenMesa(@Path("id") int idVenta, @Path("codMesa") String codMesa);
-
-    @GET("pos/venta/{id}/get-total-resumen-por-personal/{usuario}")
-    public Call<String> getTotalResumenDependiente(@Path("id") int idVenta, @Path("usuario") String codPersonal);
-
-    @GET("pos/venta/{id}/get-total-resumen-por-cocina/{ptoElab}")
-    public Call<String> getTotalResumenCocina(@Path("id") int idVenta, @Path("ptoElab") String codCocina);
-
-    @GET("pos/venta/{id}/get-total-resumen-por-area/{codArea}")
-    public Call<String> getTotalResumenArea(@Path("id") int idVenta, @Path("codArea") String codArea);
-    
     @GET("pos/venta/find-integer/{id}")
     public Call<Venta> findBy(@Path("id") int idVenta);
-    
-    
+
+
+    @PUT("pos/venta/{id}/set-propina/{cantidad}")
+    Call<Float> setPropina(@Path("id") Integer id, @Path("cantidad") Float ventapropina);
 
 }

@@ -5,51 +5,43 @@
  */
 package com.jobits.pos.ui.venta;
 
-import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
-import com.jobits.pos.core.domain.models.Area;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Mesa;
-import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.domain.models.ProductovOrden;
-import java.awt.Color;
-import java.util.Date;
-import javax.swing.JFileChooser;
-import org.knowm.xchart.PieChart;
-import org.knowm.xchart.PieChartBuilder;
-import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.style.PieStyler;
-import org.knowm.xchart.style.Styler;
-import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
+import com.jobits.pos.core.domain.models.*;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.gastos.GastosView;
-import com.jobits.pos.ui.trabajadores.AsistenciaPersonalView;
-import com.jobits.pos.ui.swing.utils.BindableTableModel;
-import com.jobits.pos.utils.utils;
-import com.jobits.pos.ui.venta.orden.VentaListOrdenesView;
 import com.jobits.pos.ui.mainmenu.MenuBarClass;
-import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
-import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
+import com.jobits.pos.ui.trabajadores.AsistenciaPersonalView;
+import com.jobits.pos.ui.venta.mesas.MesaListView;
+import com.jobits.pos.ui.venta.orden.VentaListOrdenesView;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
-import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.displayers.Card;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
-import java.awt.Dimension;
+import org.knowm.xchart.PieChart;
+import org.knowm.xchart.PieChartBuilder;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.style.Styler;
+
+import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.Action;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import java.util.Date;
+
+import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
+import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 
 /**
- *
  * @author Jorge
  */
 public class VentaDetailView extends AbstractViewPanel {
@@ -58,7 +50,88 @@ public class VentaDetailView extends AbstractViewPanel {
     Date fechaFin;
     MesaListView mesaView;
     private JFileChooser fileChooser;
-
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCambiarTurno;
+    private javax.swing.JButton jButtonImpPagoVentas;
+    private javax.swing.JButton jButtonImpimirResumenComisionPorcentual;
+    private javax.swing.JButton jButtonImpimirResumenMesas1;
+    private javax.swing.JButton jButtonImprimirDptes;
+    private javax.swing.JButton jButtonImprimirResumenArea;
+    private javax.swing.JButton jButtonImprimirResumenPto;
+    private javax.swing.JButton jButtonReabrirVentas;
+    private javax.swing.JButton jButtonRefresh;
+    private javax.swing.JButton jButtonTerminar;
+    private javax.swing.JComboBox<String> jComboBoxAreaList;
+    private javax.swing.JComboBox<String> jComboBoxCocinasList;
+    private javax.swing.JComboBox<String> jComboBoxDependientesList;
+    private javax.swing.JComboBox<String> jComboBoxMesaList;
+    private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
+    private javax.swing.JComboBox<String> jComboBoxVentas;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelFecha;
+    private javax.swing.JLabel jLabelTotalAreas;
+    private javax.swing.JLabel jLabelTotalCocina;
+    private javax.swing.JLabel jLabelTotalDependientes;
+    private javax.swing.JLabel jLabelTotalMesas;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelData;
+    private javax.swing.JPanel jPanelDependientes;
+    private javax.swing.JPanel jPanelExtracciones;
+    private javax.swing.JPanel jPanelFooter;
+    private javax.swing.JPanel jPanelGastos;
+    private javax.swing.JPanel jPanelGastosCards;
+    private javax.swing.JPanel jPanelGeneral;
+    private javax.swing.JPanel jPanelGraficaPieGenerales;
+    private javax.swing.JPanel jPanelMesas;
+    private javax.swing.JPanel jPanelOperaciones;
+    private javax.swing.JPanel jPanelPagoTrabajadores;
+    private javax.swing.JPanel jPanelPtoElab;
+    private javax.swing.JPanel jPanelRefresh;
+    private javax.swing.JPanel jPanelResumen;
+    private javax.swing.JPanel jPanelResumenDetallado;
+    private javax.swing.JPanel jPanelRoot;
+    private javax.swing.JPanel jPanelTerminarVentas;
+    private javax.swing.JPanel jPanelTurnosTrabajo;
+    private javax.swing.JPanel jPanelVentas;
+    private javax.swing.JPanel jPanelVentas1;
+    private javax.swing.JPanel jPanelVentasArea;
+    private javax.swing.JPanel jPanelVentasCards;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTabbedPane jTabbedPaneData;
+    private javax.swing.JTabbedPane jTabbedPaneResumen;
+    private javax.swing.JTabbedPane jTabbedPaneResumenD;
+    private javax.swing.JTabbedPane jTabbedPaneResumenD1;
+    private javax.swing.JTable jTableVentasDependientes;
+    private javax.swing.JTable jTableVentasPorArea;
+    private javax.swing.JTable jTableVentasPorCocina;
+    private javax.swing.JTable jTableVentasPorMesa;
+    private javax.swing.JTextField jTextFieldPropina;
     public VentaDetailView(VentaDetailViewPresenter presenter) {
         super(presenter);
     }
@@ -152,7 +225,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
 
-        jComboBoxSeleccionarVentaPorTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todo", "Turno 1", "Turno 2" }));
+        jComboBoxSeleccionarVentaPorTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Todo", "Turno 1", "Turno 2"}));
         jComboBoxSeleccionarVentaPorTurno.setToolTipText("Seleccione el turno a visualizar");
 
         jPanelExtracciones.setLayout(new java.awt.BorderLayout());
@@ -292,7 +365,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel19.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 15));
         jPanel19.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jComboBoxAreaList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxAreaList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         jComboBoxAreaList.setMaximumSize(new java.awt.Dimension(250, 26));
         jComboBoxAreaList.setMinimumSize(new java.awt.Dimension(250, 26));
         jComboBoxAreaList.setPreferredSize(new java.awt.Dimension(250, 26));
@@ -306,26 +379,26 @@ public class VentaDetailView extends AbstractViewPanel {
         jTableVentasPorArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jTableVentasPorArea.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jTableVentasPorArea.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "Codigo", "Nombre", "Neta", "Real"
-            }
+                },
+                new String[]{
+                        "Codigo", "Nombre", "Neta", "Real"
+                }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+            Class[] types = new Class[]{
+                    java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jTableVentasPorArea.setRowHeight(25);
@@ -367,7 +440,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 15));
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jComboBoxDependientesList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxDependientesList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         jComboBoxDependientesList.setMaximumSize(new java.awt.Dimension(250, 26));
         jComboBoxDependientesList.setMinimumSize(new java.awt.Dimension(250, 26));
         jComboBoxDependientesList.setPreferredSize(new java.awt.Dimension(250, 26));
@@ -380,26 +453,26 @@ public class VentaDetailView extends AbstractViewPanel {
         jTableVentasDependientes.setAutoCreateRowSorter(true);
         jTableVentasDependientes.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jTableVentasDependientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "Usuario", "Monto", "Ordenes Atendidas", "Pago por venta"
-            }
+                },
+                new String[]{
+                        "Usuario", "Monto", "Ordenes Atendidas", "Pago por venta"
+                }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
+            Class[] types = new Class[]{
+                    java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jTableVentasDependientes.setRowHeight(25);
@@ -446,7 +519,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 15));
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jComboBoxCocinasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxCocinasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         jComboBoxCocinasList.setMaximumSize(new java.awt.Dimension(250, 26));
         jComboBoxCocinasList.setMinimumSize(new java.awt.Dimension(250, 26));
         jComboBoxCocinasList.setPreferredSize(new java.awt.Dimension(250, 26));
@@ -459,26 +532,26 @@ public class VentaDetailView extends AbstractViewPanel {
         jTableVentasPorCocina.setAutoCreateRowSorter(true);
         jTableVentasPorCocina.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jTableVentasPorCocina.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "Codigo", "Nombre", "Monto"
-            }
+                },
+                new String[]{
+                        "Codigo", "Nombre", "Monto"
+                }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class
+            Class[] types = new Class[]{
+                    java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jTableVentasPorCocina.setRowHeight(25);
@@ -520,7 +593,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 15));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jComboBoxMesaList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxMesaList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         jComboBoxMesaList.setMaximumSize(new java.awt.Dimension(250, 26));
         jComboBoxMesaList.setMinimumSize(new java.awt.Dimension(250, 26));
         jComboBoxMesaList.setPreferredSize(new java.awt.Dimension(250, 26));
@@ -532,15 +605,15 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jTableVentasPorMesa.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jTableVentasPorMesa.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         jScrollPane1.setViewportView(jTableVentasPorMesa);
 
@@ -628,90 +701,6 @@ public class VentaDetailView extends AbstractViewPanel {
             getPresenter().getOperation(ACTION_TERMINAR_VENTAS).doAction();
         }
     }//GEN-LAST:event_jButtonTerminarActionPerformed
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonCambiarTurno;
-    private javax.swing.JButton jButtonImpPagoVentas;
-    private javax.swing.JButton jButtonImpimirResumenComisionPorcentual;
-    private javax.swing.JButton jButtonImpimirResumenMesas1;
-    private javax.swing.JButton jButtonImprimirDptes;
-    private javax.swing.JButton jButtonImprimirResumenArea;
-    private javax.swing.JButton jButtonImprimirResumenPto;
-    private javax.swing.JButton jButtonReabrirVentas;
-    private javax.swing.JButton jButtonRefresh;
-    private javax.swing.JButton jButtonTerminar;
-    private javax.swing.JComboBox<String> jComboBoxAreaList;
-    private javax.swing.JComboBox<String> jComboBoxCocinasList;
-    private javax.swing.JComboBox<String> jComboBoxDependientesList;
-    private javax.swing.JComboBox<String> jComboBoxMesaList;
-    private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
-    private javax.swing.JComboBox<String> jComboBoxVentas;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabelFecha;
-    private javax.swing.JLabel jLabelTotalAreas;
-    private javax.swing.JLabel jLabelTotalCocina;
-    private javax.swing.JLabel jLabelTotalDependientes;
-    private javax.swing.JLabel jLabelTotalMesas;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JPanel jPanelData;
-    private javax.swing.JPanel jPanelDependientes;
-    private javax.swing.JPanel jPanelExtracciones;
-    private javax.swing.JPanel jPanelFooter;
-    private javax.swing.JPanel jPanelGastos;
-    private javax.swing.JPanel jPanelGastosCards;
-    private javax.swing.JPanel jPanelGeneral;
-    private javax.swing.JPanel jPanelGraficaPieGenerales;
-    private javax.swing.JPanel jPanelMesas;
-    private javax.swing.JPanel jPanelOperaciones;
-    private javax.swing.JPanel jPanelPagoTrabajadores;
-    private javax.swing.JPanel jPanelPtoElab;
-    private javax.swing.JPanel jPanelRefresh;
-    private javax.swing.JPanel jPanelResumen;
-    private javax.swing.JPanel jPanelResumenDetallado;
-    private javax.swing.JPanel jPanelRoot;
-    private javax.swing.JPanel jPanelTerminarVentas;
-    private javax.swing.JPanel jPanelTurnosTrabajo;
-    private javax.swing.JPanel jPanelVentas;
-    private javax.swing.JPanel jPanelVentas1;
-    private javax.swing.JPanel jPanelVentasArea;
-    private javax.swing.JPanel jPanelVentasCards;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTabbedPane jTabbedPaneData;
-    private javax.swing.JTabbedPane jTabbedPaneResumen;
-    private javax.swing.JTabbedPane jTabbedPaneResumenD;
-    private javax.swing.JTabbedPane jTabbedPaneResumenD1;
-    private javax.swing.JTable jTableVentasDependientes;
-    private javax.swing.JTable jTableVentasPorArea;
-    private javax.swing.JTable jTableVentasPorCocina;
-    private javax.swing.JTable jTableVentasPorMesa;
-    private javax.swing.JTextField jTextFieldPropina;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -804,7 +793,8 @@ public class VentaDetailView extends AbstractViewPanel {
 //        if (UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
 //            jTabbedPaneData.remove(0);
 //        }//TODO autorizacion en el view
-        jPanelTurnosTrabajo.setVisible(ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_MULTIPLES_TURNOS).getValor() == 1);//TODO:otro mojon
+        ConfiguracionService service = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class);
+        jPanelTurnosTrabajo.setVisible(service.getConfiguracion(R.SettingID.GENERAL_MULTIPLES_TURNOS).getValor() == 1);//TODO:otro mojon
         jComboBoxSeleccionarVentaPorTurno.setEnabled(UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
@@ -1072,14 +1062,14 @@ public class VentaDetailView extends AbstractViewPanel {
         });
     }
 
-//TODO: agregar listener al bean para nada mas cambien los datos se actualize la tabla p mejor agregar los listener a los jtextfield
+    //TODO: agregar listener al bean para nada mas cambien los datos se actualize la tabla p mejor agregar los listener a los jtextfield
     private void updateGraficasResumenGeneralVentas() {
         PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).title("Ventas/Gastos ").build();
         chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
         chartPie.getStyler().setChartTitleBoxVisible(true);
         chartPie.getStyler().setLegendPosition(Styler.LegendPosition.InsideSE);
         chartPie.getStyler().setLegendBackgroundColor(new Color(255, 255, 255, 0));
-        
+
         String insumos, salarios, otro, ventasTotal;
 
         insumos = getPresenter().getBean().getTotal_gasto_insumos();

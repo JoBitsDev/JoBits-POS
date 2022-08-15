@@ -11,20 +11,17 @@ import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
 import com.jobits.pos.core.domain.VentaResourcesWrapper;
 import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Venta;
+
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class VentaWCS extends BaseConnection implements VentaDetailService, VentaResumenUseCase {
 
@@ -51,17 +48,17 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public boolean canOpenNuevoTurno(LocalDate fecha) {
+    public int canOpenNuevoTurno(LocalDate fecha) {
         return handleCall(service.canOpenNuevoTurno(fecha));
     }
 
     @Override
-    public boolean canOpenNuevoTurno(int idVenta) {
+    public int canOpenNuevoTurno(int idVenta) {
         return handleCall(service.canOpenNuevoTurno(idVenta));
     }
 
     @Override
-    public boolean canReabrirVenta(int codVenta) {
+    public int canReabrirVenta(int codVenta) {
         return handleCall(service.canReabrirVenta(codVenta));
     }
 
@@ -121,12 +118,12 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public boolean reabrirVentas(int codVenta) {
+    public Venta reabrirVentas(int codVenta) {
         return handleCall(service.reabrirVentas(codVenta));
     }
 
     @Override
-    public boolean terminarVentas(int codVenta) {
+    public Venta terminarVentas(int codVenta) {
         return handleCall(service.terminarVentas(codVenta));
     }
 
@@ -163,6 +160,11 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     @Override
     public Venta edit(Venta t) throws RuntimeException {
         throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Float setPropina(Integer id, Float ventapropina) {
+        return handleCall(service.setPropina(id, ventapropina));
     }
 
     @Override
