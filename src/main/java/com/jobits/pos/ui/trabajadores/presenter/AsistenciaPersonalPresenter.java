@@ -11,15 +11,15 @@ import com.jobits.pos.controller.trabajadores.PersonalUseCase;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
 import java.util.Optional;
 
 /**
- *
  * @author Home
  */
 public class AsistenciaPersonalPresenter extends AbstractViewPresenter<AsistenciaPersonalViewModel> {
@@ -95,9 +95,12 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             AsistenciaPersonal ap = getBean().getPersonal_contenido_selecionado();
             if (ap != null) {
-                ap = asistenciaPersonalService.findBy(ap.getAsistenciaPersonalPK());
+                ap = asistenciaPersonalService.findBy(
+                        ap.getAsistenciaPersonalPK().getVentaid(),
+                        ap.getAsistenciaPersonalPK().getPersonalusuario());
                 if (ap != null) {
-                    asistenciaPersonalService.destroy(getBean().getPersonal_contenido_selecionado());
+                    asistenciaPersonalService.destroy(ap.getAsistenciaPersonalPK().getVentaid(),
+                            ap.getAsistenciaPersonalPK().getPersonalusuario());
                     refreshState();
                 }
             } else {
@@ -110,12 +113,10 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         Personal personal = getBean().getPersonal_disponible_seleccionado();
         if (personal != null) {
             AsistenciaPersonal ap = new AsistenciaPersonal(idVenta, personal.getUsuario());
-            if ((asistenciaPersonalService.findBy(ap.getAsistenciaPersonalPK())) != null) {
-                throw new IllegalStateException("El personal seleccionado ya se encuentra registrado en el dia de venta");
-            }
+
             ap.setPersonal(personal);
-           // ap.setVenta(idVenta);
-            asistenciaPersonalService.create(ap);
+            // ap.setVenta(idVenta);
+            asistenciaPersonalService.create(ap.getAsistenciaPersonalPK().getVentaid(), ap.getAsistenciaPersonalPK().getPersonalusuario());
             refreshState();
             firePropertyChange(PROP_VALUE_CHANGED, false, true);
         }

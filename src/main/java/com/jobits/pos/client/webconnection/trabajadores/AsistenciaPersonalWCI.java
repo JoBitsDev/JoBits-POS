@@ -5,14 +5,13 @@
  */
 package com.jobits.pos.client.webconnection.trabajadores;
 
-import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
-import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
-import com.jobits.pos.core.module.PosCoreModule;
 import retrofit2.Call;
-import retrofit2.http.*;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -33,6 +32,11 @@ public interface AsistenciaPersonalWCI {
 
     public static final String UPDATE_SALARIES = "/venta/{id}/update-salaries";
 
+    public static final String CREATE = "/venta/{id}/add-trabajador/{usuario}";
+    public static final String FIND_BY = "/venta/{id}/find/{usuario}";
+
+    public static final String DELETE = "/venta/{id}/delete/{usuario}";
+
     @POST(BASE + CALCULAR_PAGO_TRABAJADOR)
     public Call<AsistenciaPersonal> calcularPagoTrabajador(@Path("id") int idVenta, @Path("usuario") String usuario);
 
@@ -48,5 +52,14 @@ public interface AsistenciaPersonalWCI {
 
     @GET(BASE + UPDATE_SALARIES)
     public Call<List<AsistenciaPersonal>> updateSalaries(@Path("id") int idVenta);
+
+    @POST(BASE + CREATE)
+    public Call<AsistenciaPersonal> create(@Path("id") int idVenta, @Path("usuario") String usuario);
+
+    @GET(BASE + FIND_BY)
+    public Call<AsistenciaPersonal> findBy(@Path("id") int idVenta, @Path("usuario") String usuario);
+
+    @retrofit2.http.DELETE(BASE + DELETE)
+    public Call<AsistenciaPersonal> destroy(@Path("id") int idVenta, @Path("usuario") String usuario);
 
 }

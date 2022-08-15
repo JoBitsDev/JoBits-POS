@@ -5,15 +5,10 @@
  */
 package com.jobits.pos.client.webconnection.trabajadores;
 
-import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.client.webconnection.CRUDBaseConnection;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
-import com.jobits.pos.controller.trabajadores.NominasUseCase;
-import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
-import retrofit2.Retrofit;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -56,4 +51,28 @@ public class AsistenciaPersonalWCS extends CRUDBaseConnection<AsistenciaPersonal
     public List<AsistenciaPersonal> updateSalaries(int idVenta) {
         return handleCall(service.updateSalaries(idVenta));
     }
+
+    @Override
+    public AsistenciaPersonal create(int codVenta, String usuario) {
+        return handleCall(service.create(codVenta, usuario));
+    }
+
+
+    @Override
+    public AsistenciaPersonal findBy(int codVenta, String usuario) {
+        return handleCall(service.findBy(codVenta, usuario));
+    }
+
+    @Override
+    public AsistenciaPersonal destroy(int codVenta, String usuario) {
+        return handleCall(service.destroy(codVenta, usuario));
+    }
+
+    @Override
+    public AsistenciaPersonal create(AsistenciaPersonal asistenciaPersonal) throws RuntimeException {
+        return handleCall(service.create(asistenciaPersonal.getAsistenciaPersonalPK().getVentaid(),
+                asistenciaPersonal.getAsistenciaPersonalPK().getPersonalusuario()));
+    }
+
+
 }
