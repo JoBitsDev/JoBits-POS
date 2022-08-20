@@ -7,7 +7,6 @@ package com.jobits.pos.client.webconnection.venta;
 
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.temporal.ProductoVentaWrapper;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -25,10 +24,10 @@ public interface OrdenWCI {
                                @Path("nota") String nuevaNota);
 
     @POST(OrdenService.BASE + OrdenService.ADD_PRODUCT_PATH)
-    public Call<ProductovOrden> addProduct(@Path("codOrden") String codOrden,
-                                           @Path("codProduct") String codProducto,
-                                           @Path("cantidad") float cantidad,
-                                           @Path("productoAgregado") int productoOrdenAgregar);
+    public Call<Orden> addProduct(@Path("codOrden") String codOrden,
+                                  @Path("codProduct") String codProducto,
+                                  @Path("cantidad") float cantidad,
+                                  @Path("productoAgregado") int productoOrdenAgregar);
 
     @POST(OrdenService.BASE + OrdenService.ADD_PRODUCTO_COMPUESTO_PATH)
     public Call<Orden> addProductoCompuesto(@Path("codOrden") String codOrden,

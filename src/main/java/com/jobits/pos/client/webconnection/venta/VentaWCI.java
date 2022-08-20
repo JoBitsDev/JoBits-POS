@@ -76,16 +76,16 @@ public interface VentaWCI {
     public Call<Venta> importarVenta(@Body String jsonFile);
 
     @POST("pos/venta/{id}/print/autorizos")
-    public Call<Float> printGastosCasa(@Path("id") int idVenta);
+    public Call<Void> printGastosCasa(@Path("id") int idVenta);
 
-    @POST("pos/venta/{id}/print/pago-por-venta/{usuario}")
-    public Call<Float> printPagoPorVentaPersonal(@Path("id") int idVenta, @Path("usuario") String personal, @Query("printValues") boolean printValores);
+    @POST("pos/venta/{id}/print/pago-por-venta/{usuario}/{printValores}")
+    public Call<Void> printPagoPorVentaPersonal(@Path("id") int idVenta, @Path("usuario") String personal, @Path("printValores") boolean printValores);
 
     @POST("pos/venta/{id}/print/comision-porcentual/{codMesa}")
-    public Call<Float> printComisionPorcentualResumen(@Path("id") int idVenta, @Path("codMesa") String mesa);
+    public Call<Void> printComisionPorcentualResumen(@Path("id") int idVenta, @Path("codMesa") String mesa);
 
     @POST("pos/venta/{id}/print/z")
-    public Call<Float> printZ(@Path("id") int idVenta);
+    public Call<Void> printZ(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/reabrir-ventas")
     public Call<Venta> reabrirVentas(@Path("id") int idVenta);
@@ -96,21 +96,21 @@ public interface VentaWCI {
     @POST("pos/venta/{id}/terminar-y-exportar")
     public Call<String> terminarYExportar(@Path("id") int idVenta);
 
-    @POST("pos/venta/{id}/print/mesa-resumen/{codMesa}")
-    public Call<Float> printMesaResumen(@Path("id") int idVenta, @Path("codMesa") String codMesa);
+    @GET("pos/venta/{id}/print/mesa-resumen/{codMesa}")
+    public Call<Void> printMesaResumen(@Path("id") int idVenta, @Path("codMesa") String codMesa);
 
-    @POST("pos/venta/{id}/print/area-resumen/{codArea}")
-    public Call<Float> printAreaResumen(@Path("id") int idVenta, @Path("codArea") String codArea);
+    @GET("pos/venta/{id}/print/area-resumen/{codArea}")
+    public Call<Void> printAreaResumen(@Path("id") int idVenta, @Path("codArea") String codArea);
 
-    @POST("pos/venta/{id}/print/personal-resumen/{usuario}/{printValues}")
-    public Call<Float> printPersonalResumenRow(@Path("id") int idVenta,
-                                               @Path("usuario") String codPersonal,
-                                               @Path("printValues") boolean printValores);
+    @GET("pos/venta/{id}/print/personal-resumen/{usuario}/{printValues}")
+    public Call<Void> printPersonalResumenRow(@Path("id") int idVenta,
+                                              @Path("usuario") String codPersonal,
+                                              @Path("printValues") boolean printValores);
 
-    @POST("pos/venta/{id}/print/cocina-resumen/{idCocina}/{printValues}")
-    public Call<Float> printCocinaResumen(@Path("id") int idVenta,
-                                          @Path("idCocina") String idCocina,
-                                          @Path("printValues") boolean printValores);
+    @GET("pos/venta/{id}/print/cocina-resumen/{idCocina}/{printValues}")
+    public Call<Void> printCocinaResumen(@Path("id") int idVenta,
+                                         @Path("idCocina") String idCocina,
+                                         @Path("printValues") boolean printValores);
 
     @GET("pos/venta/{id}/get-resources")
     public Call<VentaResourcesWrapper> getVentaResources(@Path("id") int idVenta);

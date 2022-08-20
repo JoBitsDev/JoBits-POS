@@ -9,6 +9,7 @@ import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.cliente.core.domain.DireccionEnvioDomain;
 import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
+import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -71,6 +72,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private Map<String, Boolean> isCardValueTemportal = new HashMap<>();
     private OrdenService ordenService = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
     private ClienteUseCase clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
+
+    private SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
 
     public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
@@ -534,7 +537,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                     boolean flag = false;
                     if (p != null && p.getAgregadoA() == null) {
                         if (p.getProductoVenta() != null) {
-                            if (!p.getProductoVenta().getSeccionnombreSeccion().getAgregadoEn().isEmpty()) {
+                            var seccion = seccionService.findBy(p.getProductoVenta().getSeccionnombreSeccion());
+                            if (!seccion.getAgregadoEn().isEmpty()) {
                                 flag = true;
                             }
                         }

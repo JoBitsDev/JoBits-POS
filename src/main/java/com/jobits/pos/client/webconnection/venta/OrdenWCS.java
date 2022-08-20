@@ -8,7 +8,6 @@ package com.jobits.pos.client.webconnection.venta;
 import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.temporal.ProductoVentaWrapper;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
     }
 
     @Override
-    public ProductovOrden addProduct(String codOrden, String codProducto, Float cantidad, int productoOrdenAgregar) {
+    public Orden addProduct(String codOrden, String codProducto, Float cantidad, int productoOrdenAgregar) {
         return handleCall(service.addProduct(codOrden, codProducto, cantidad, productoOrdenAgregar));
     }
 

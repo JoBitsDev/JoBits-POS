@@ -7,44 +7,37 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
+import com.jobits.pos.controller.insumo.InsumoService;
+import com.jobits.pos.controller.productos.ProductoVentaService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Carta;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.ProductoInsumo;
-import com.jobits.pos.core.domain.models.ProductoVenta;
-import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.*;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.PROP_RUTA_IMAGEN_PRODUCTO;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import com.jobits.pos.controller.productos.ProductoVentaService;
-import com.jobits.pos.controller.insumo.InsumoService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
+
+import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.PROP_RUTA_IMAGEN_PRODUCTO;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ProductoVentaDetailPresenter extends AbstractViewPresenter<ProductoVentaDetailViewModel> {
 
@@ -215,7 +208,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             }
             productoVenta.setNombre(getBean().getNombre_producto());
             productoVenta.setCocinacodCocina(getBean().getElaborado_seleccionado());
-            productoVenta.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
+            productoVenta.setSeccionnombreSeccion(getBean().getCategoria_seleccionada().getNombreSeccion());
             productoVenta.setProductoInsumoList(getBean().getLista_insumos_contenidos());
             productoVenta.setTiempoServicioMin(getBean().getTimepo_elaboracion());
             productoVenta.setDescripcion(getBean().getRuta_imagen_producto());

@@ -56,7 +56,8 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
             if (producto != null && codOrdenEnlazada != null) {
                 Float cantidad = new NumberPad().showView();
                 if (cantidad != null) {
-                    if (producto.getSeccionnombreSeccion().getAgregadoEn().isEmpty() || getBean().getProductoAgregar() != null) {
+                    var seccion = seccionService.findBy(producto.getSeccionnombreSeccion());
+                    if (seccion.getAgregadoEn().isEmpty() || getBean().getProductoAgregar() != null) {
                         service.addProduct(codOrdenEnlazada, producto.getCodigoProducto(), cantidad, -1);
                     } else {
                         Application.getInstance().getNavigator().navigateTo(
@@ -166,7 +167,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
     public void showSeccionesAgregadas() {
         if (getBean().getProductoAgregar() != null) {
-            Seccion seccion = getBean().getProductoAgregar().getProductoVenta().getSeccionnombreSeccion();
+            Seccion seccion = seccionService.findBy(getBean().getProductoAgregar().getProductoVenta().getSeccionnombreSeccion());
             List<Seccion> list = new ArrayList<>();
             for (SeccionAgregada seccionAgregada : seccion.getAgregadoEn()) {
                 list.add(seccionAgregada.getSeccion());

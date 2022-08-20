@@ -237,7 +237,11 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void onImprimirResumenVentaAreaClick() {
-        ventaResumenService.printAreaResumen(getBean().getArea_seleccionada(), getBean().getVenta_seleccionada());
+        var area = getBean().getArea_seleccionada();
+        area = area.split("\\[")[1].trim();
+        area = area.substring(0, area.length() - 1);
+        area = area.trim();
+        ventaResumenService.printAreaResumen(area, getBean().getVenta_seleccionada());
     }
 
     private void onImprimirResumenVentaUsuarioClick() {
@@ -256,16 +260,24 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     private void onImprimirResumenPtoElabClick() {
         boolean imprimirValores = (boolean) Application.getInstance().getNotificationService().showDialog("Presione SI para imprimir los valores," + "\nNo para imprimir solo las cantidades", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+        var punto = getBean().getCocina_seleccionada().split("\\(")[1];
+        punto = punto.substring(0, punto.length() - 1);
 
-        ventaResumenService.printCocinaResumen(getBean().getCocina_seleccionada(), getBean().getVenta_seleccionada(), imprimirValores);
+        ventaResumenService.printCocinaResumen(punto, getBean().getVenta_seleccionada(), imprimirValores);
     }
 
     private void onImpimirResumenMesaClick() {
-        ventaResumenService.printMesaResumen(getBean().getMesa_seleccionada(), getBean().getVenta_seleccionada());
+        var mesa = getBean().getMesa_seleccionada().split("]")[0];
+        mesa = mesa.substring(1);
+        mesa = mesa.trim();
+        ventaResumenService.printMesaResumen(mesa, getBean().getVenta_seleccionada());
     }
 
     private void onImprimirResumenComisionPorcentualClick() {
-        service.printComisionPorcentualResumen(getBean().getMesa_seleccionada(), getBean().getVenta_seleccionada());
+        var mesa = getBean().getMesa_seleccionada().split("]")[0];
+        mesa = mesa.substring(1);
+        mesa = mesa.trim();
+        service.printComisionPorcentualResumen(mesa, getBean().getVenta_seleccionada());
     }
 
     private void onCambiarTurnoClick() {
