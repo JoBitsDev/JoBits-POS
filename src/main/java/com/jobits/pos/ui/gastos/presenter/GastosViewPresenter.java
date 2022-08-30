@@ -115,11 +115,12 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onAgregarClick() {
-        service.createGasto(
+        var ret = service.createGasto(
                 getBean().getCategoria_gasto_seleccionada(),
                 getBean().getTipo_gasto(),
                 Float.parseFloat(getBean().getMonto_gasto()),
                 getBean().getDescripcion_gasto(), venta.getId());
+        venta.getGastoVentaList().add(ret);
         refreshState();
         onLimpiarClick();
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
@@ -131,8 +132,9 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {//TODO: inyectar
                 var aux = getBean().getGasto_venta_seleccionado().getGastoVentaPK();
-                service.removeGasto(aux.getGastocodGasto(), aux.getVentafecha());
+                var ret = service.removeGasto(aux.getGastocodGasto(), aux.getVentafecha());
                 getBean().setGasto_venta_seleccionado(null);
+                venta.getGastoVentaList().remove(ret);
                 refreshState();
                 Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             }

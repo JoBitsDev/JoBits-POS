@@ -29,7 +29,7 @@ public class GastoWCS extends CRUDBaseConnection<GastoVenta> implements GastoOpe
 
     @Override
     public GastoVenta createGasto(R.TipoGasto cat, String nombre, float monto, String descripcion, int venta) {
-        return handleCall(service.createGasto(cat, nombre, monto, descripcion, venta));
+        return handleCall(service.createGasto(cat, nombre, monto, descripcion == null ? "Sin descripcion" : descripcion, venta));
     }
 
 

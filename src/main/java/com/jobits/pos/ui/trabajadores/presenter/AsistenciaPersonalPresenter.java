@@ -94,15 +94,11 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
                 showDialog("Esta seguro que desea eliminar al personal seleccionado?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             AsistenciaPersonal ap = getBean().getPersonal_contenido_selecionado();
-            if (ap != null) {
-                ap = asistenciaPersonalService.findBy(
-                        ap.getAsistenciaPersonalPK().getVentaid(),
-                        ap.getAsistenciaPersonalPK().getPersonalusuario());
                 if (ap != null) {
                     asistenciaPersonalService.destroy(ap.getAsistenciaPersonalPK().getVentaid(),
                             ap.getAsistenciaPersonalPK().getPersonalusuario());
                     refreshState();
-                }
+
             } else {
                 throw new IllegalArgumentException("Seleccione un trabajador primero");
             }

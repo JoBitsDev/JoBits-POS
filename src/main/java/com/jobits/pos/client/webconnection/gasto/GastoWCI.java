@@ -19,7 +19,7 @@ import java.util.List;
 public interface GastoWCI {
 
     public static final String BASE = "pos/gastos";
-    public static final String CREATE_GASTO_PATH = "/create-gasto/{idVenta}/{tipo}/{nombre}/{monto}";
+    public static final String CREATE_GASTO_PATH = "/create-gasto/{idVenta}/{tipo}/{nombre}/{monto}/{desc}";
     public static final String REMOVE_GASTO_PATH = "/remove-gasto/{idVenta}/{codGasto}";
     public static final String GET_VALOR_TOTAL_GASTOS_PATH = "/{idVenta}/get-valor-total-gastos";
     public static final String GET_NOMBRE_BY_TIPO_PATH = "/nombres-por-tipo/{tipo}";
@@ -31,7 +31,7 @@ public interface GastoWCI {
     @POST(BASE + CREATE_GASTO_PATH)
     public Call<GastoVenta> createGasto(@Path("tipo") R.TipoGasto tipoGasto,
                                         @Path("nombre") String nombre, @Path("monto") float monto,
-                                        @Query("desc") String desc, @Path("idVenta") int idVenta);
+                                        @Path("desc") String desc, @Path("idVenta") int idVenta);
 
     @DELETE(BASE + REMOVE_GASTO_PATH)
     public Call<GastoVenta> removeGasto(@Path("codGasto") String codGasto, @Path("idVenta") int idVenta);
