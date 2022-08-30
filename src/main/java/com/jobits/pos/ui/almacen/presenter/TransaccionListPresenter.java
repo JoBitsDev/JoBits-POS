@@ -84,7 +84,7 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen()));
+        getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen().getCodAlmacen()));
     }
 
     private void onShowMermasClick() {
@@ -95,9 +95,9 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
         getBean().addPropertyChangeListener(PROP_SHOW_MERMAS, (PropertyChangeEvent evt) -> {
             getBean().getLista_elementos().clear();
             if ((boolean) evt.getNewValue()) {
-                getBean().getLista_elementos().addAll(service.findMermasByAlmacen(getBean().getAlmacen()));
+                getBean().getLista_elementos().addAll(service.findMermasByAlmacen(getBean().getAlmacen().getCodAlmacen()));
             } else {
-                getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen()));
+                getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen().getCodAlmacen()));
             }
         });
     }

@@ -7,29 +7,41 @@ package com.jobits.pos.ui.venta.orden;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.root101.swing.material.standards.MaterialIcons;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
-import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.*;
-import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewModel.*;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.beans.PropertyChangeEvent;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
+import com.root101.swing.material.standards.MaterialIcons;
+
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+
+import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewModel.PROP_ELEMENTO_SELECCIONADO;
+import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewModel.PROP_LISTA_ELEMENTOS;
+import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.*;
 
 /**
- *
  * @author Jorge
  */
 public class VentaListOrdenesView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Lista Ordenes";
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCalcCAmbio;
+    private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
+    private javax.swing.JButton jButtonNuevaOrden;
+    private javax.swing.JButton jButtonPrintOrderList;
+    private javax.swing.JList<Orden> jListOrdenesActivas;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelOrdenesActivas;
+    private javax.swing.JScrollPane jScrollPane1;
 
     public VentaListOrdenesView(VentaOrdenListViewPresenter ventaPresenter) {
         super(ventaPresenter);
@@ -107,19 +119,6 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
         add(jPanelOrdenesActivas, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonCalcCAmbio;
-    private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
-    private javax.swing.JButton jButtonNuevaOrden;
-    private javax.swing.JButton jButtonPrintOrderList;
-    private javax.swing.JList<Orden> jListOrdenesActivas;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanelOrdenesActivas;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -162,7 +161,9 @@ public class VentaListOrdenesView extends AbstractViewPanel {
                 jPanelOrdenesActivas.add(new ProductoVentaSelectorView(getPresenter().getMenuPresenter()), BorderLayout.CENTER);
             }
         }
-        if (ConfiguracionDAO.getInstance().find(R.SettingID.IMPRESION_IMPRESION_ORDENES).getValor() == 1) {
+        ConfiguracionService service = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class);
+
+        if (service.getConfiguracion(R.SettingID.IMPRESION_IMPRESION_ORDENES).getValor() == 1) {
             jPanel3.add(jButtonPrintOrderList, 1);
         }
     }

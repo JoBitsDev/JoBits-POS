@@ -13,6 +13,7 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
+import com.jobits.pos.inventario.core.almacen.domain.wrapper.PedidoIpvWrapper;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
 import com.jobits.pos.main.Application;
@@ -41,14 +42,14 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     private PedidoIpvVentasService service;
     private AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
     private Cocina cocina;
-    private Venta venta;
+    private Integer venta;
     private List<IpvVentaRegistro> ipvProductList;
 
-    public IPVPedidoVentasViewPresenter(PedidoIpvVentasService service, Cocina cocina, Venta venta, List<IpvVentaRegistro> ipvProductList) {
+    public IPVPedidoVentasViewPresenter(PedidoIpvVentasService service, Cocina cocina, Integer ventaId, List<IpvVentaRegistro> ipvProductList) {
         super(new IPVPedidoVentasViewModel());
         this.service = service;
         this.cocina = cocina;
-        this.venta = venta;
+        this.venta = ventaId;
         this.ipvProductList = ipvProductList;
         fillBeanData();
     }
@@ -96,10 +97,10 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
                 showDialog("Esta seguro que desea ejecutar el pedido",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.realizarPedidoDeIpv(
-                    getBean().getLista_insumo_pedido_model(),
-                    getBean().getLista_producto_venta_model(),
-                    cocina,
-                    getBean().getSeleccionado_almacen(),
+                    new PedidoIpvWrapper(getBean().getLista_insumo_pedido_model(),
+                            getBean().getLista_producto_venta_model()),
+                    cocina.getCodCocina(),
+                    getBean().getSeleccionado_almacen().getCodAlmacen(),
                     venta);
             Application.getInstance().getNavigator().navigateUp();
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);

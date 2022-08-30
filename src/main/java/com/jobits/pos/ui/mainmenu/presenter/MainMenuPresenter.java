@@ -5,9 +5,8 @@
  */
 package com.jobits.pos.ui.mainmenu.presenter;
 
+import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.controller.login.impl.LogInController;
-import com.jobits.pos.controller.login.impl.MainMenuController;
-import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.NavigationService;
@@ -15,13 +14,14 @@ import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.autorizo.AuthorizerImpl;
+import com.jobits.pos.ui.mainmenu.MenuButtons;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
+import com.jobits.pos.utils.utils;
 import java.text.ParseException;
 import java.util.Optional;
 
@@ -34,13 +34,11 @@ import java.util.Optional;
  */
 public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> {
 
-    MainMenuService service;
     VentaDetailService vService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
     private int nivelDeAccesoAutenticado = 0;
 
-    public MainMenuPresenter(MainMenuService service) {
+    public MainMenuPresenter() {
         super(new MainMenuViewModel());
-        this.service = service;
         nivelDeAccesoAutenticado = Application.getInstance().getLoggedUser()
                 .getPuestoTrabajonombrePuesto().getNivelAcceso();
 
@@ -48,8 +46,8 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
 
     @Override
     protected void registerOperations() {
-        for (MainMenuController.MenuButtons v : MainMenuController.MenuButtons.values()) {
-            if (v == MainMenuController.MenuButtons.COMENZAR_VENTAS) {
+        for (MenuButtons v : MenuButtons.values()) {
+            if (v == MenuButtons.COMENZAR_VENTAS) {
                 registerOperation(onComenzarVentaClick(v.toString()));
                 continue;
             }
@@ -72,14 +70,14 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                                 ret = Application.getInstance().getNotificationService().
                                         showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
                                                 TipoNotificacion.DIALOG_INPUT);
-                                Venta ventaIniciada;
+                                Integer ventaIniciada;
                                 if (ret.get().isEmpty() || ret.get().isBlank()) {
-                                    ventaIniciada = vService.inicializarVentas(null, false);
+                                    ventaIniciada = vService.inicializarVentas(null);
                                 } else {
-                                    ventaIniciada = vService.inicializarVentas(R.DATE_FORMAT.parse(ret.get()), false);
+                                    ventaIniciada = vService.inicializarVentas(utils.toLocalDate(R.DATE_FORMAT.parse(ret.get())));
                                 }
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                        new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
+                                        new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada));
                             } catch (ParseException ex) {
                                 throw new IllegalArgumentException("Formato incorrecto");
                             }
@@ -89,9 +87,9 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                     new LongProcessActionServiceImpl("Creando IPVs.........") {
                         @Override
                         protected void longProcessMethod() {
-                            var ventaIniciada = vService.inicializarVentas(null, false);
+                            var ventaIniciada = vService.inicializarVentas(null);
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
+                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada));
                         }
                     }.performAction(null);
                 } else {
@@ -99,9 +97,9 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                         @Override
                         protected void longProcessMethod() {
                             VentaDetailService control = null;
-                            var ventaIniciada = vService.inicializarVentas(null, false);
+                            var ventaIniciada = vService.inicializarVentas(null);
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
+                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada));
                         }
                     }.performAction(null);
                 }
@@ -148,7 +146,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
 
         @Override
         public boolean isEnabled() {
-            return service.estaActivaLaLicencia();
+            return PosDesktopUiModule.getInstance().getImplementation(LicenceService.class).estaActivaLaLicencia();
         }
 
     }

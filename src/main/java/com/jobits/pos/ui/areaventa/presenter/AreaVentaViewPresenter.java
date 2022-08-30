@@ -8,7 +8,7 @@ package com.jobits.pos.ui.areaventa.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 //import com.jobits.pos.controller.areaventa.impl.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
-import com.jobits.pos.controller.mesa.MesaService;
+import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
@@ -97,12 +97,12 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
     @Override
     protected Optional refreshState() {
         Area areaSel = getBean().getArea_seleccionada();
+        getBean().setLista_area(new ArrayListModel<>(areaService.findAll()));
         if (areaSel == null) {
-            getBean().getLista_area().clear();
-            getBean().getLista_area().addAll(new ArrayListModel<>(areaService.findAll()));
             getBean().getLista_mesas().clear();
         } else {
-            getBean().setLista_area(new ArrayListModel<>(areaService.findAll()));
+            int index = getBean().getLista_area().indexOf(areaSel);
+            areaSel = getBean().getLista_area().get(index);
             getBean().setArea_seleccionada(areaSel);
         }
         return Optional.empty();
@@ -167,8 +167,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
             Application.getInstance().getNotificationService().
                     notify("Seleccione un Area", TipoNotificacion.ERROR);
         }
-        getBean().getLista_mesas().clear();
-        getBean().setArea_seleccionada(getBean().getArea_seleccionada());
+        refreshState();
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
@@ -182,7 +181,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
                 showDialog("Esta seguro que desea eliminar: " + selected,
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             mesaService.destroy(selected);
-            getBean().setArea_seleccionada(getBean().getArea_seleccionada());
+            refreshState();
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }

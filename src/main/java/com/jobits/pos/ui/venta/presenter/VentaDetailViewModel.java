@@ -95,11 +95,11 @@ public class VentaDetailViewModel extends AbstractViewModel {
     //
     //Mesas
     //
-    private ArrayListModel<Mesa> lista_mesas = new ArrayListModel<>();
+    private ArrayListModel<String> lista_mesas = new ArrayListModel<>();
 
     public static final String PROP_LISTA_MESAS = "lista_mesas";
 
-    private Mesa mesa_seleccionada;
+    private String mesa_seleccionada;
 
     public static final String PROP_MESA_SELECCIONADA = "mesa_seleccionada";
 
@@ -114,11 +114,11 @@ public class VentaDetailViewModel extends AbstractViewModel {
     //    
     //Punto Elaboracion    
     //    
-    private ArrayListModel<Cocina> lista_cocinas = new ArrayListModel<Cocina>();
+    private ArrayListModel<String> lista_cocinas = new ArrayListModel<>();
 
     public static final String PROP_LISTA_COCINAS = "lista_cocinas";
 
-    private Cocina cocina_seleccionada;
+    private String cocina_seleccionada;
 
     public static final String PROP_COCINA_SELECCIONADA = "cocina_seleccionada";
 
@@ -133,11 +133,11 @@ public class VentaDetailViewModel extends AbstractViewModel {
     //
     //Area
     //
-    private ArrayListModel<Area> lista_areas = new ArrayListModel<>();
+    private ArrayListModel<String> lista_areas = new ArrayListModel<>();
 
     public static final String PROP_LISTA_AREAS = "lista_areas";
 
-    private Area area_seleccionada;
+    private String area_seleccionada;
 
     public static final String PROP_AREA_SELECCIONADA = "area_seleccionada";
 
@@ -152,11 +152,11 @@ public class VentaDetailViewModel extends AbstractViewModel {
     //
     //Dependientes
     //
-    private ArrayListModel<Personal> lista_dependientes = new ArrayListModel<>();
+    private ArrayListModel<String> lista_dependientes = new ArrayListModel<>();
 
     public static final String PROP_LISTA_DEPENDIENTES = "lista_dependientes";
 
-    private Personal personal_seleccionado;
+    private String personal_seleccionado;
 
     public static final String PROP_PERSONAL_SELECCIONADO = "personal_seleccionado";
 
@@ -216,7 +216,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of personal_seleccionado
      */
-    public Personal getPersonal_seleccionado() {
+    public String getPersonal_seleccionado() {
         return personal_seleccionado;
     }
 
@@ -225,8 +225,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param personal_seleccionado new value of personal_seleccionado
      */
-    public void setPersonal_seleccionado(Personal personal_seleccionado) {
-        Personal oldPersonal_seleccionado = this.personal_seleccionado;
+    public void setPersonal_seleccionado(String personal_seleccionado) {
+        String oldPersonal_seleccionado = this.personal_seleccionado;
         this.personal_seleccionado = personal_seleccionado;
         firePropertyChange(PROP_PERSONAL_SELECCIONADO, oldPersonal_seleccionado, personal_seleccionado);
     }
@@ -236,7 +236,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_dependientes
      */
-    public ArrayListModel<Personal> getLista_dependientes() {
+    public ArrayListModel<String> getLista_dependientes() {
         return lista_dependientes;
     }
 
@@ -245,8 +245,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_dependientes new value of lista_dependientes
      */
-    public void setLista_dependientes(ArrayListModel<Personal> lista_dependientes) {
-        ArrayListModel<Personal> oldLista_dependientes = this.lista_dependientes;
+    public void setLista_dependientes(ArrayListModel<String> lista_dependientes) {
+        ArrayListModel<String> oldLista_dependientes = this.lista_dependientes;
         this.lista_dependientes.clear();
         this.lista_dependientes.addAll(lista_dependientes);
         firePropertyChange(PROP_LISTA_DEPENDIENTES, oldLista_dependientes, lista_dependientes);
@@ -299,7 +299,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of area_seleccionada
      */
-    public Area getArea_seleccionada() {
+    public String getArea_seleccionada() {
         return area_seleccionada;
     }
 
@@ -308,8 +308,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param area_seleccionada new value of area_seleccionada
      */
-    public void setArea_seleccionada(Area area_seleccionada) {
-        Area oldArea_seleccionada = this.area_seleccionada;
+    public void setArea_seleccionada(String area_seleccionada) {
+        String oldArea_seleccionada = this.area_seleccionada;
         this.area_seleccionada = area_seleccionada;
         firePropertyChange(PROP_AREA_SELECCIONADA, oldArea_seleccionada, area_seleccionada);
     }
@@ -319,7 +319,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_areas
      */
-    public ArrayListModel<Area> getLista_areas() {
+    public ArrayListModel<String> getLista_areas() {
         return lista_areas;
     }
 
@@ -328,8 +328,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_areas new value of lista_areas
      */
-    public void setLista_areas(ArrayListModel<Area> lista_areas) {
-        ArrayListModel<Area> oldLista_areas = this.lista_areas;
+    public void setLista_areas(ArrayListModel<String> lista_areas) {
+        ArrayListModel<String> oldLista_areas = this.lista_areas;
         this.lista_areas.clear();
         this.lista_areas.addAll(lista_areas);
         firePropertyChange(PROP_LISTA_AREAS, oldLista_areas, lista_areas);
@@ -559,7 +559,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of cocina_seleccionada
      */
-    public Cocina getCocina_seleccionada() {
+    public String getCocina_seleccionada() {
         return cocina_seleccionada;
     }
 
@@ -568,8 +568,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param cocina_seleccionada new value of cocina_seleccionada
      */
-    public void setCocina_seleccionada(Cocina cocina_seleccionada) {
-        Cocina oldCocina_seleccionada = this.cocina_seleccionada;
+    public void setCocina_seleccionada(String cocina_seleccionada) {
+        String oldCocina_seleccionada = this.cocina_seleccionada;
         this.cocina_seleccionada = cocina_seleccionada;
         firePropertyChange(PROP_COCINA_SELECCIONADA, oldCocina_seleccionada, cocina_seleccionada);
     }
@@ -579,7 +579,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_cocinas
      */
-    public ArrayListModel<Cocina> getLista_cocinas() {
+    public ArrayListModel<String> getLista_cocinas() {
         return lista_cocinas;
     }
 
@@ -588,8 +588,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_cocinas new value of lista_cocinas
      */
-    public void setLista_cocinas(ArrayListModel<Cocina> lista_cocinas) {
-        ArrayListModel<Cocina> oldLista_cocinas = this.lista_cocinas;
+    public void setLista_cocinas(ArrayListModel<String> lista_cocinas) {
+        ArrayListModel<String> oldLista_cocinas = this.lista_cocinas;
         this.lista_cocinas.clear();
         this.lista_cocinas.addAll(lista_cocinas);
         firePropertyChange(PROP_LISTA_COCINAS, oldLista_cocinas, lista_cocinas);
@@ -642,7 +642,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of mesa_seleccionada
      */
-    public Mesa getMesa_seleccionada() {
+    public String getMesa_seleccionada() {
         return mesa_seleccionada;
     }
 
@@ -651,8 +651,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param mesa_seleccionada new value of mesa_seleccionada
      */
-    public void setMesa_seleccionada(Mesa mesa_seleccionada) {
-        Mesa oldMesa_seleccionada = this.mesa_seleccionada;
+    public void setMesa_seleccionada(String mesa_seleccionada) {
+        String oldMesa_seleccionada = this.mesa_seleccionada;
         this.mesa_seleccionada = mesa_seleccionada;
         firePropertyChange(PROP_MESA_SELECCIONADA, oldMesa_seleccionada, mesa_seleccionada);
     }
@@ -662,7 +662,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_mesas
      */
-    public ArrayListModel<Mesa> getLista_mesas() {
+    public ArrayListModel<String> getLista_mesas() {
         return lista_mesas;
     }
 
@@ -671,8 +671,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_mesas new value of lista_mesas
      */
-    public void setLista_mesas(ArrayListModel<Mesa> lista_mesas) {
-        ArrayListModel<Mesa> oldLista_mesas = this.lista_mesas;
+    public void setLista_mesas(ArrayListModel<String> lista_mesas) {
+        ArrayListModel<String> oldLista_mesas = this.lista_mesas;
         this.lista_mesas.clear();
         this.lista_mesas.addAll(lista_mesas);
         firePropertyChange(PROP_LISTA_MESAS, oldLista_mesas, lista_mesas);

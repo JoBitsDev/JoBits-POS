@@ -6,7 +6,8 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.areaventa.AreaDetailService;
+import com.jobits.pos.controller.areaventa.AreaVentaService;
+import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
@@ -15,7 +16,6 @@ import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -30,7 +30,8 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
     public static final String ACTION_AGREGAR = "Agregar";
     public static final String ACTION_ELIMINAR = "Eliminar";
 
-    private AreaDetailService service = PosDesktopUiModule.getInstance().getImplementation(AreaDetailService.class);
+    private AreaVentaService service = PosDesktopUiModule.getInstance().getImplementation(AreaVentaService.class);
+    private CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
 
     private final boolean creatingMode;
     Area area;
@@ -134,6 +135,6 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
         getBean().getLista_menu_area().clear();
         getBean().getLista_menu_area().addAll(new ArrayListModel<>(area.getCartaList()));
         getBean().getLista_all_menus().clear();
-        getBean().getLista_all_menus().addAll(new ArrayListModel<>(service.getCartaList()));
+        getBean().getLista_all_menus().addAll(new ArrayListModel<>(cartaService.findAll()));
     }
 }

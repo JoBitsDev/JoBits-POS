@@ -5,11 +5,13 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
+import com.jobits.pos.controller.areaventa.MesaService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.mesas.MesaListView;
@@ -38,6 +40,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     public static final String ACTION_IMPRIMIR_LISTA_ORDENES = "Imprimir Ordenes";
 
     private VentaDetailService ventaService;
+    private MesaService mesaService = PosDesktopUiModule.getInstance().getImplementation(MesaService.class);
     private OrdenDetailViewPresenter ordenPresenter;
     private ProductoVentaSelectorPresenter menuPresenter;
     private OrdenService ordenService;
@@ -124,16 +127,10 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onCrearOrdenAction() {
-        Mesa m;
-        if (ordenService.validateAddOrden()) {
-            List<Mesa> list = ordenService.getListaMesasDisponibles();
-            m = selectMesaNew();
-        } else {
-            m = ordenService.findMesaCaja();
-        }
+        Mesa m = selectMesaNew();
         Orden newOrden = null;
         if (m != null) {
-            newOrden = ventaService.createNewOrden(codVenta, m);
+            newOrden = ventaService.createNewOrden(codVenta, m.getCodMesa());
         }
         if (newOrden != null) {
             getBean().setElemento_seleccionado(newOrden);
@@ -151,7 +148,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onImprimirOrdenesClick() {
-        ordenService.impimirListaOrdenes(getBean().getLista_elementos(), codVenta);
+        throw new UnsupportedOperationException("Operacion deshabilitada permanentemente");
     }
 
     @Override

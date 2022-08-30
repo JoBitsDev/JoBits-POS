@@ -377,7 +377,7 @@ public class ClientesDetailView extends AbstractViewPanel {
 
         jPanelTable.add(jPanel10, "Agregar");
 
-        jTabbedPane1.addTab("Direcciones de Envío", jPanelTable);
+        jTabbedPane1.addTab("Direcciones de EnvÃ­os", jPanelTable);
 
         jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 

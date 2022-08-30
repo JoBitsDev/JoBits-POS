@@ -7,8 +7,7 @@ package com.jobits.pos.ui.insumo.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.controller.insumo.InsumoDetailService;
-import com.jobits.pos.controller.productos.ProductoVentaListService;
+import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -20,6 +19,9 @@ import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import com.jobits.pos.controller.insumo.InsumoService;
+import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.ProductoVenta;
 
 /**
  *
@@ -34,8 +36,8 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     public static String ACTION_ELIMINAR_PRODUCTO = "Eliminar Producto";
     public static String ACTION_AGREGAR_PRODUCTO = "Agregar Producto";
 
-    private final InsumoDetailService service = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
-    private final ProductoVentaListService productoService = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
+    private final InsumoService service = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
+    private final ProductoVentaService productoService = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaService.class);
     private final boolean creatingMode;
     private Insumo insumo;
 
@@ -112,10 +114,11 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel(service.findAll()));
         //TABLA DE PRODUCTOS
-        getBean().getLista_productos_contenidos().clear();
-        getBean().getLista_productos_contenidos().addAll(new ArrayListModel(insumo.getProductoInsumoList()));
         getBean().getLista_productos_disponibles().clear();
         getBean().getLista_productos_disponibles().addAll(new ArrayListModel(productoService.findAll()));
+        fillInsumoProductoInfo(insumo, getBean().getLista_productos_disponibles());
+        getBean().getLista_productos_contenidos().clear();
+        getBean().getLista_productos_contenidos().addAll(new ArrayListModel(insumo.getProductoInsumoList()));
         //PANEL INPUTS
         getBean().setNombre_insumo(insumo.getNombre());
         getBean().setIdentificador_insumo(insumo.getIdentificador());
@@ -160,7 +163,6 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
                 service.create(insumo);
             } else {
                 service.edit(insumo);
-                service.updateProductoOnInsumo(insumo);
             }
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
@@ -179,7 +181,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             Insumo selected = getBean().getInsumo_disponible_selecionado();
-            service.agregarInsumoElaboradoaInsumo(insumo, selected, cantidad);
+            insumo.agregarInsumoElaborado(selected, cantidad);
             getBean().setInsumo_disponible_selecionado(null);
             getBean().getLista_insumos_contenidos().clear();
             getBean().getLista_insumos_contenidos().addAll(insumo.getInsumoDerivadoList());
@@ -188,7 +190,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onEliminarInsumoFichaClick() {
-        service.eliminarInsumoElaboradoDeInsumo(insumo, getBean().getInsumo_contenido_seleccionado());
+        insumo.eliminarInsumoElaborado(getBean().getInsumo_contenido_seleccionado());
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(insumo.getInsumoDerivadoList());
@@ -198,7 +200,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     private void onAgregarProductoFichaClick() {
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
-            service.agregarProductoVentaAInsumo(insumo, getBean().getProducto_disponible_seleccionado(), cantidad);
+            insumo.agregarProductoVenta(getBean().getProducto_disponible_seleccionado(), cantidad);
             getBean().setProducto_disponible_seleccionado(null);
             getBean().getLista_productos_contenidos().clear();
             getBean().getLista_productos_contenidos().addAll(insumo.getProductoInsumoList());
@@ -207,10 +209,18 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onEliminarProductoFichaClick() {
-        service.eliminarProductoVentaDeInsumo(insumo, getBean().getProducto_contenido_seleccionado());
+        insumo.eliminarProductoVenta(getBean().getProducto_contenido_seleccionado());
         getBean().setProducto_contenido_seleccionado(null);
         getBean().getLista_productos_contenidos().clear();
         getBean().getLista_productos_contenidos().addAll(insumo.getProductoInsumoList());
+    }
+
+    private void fillInsumoProductoInfo(Insumo insumo, ArrayListModel<ProductoVenta> lista_productos_disponibles) {
+        for (ProductoInsumo p : insumo.getProductoInsumoList()) {
+            var aux = new ProductoVenta(p.getProductoInsumoPK().getProductoVentapCod());
+            p.setProductoVenta(lista_productos_disponibles.get(lista_productos_disponibles.indexOf(aux)));
+            p.setInsumo(insumo);
+        }
     }
 
 }

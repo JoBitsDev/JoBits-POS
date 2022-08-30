@@ -25,7 +25,7 @@ public class AuthorizerImpl implements Authorizer {
     @Override
     public void authorize(LogInService service, String windowTitle) {
         Application.getInstance().getNavigator().navigateTo(AutorizoView.VIEW_NAME,
-                new AutorizoViewPresenter(service, windowTitle), DisplayType.POPUP);
+                new AutorizoViewPresenter(windowTitle), DisplayType.POPUP);
     }
 
 }

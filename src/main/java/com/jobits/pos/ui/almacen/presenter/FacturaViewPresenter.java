@@ -8,7 +8,6 @@ package com.jobits.pos.ui.almacen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.repo.impl.VentaDAO;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.core.domain.TransaccionSimple;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
@@ -45,6 +44,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 
 /**
  *
@@ -53,7 +53,7 @@ import javax.swing.JOptionPane;
 public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel> {
 
     private AlmacenManageService service;
-    private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
 
     private Operacion operationToAccept;
 
@@ -415,7 +415,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                                         (Almacen) getBean().getDestino_seleccionado(),
                                         getBean().getLista_insumos_transformados_contenidos())),
                         getBean().getNumero_recibo(),
-                        getBean().getFecha_factura(),
+                        utils.toLocalDate(getBean().getFecha_factura()),
                         getBean().getAlmacen().getCodAlmacen(),
                         0
                 );
@@ -425,26 +425,26 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 switch (currentOperation) {
                     case ENTRADA:
                         service.crearOperacion(Operacion.Tipo.ENTRADA, getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), -1);
+                                getBean().getNumero_recibo(), utils.toLocalDate(getBean().getFecha_factura()), getBean().getAlmacen().getCodAlmacen(), -1);
                         break;
                     case SALIDA:
                         Date fecha = getBean().getFecha_factura();
                         service.crearOperacion(Operacion.Tipo.SALIDA, getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), fecha, getBean().getAlmacen().getCodAlmacen(), selectIdFecha(fecha));
+                                getBean().getNumero_recibo(), utils.toLocalDate(fecha), getBean().getAlmacen().getCodAlmacen(), selectIdFecha(fecha));
                         break;
                     case REBAJA:
                         service.crearOperacion(
                                 Operacion.Tipo.REBAJA,
                                 getBean().getLista_elementos(),
                                 getBean().getNumero_recibo(),
-                                getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), 0);
+                                utils.toLocalDate(getBean().getFecha_factura()), getBean().getAlmacen().getCodAlmacen(), 0);
                         break;
                     case TRASPASO:
                         service.crearOperacion(
                                 Operacion.Tipo.TRASPASO,
                                 getBean().getLista_elementos(),
                                 getBean().getNumero_recibo(),
-                                getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), 0);
+                                utils.toLocalDate(getBean().getFecha_factura()), getBean().getAlmacen().getCodAlmacen(), 0);
                         break;
                     default:
                         throw new UnExpectedErrorException("Tipo de operacion no soportada");
@@ -488,7 +488,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     }
 
     private Integer selectIdFecha(Date fecha) {
-        List<Venta> list = VentaDAO.getInstance().find(fecha);
+        List<Venta> list = VentaDAO.getInstance().find(utils.toLocalDate(fecha));
         if (!list.isEmpty()) {
             if (list.size() > 1) {
                 JList<Venta> jList = new JList<>(list.toArray(new Venta[list.size()]));
@@ -539,7 +539,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             throw new IllegalArgumentException("Bad Call");
         }
         var o = operationToAccept;
-        getBean().setFecha_factura(o.getFecha());
+        getBean().setFecha_factura(utils.toDate(o.getFecha()));
         OperationType opType = getTipoOperacionAndFillData(o);
         getBean().setOperacion_selected(opType);
         getBean().setNumero_recibo(o.getNoRecibo());

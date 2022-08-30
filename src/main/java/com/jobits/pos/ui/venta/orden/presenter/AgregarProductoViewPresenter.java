@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.SeccionAgregada;
@@ -15,16 +16,17 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
-import static com.jobits.pos.ui.venta.orden.presenter.AgregarProductoViewModel.*;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.jobits.pos.ui.venta.orden.presenter.AgregarProductoViewModel.PROP_PRODUCTO_DISPONIBLE_SELECCIONADO;
+
 /**
- *
  * @author Home
  */
 public class AgregarProductoViewPresenter extends AbstractViewPresenter<AgregarProductoViewModel> {
@@ -39,11 +41,10 @@ public class AgregarProductoViewPresenter extends AbstractViewPresenter<AgregarP
     private final String codOrden;
     private final ProductoVenta producto;
     private final float cantidad;
-
+    OrdenService service = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
+    SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
     private int currentIndex = 0;
     private List<SeccionAgregada> list_secciones_agregadas = new ArrayList();
-
-    OrdenService service = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
 
     public AgregarProductoViewPresenter(String codOrden, ProductoVenta producto, float cantidad) {
         super(new AgregarProductoViewModel());
@@ -107,7 +108,7 @@ public class AgregarProductoViewPresenter extends AbstractViewPresenter<AgregarP
 
     @Override
     protected Optional refreshState() {
-        list_secciones_agregadas = producto.getSeccionnombreSeccion().getAgregadoEn();
+        list_secciones_agregadas = seccionService.findBy(producto.getSeccionnombreSeccion()).getAgregadoEn();
         currentIndex = 0;
         setProductosFromSeccion();
         getBean().setNavegacion_habilitada(list_secciones_agregadas.size() > 1);
@@ -116,7 +117,7 @@ public class AgregarProductoViewPresenter extends AbstractViewPresenter<AgregarP
     }
 
     private void onAgregarAction() {
-        service.addProductoCompuesto(codOrden, producto, cantidad, getBean().getLista_productos_contenidos());
+        service.addProductoCompuesto(codOrden, producto.getCodigoProducto(), cantidad, getBean().getLista_productos_contenidos());
         Application.getInstance().getNavigator().navigateUp();
     }
 

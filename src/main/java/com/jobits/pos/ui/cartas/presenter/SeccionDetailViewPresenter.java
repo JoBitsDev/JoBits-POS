@@ -135,7 +135,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
             seccion.setAgregadoEn(getBean().getLista_secciones_agregadas());
             if (creatingMode) {
                 seccion.setCartacodCarta(carta);
-                seccionService.create(seccion);
+                cartaService.addSeccion(carta.getCodCarta(),seccion);
             } else {
                 seccionService.edit(seccion);
             }

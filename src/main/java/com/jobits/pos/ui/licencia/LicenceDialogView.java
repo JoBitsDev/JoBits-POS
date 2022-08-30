@@ -5,10 +5,12 @@
  */
 package com.jobits.pos.ui.licencia;
 
+import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.controller.licencia.impl.Licence;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.ui.swing.View;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -31,12 +33,11 @@ public class LicenceDialogView extends JPanel implements View {
 
     public static final String VIEW_NAME = "Licencia";
 
-    private LicenceController controller;
+    private LicenceService service = PosDesktopUiModule.getInstance().getImplementation(LicenceService.class);
 
     //TODO: falta presenter en esta clase
-    public LicenceDialogView(LicenceController controller) {
+    public LicenceDialogView() {
         super();
-        this.controller = controller;
         uiInit();
         wireUp();
     }
@@ -352,14 +353,14 @@ public class LicenceDialogView extends JPanel implements View {
         key += jTextField7.getText();
         key += jTextField8.getText();
         key += jTextField9.getText();
-        boolean result = controller.validateAndSafe(key);
+        boolean result = service.validateAndSafe(key);
         if (result) {
             Application.getInstance().getNotificationService().notify(
-                    controller.getEstadoLic(), TipoNotificacion.SUCCESS);
+                    service.getEstadoLic(), TipoNotificacion.SUCCESS);
             NavigationService.getInstance().navigateUp();
         } else {
             Application.getInstance().getNotificationService().notify(
-                    controller.getEstadoLic(), TipoNotificacion.ERROR);
+                    service.getEstadoLic(), TipoNotificacion.ERROR);
 
         }
     }//GEN-LAST:event_jButtonActivarActionPerformed
@@ -405,8 +406,8 @@ public class LicenceDialogView extends JPanel implements View {
 
     @Override
     public void wireUp() {
-        jideLabelEstadoLic.setText(controller.getEstadoLicencia(Licence.TipoLicencia.APLICACION));
-        jideLabelIdentificador.setText(controller.getSoftwareUID());
+        jideLabelEstadoLic.setText(service.getEstadoLicencia(Licence.TipoLicencia.APLICACION));
+        jideLabelIdentificador.setText(service.getSoftwareUID());
 
     }
 

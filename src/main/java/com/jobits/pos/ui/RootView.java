@@ -9,10 +9,7 @@ import com.jobits.ui.swing.View;
 import com.jobits.pos.ui.statusbar.StatusBarView;
 import com.jobits.pos.ui.statusbar.StatusBarPresenter;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
-import com.jobits.pos.ui.mainmenu.presenter.MainMenuPresenter;
-import com.jobits.pos.controller.login.impl.MainMenuController;
 import com.jobits.pos.cordinator.DisplayType;
-import com.jobits.pos.main.Application;
 import com.jobits.pos.main.ViewFacade;
 
 import com.jobits.pos.ui.dashboard.DashBoardView;
@@ -56,7 +53,7 @@ public class RootView extends JPanel {
         initComponents();
         // jPanelContent.setLayout(cards);
         jPanelStatus.add(statusBar);
-        dashboard = new MainMenuView(new MainMenuPresenter(new MainMenuController(Application.getInstance().getLoggedUser())));
+        dashboard = new MainMenuView();
         add(dashboard, BorderLayout.CENTER);
         setShrinked(true);
         statusBar.refreshView();

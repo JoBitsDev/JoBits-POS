@@ -7,20 +7,19 @@ package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
-import com.jobits.pos.controller.trabajadores.PersonalListService;
+import com.jobits.pos.controller.trabajadores.PersonalUseCase;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
 import java.util.Optional;
 
 /**
- *
  * @author Home
  */
 public class AsistenciaPersonalPresenter extends AbstractViewPresenter<AsistenciaPersonalViewModel> {
@@ -32,7 +31,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
             PROP_VALUE_CHANGED = "Valores Modificados";
 
     private final AsistenciaPersonalService asistenciaPersonalService = PosDesktopUiModule.getInstance().getImplementation(AsistenciaPersonalService.class);
-    private final PersonalListService personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalListService.class);
+    private final PersonalUseCase personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalUseCase.class);
     private int idVenta;
 
     public AsistenciaPersonalPresenter(int idVenta) {
@@ -95,12 +94,11 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
                 showDialog("Esta seguro que desea eliminar al personal seleccionado?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             AsistenciaPersonal ap = getBean().getPersonal_contenido_selecionado();
-            if (ap != null) {
-                ap = asistenciaPersonalService.findBy(ap.getAsistenciaPersonalPK());
                 if (ap != null) {
-                    asistenciaPersonalService.destroy(getBean().getPersonal_contenido_selecionado());
+                    asistenciaPersonalService.destroy(ap.getAsistenciaPersonalPK().getVentaid(),
+                            ap.getAsistenciaPersonalPK().getPersonalusuario());
                     refreshState();
-                }
+
             } else {
                 throw new IllegalArgumentException("Seleccione un trabajador primero");
             }
@@ -111,12 +109,10 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         Personal personal = getBean().getPersonal_disponible_seleccionado();
         if (personal != null) {
             AsistenciaPersonal ap = new AsistenciaPersonal(idVenta, personal.getUsuario());
-            if ((asistenciaPersonalService.findBy(ap.getAsistenciaPersonalPK())) != null) {
-                throw new IllegalStateException("El personal seleccionado ya se encuentra registrado en el dia de venta");
-            }
+
             ap.setPersonal(personal);
-           // ap.setVenta(idVenta);
-            asistenciaPersonalService.create(ap);
+            // ap.setVenta(idVenta);
+            asistenciaPersonalService.create(ap.getAsistenciaPersonalPK().getVentaid(), ap.getAsistenciaPersonalPK().getPersonalusuario());
             refreshState();
             firePropertyChange(PROP_VALUE_CHANGED, false, true);
         }
@@ -126,9 +122,12 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
-            asistenciaPersonalService.updateAMayores(personal, cantidad);
+            asistenciaPersonalService.updateAMayores(
+                    personal.getAsistenciaPersonalPK().getVentaid(),
+                    personal.getAsistenciaPersonalPK().getPersonalusuario(), cantidad);
             getBean().getLista_personal_contenido().clear();
-            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(asistenciaPersonalService.getPersonalTrabajando(idVenta)));
+            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(
+                    asistenciaPersonalService.getPersonalTrabajando(idVenta)));
         }
 
     }

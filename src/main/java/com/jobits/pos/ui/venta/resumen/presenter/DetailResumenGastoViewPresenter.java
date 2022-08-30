@@ -17,22 +17,21 @@ import com.jobits.pos.utils.utils;
  * @author Home
  */
 public class DetailResumenGastoViewPresenter extends AbstractResumenViewPresenter<DetailResumenGastoViewModel> {
-    
-    GastoResumenService service = PosDesktopUiModule.getInstance().getImplementation(GastoResumenService.class);
-    
+
+
     public DetailResumenGastoViewPresenter() {
         super(new DetailResumenGastoViewModel(), false, "Resumen de Gastos General", "Resumen de Gastos Detallado");
     }
-    
+
     @Override
     protected void setListsToBean() {
-        service.createVentaResumen(getBean().getSince_date(), getBean().getTo_date());
-        getBean().setListaMain(new ArrayListModel<>(service.getResumenGeneral()));
-        getBean().setListaDetail(new ArrayListModel<>(service.getResumenDetallado()));
+        var ret = service.getGastoResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
+        getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);
         setView(getBean().getListaMain().size() == 1);
     }
-    
+
     @Override
     public float getTotal() {
         float total = 0;
@@ -46,6 +45,5 @@ public class DetailResumenGastoViewPresenter extends AbstractResumenViewPresente
     protected void printToTicketPrinter() {
         throw new UnsupportedOperationException("En Desarrollo"); //To change body of generated methods, choose Tools | Templates.
     }
- 
-    
+
 }

@@ -5,7 +5,8 @@
  */
 package com.jobits.pos.ui.mainmenu.presenter;
 
-import com.jobits.pos.controller.login.LogInService;
+import com.jobits.pos.client.webconnection.login.LoginService;
+import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.login.impl.LogInController;
@@ -36,7 +37,6 @@ import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
@@ -70,7 +70,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
     //Ayuda
     public static final String ACTION_SHOW_MANUAL_USUARIO = "Manual de Usuario";
 
-    LogInService loginService = PosDesktopUiModule.getInstance().getImplementation(LogInService.class);
+    LoginService loginService = PosDesktopUiModule.getInstance().getImplementation(LoginService.class);
 
     public MenuBarClassPresenter() {
         super(new MenuBarClassViewModel());
@@ -109,7 +109,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        ChangeUserView.VIEW_NAME, new ChangeUserViewPresenter(new LogInController()), DisplayType.POPUP);//TODO: inyectar
+                        ChangeUserView.VIEW_NAME, new ChangeUserViewPresenter(), DisplayType.POPUP);//TODO: inyectar
                 return Optional.empty();
             }
         });
@@ -119,7 +119,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
                 Application.getInstance().setLoggedUser(null);
                 RootView.getInstance().clearView();
                 Application.getInstance().getNavigator().navigateTo(
-                        LogInView.VIEW_NAME, new LoginViewPresenter(new LogInController()), DisplayType.POPUP);
+                        LogInView.VIEW_NAME, new LoginViewPresenter(), DisplayType.POPUP);
                 Application.getInstance().getNotificationService().showDialog("Sesion Cerrada", TipoNotificacion.INFO);
                 return Optional.empty();
             }
@@ -227,7 +227,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        UbicacionView.VIEW_NAME, new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class)), DisplayType.POPUP);
+                        UbicacionView.VIEW_NAME, new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionService.class)), DisplayType.POPUP);
                 return Optional.empty();
             }
         });

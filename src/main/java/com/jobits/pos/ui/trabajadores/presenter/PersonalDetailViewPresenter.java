@@ -6,16 +6,13 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.trabajadores.impl.PersonalDetailController;
-import com.jobits.pos.controller.trabajadores.PersonalDetailService;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoListService;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoUseCase;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.DatosPersonales;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.domain.models.PuestoTrabajo;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -28,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
+import com.jobits.pos.controller.trabajadores.PersonalUseCase;
 
 /**
  *
@@ -38,8 +36,8 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
 
-    private final PersonalDetailService personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalDetailService.class);
-    private final PuestoTrabajoListService puestoService = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoListService.class);
+    private final PersonalUseCase personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalUseCase.class);
+    private final PuestoTrabajoUseCase puestoService = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoUseCase.class);
     private Personal personal;
     private final boolean creatingMode;
 
@@ -48,7 +46,6 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
         creatingMode = personal == null;
         if (creatingMode) {
             this.personal = new Personal();
-            this.personal.setOrdenList(new ArrayList<>());
             this.personal.setDatosPersonales(new DatosPersonales());
         } else {
             this.personal = personal;

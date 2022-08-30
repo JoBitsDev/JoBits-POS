@@ -26,11 +26,10 @@ public class ChangeUserViewPresenter extends AbstractViewPresenter<ChangeUserVie
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_ACEPTAR = "Aceptar";
-    LogInService service;
+    LogInService service = PosDesktopUiModule.getInstance().getImplementation(LogInService.class);
 
-    public ChangeUserViewPresenter(LogInService service) {
+    public ChangeUserViewPresenter() {
         super(new ChangeUserViewModel());
-        this.service = service;
     }
 
     @Override
@@ -65,7 +64,7 @@ public class ChangeUserViewPresenter extends AbstractViewPresenter<ChangeUserVie
             try {
                 ret = service.autenticar(getBean().getUser(), password.toCharArray());
             } catch (IllegalArgumentException ex) {
-                if ((boolean) configuracionService.getConfiguracion(R.SettingID.GENERAL_AUTENTICACION_PLANA)) {
+                if (configuracionService.getConfiguracion(R.SettingID.GENERAL_AUTENTICACION_PLANA).getValor() == 1) {
                     ret = service.autenticar(getBean().getUser(), passwordPlain.toCharArray());
                 }
             }

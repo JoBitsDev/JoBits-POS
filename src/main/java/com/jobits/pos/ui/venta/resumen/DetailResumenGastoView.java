@@ -109,8 +109,7 @@ public class DetailResumenGastoView extends AbstractListResumenViewPanel<DayRevi
                 GastoVenta g = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        Date d = g.getVenta().getFecha();
-                        return Instant.ofEpochMilli(d.getTime()).atZone(ZoneId.systemDefault()).toLocalDate()
+                        return g.getVenta().getFecha()
                                 .format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
                     case 1:
                         return g.getGasto().getTipoGastoidGasto().getNombre();

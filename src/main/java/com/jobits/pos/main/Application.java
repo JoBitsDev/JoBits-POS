@@ -5,38 +5,34 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.cliente.core.module.ClienteCoreModule;
-import com.jobits.pos.cliente.repo.module.ClienteRepoModule;
-import com.jobits.pos.ui.utils.ConfigLoaderService;
-import com.jobits.pos.ui.MainWindow;
-import com.jobits.pos.controller.licencia.impl.LicenceController;
 import com.jobits.pos.controller.login.AuthorizerHandler;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.core.module.UserResolverImpl;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.reserva.core.module.ReservaCoreModule;
-import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
-import com.jobits.ui.swing.LongProcessActionService;
+import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.ConfigLoaderController;
+import com.jobits.pos.ui.utils.ConfigLoaderService;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import com.jobits.ui.swing.LongProcessActionService;
 import com.jobits.ui.themes.ThemeHandler;
 import com.jobits.ui.themes.ThemeType;
-import com.jobits.ui.themes.impl.NimbusTheme;
 import com.jobits.ui.themes.impl.MaterialTheme;
+import com.jobits.ui.themes.impl.NimbusTheme;
 import com.jobits.ui.themes.impl.SimpleMaterialTheme;
 import com.root101.clean.core.app.services.NotificationService;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.app.services.UserResolverService;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -48,23 +44,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import org.jobits.db.core.module.DataVersionControlModule;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class Application {
 
-    public static String PROP_LOGGED_USER = "Logged User";
-    public static final int MAJOR_VERSION = 3;
-    public static final int MINOR_VERSION = 15;
-    public static final int PATCH_VERSION = 1;
-    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
+    public static final int MAJOR_VERSION = 4;
+    public static final int MINOR_VERSION = 0;
+    public static final int PATCH_VERSION = 0;
     //
     //Log
     //
@@ -72,9 +62,31 @@ public class Application {
     private static final String LOG_FILE_PATH = "LOGS/AppLogs/";
     private static final String ERR_FILE_PATH = "LOGS/AppLogsErr/";
     private static final String LOG_ERR_FILE_NAME = CURRENT_DATE + ".log";
+    public static String PROP_LOGGED_USER = "Logged User";
+    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION + "(BETA)";
     private static Application application;
+    //
+    // Name
+    //
+    private final String APP_NAME = "JoBits POS";
+    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    private UserResolverService<Personal> userResolver = new UserResolverImpl();
+    private LongProcessActionService backgroundWorker;
+    private CoordinatorService coordinator;
+    //
+    // App
+    //
+    private Personal loggedUser;
+    //
+    // UI
+    //
+    private MainWindow mainWindow;
+    private NavigationService navigator;
+    private NotificationService notificationService = new NotificationHandler();
+    private Application() {
+    }
 
-//    public static Application createApplication() {
+    //    public static Application createApplication() {
 //        if (application == null) {
 //            application = new Application();
 //        }
@@ -112,32 +124,6 @@ public class Application {
         System.setErr(error);
 
     }
-    private UserResolverService<Personal> userResolver = new UserResolverImpl();
-
-    //
-    // Name
-    //
-    private final String APP_NAME = "JoBits POS";
-    private LongProcessActionService backgroundWorker;
-
-    private CoordinatorService coordinator;
-
-    //
-    // App
-    //
-    private LicenceController licenceController = new LicenceController();
-
-    private Personal loggedUser;
-    //
-    // UI
-    //
-    private MainWindow mainWindow;
-    private NavigationService navigator;
-    private NotificationService notificationService = new NotificationHandler();
-    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-    private Application() {
-    }
 
     /**
      * Add PropertyChangeListener.
@@ -165,11 +151,7 @@ public class Application {
         return coordinator;
     }
 
-    public LicenceController getLicenceController() {
-        return licenceController;
-    }
-
-    public Personal getLoggedUser() {
+    public Personal getLoggedUser() {//TODO: implement userresolver
         return userResolver.resolveUser();
     }
 
@@ -228,6 +210,7 @@ public class Application {
         mainWindow.setVisible(true);
         navigator.startNavigation();
     }
+
     public void setTheme() {
         ConfigLoaderService service = new ConfigLoaderController();
         String themeName = service.getConfigValue("app.theme");
@@ -243,23 +226,23 @@ public class Application {
     }
 
     private void initModules() {
-        DataVersionControlModule.init();
+        // DataVersionControlModule.init();
         //MODULO CLIENTE
-        ClienteRepoModule.init(DataVersionControlModule.getInstance());
-        ClienteCoreModule.init(ClienteRepoModule.getInstance());
+        //ClienteRepoModule.init(DataVersionControlModule.getInstance());
+        //ClienteCoreModule.init(ClienteRepoModule.getInstance());
 
         //MODULO RESERVA
-        ReservaRepoModule.init(DataVersionControlModule.getInstance());
-        ReservaCoreModule.init(ReservaRepoModule.getInstance());
+        //ReservaRepoModule.init(DataVersionControlModule.getInstance());
+        //ReservaCoreModule.init(ReservaRepoModule.getInstance());
 
         //MODULO POS-CORE
-        PosCoreModule.init(DataVersionControlModule.getInstance());
+        //  PosCoreModule.init(DataVersionControlModule.getInstance());
 
         //MODULO DESKTOP-UI
-        PosDesktopUiModule.init(
-                PosCoreModule.getInstance(),
-                ReservaCoreModule.getInstance(),
-                ClienteCoreModule.getInstance());
+        PosDesktopUiModule.init();
+        // PosCoreModule.getInstance(),
+        //ReservaCoreModule.getInstance(),
+        //ClienteCoreModule.getInstance());
 
     }
 

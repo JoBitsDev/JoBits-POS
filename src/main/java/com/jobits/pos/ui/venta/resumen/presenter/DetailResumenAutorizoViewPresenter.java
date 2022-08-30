@@ -6,27 +6,24 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.resumen.AutorizoResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.VentaResumenFormatter;
 import com.jobits.pos.ui.filter.presenter.FilterType;
-import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
 /**
- *
  * @author Home
  */
 public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPresenter<DetailResumenAutorizoViewModel> {
 
-    AutorizoResumenService service = PosDesktopUiModule.getInstance().getImplementation(AutorizoResumenService.class);
 
     public DetailResumenAutorizoViewPresenter() {
         super(new DetailResumenAutorizoViewModel(), false, "Resumen Autorizo General", "Resumen Autorizo Detallado",
@@ -39,9 +36,9 @@ public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPrese
 
     @Override
     protected void setListsToBean() {
-        service.createVentaResumen(getBean().getSince_date(), getBean().getTo_date());
-        getBean().setListaMain(new ArrayListModel<>(service.getResumenGeneral()));
-        getBean().setListaDetail(new ArrayListModel<>(service.getResumenDetallado()));
+        var ret = service.getVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
+        getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);
         setView(getBean().getListaMain().size() == 1);
     }
@@ -59,8 +56,8 @@ public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPrese
     protected void printToTicketPrinter() {
         Impresion i = new Impresion();
         Optional<Boolean> precios = Application.getInstance().getNotificationService().showDialog("Desea Imprimir con percios los productos", TipoNotificacion.DIALOG_CONFIRM);
-        i.print(VentaResumenFormatter.of(getBean().getSince_date(),
-                getBean().getTo_date(), getBean().getListaDetail(), precios.orElse(true)), null);
+        i.print(VentaResumenFormatter.of(utils.toLocalDate(getBean().getSince_date()),
+                utils.toLocalDate(getBean().getTo_date()), getBean().getListaDetail(), precios.orElse(true)), null);
     }
 
 }

@@ -5,13 +5,14 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.controller.trabajadores.NominasService;
+import com.jobits.pos.controller.trabajadores.NominasUseCase;
 import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
     public static String ACTION_SELECCIONAR_TODOS = "Seleccionar todos";
     public static final String ACTION_DESPLEGAR_OPCIONES = "Desplegar opciones";
 
-    private final NominasService service = PosDesktopUiModule.getInstance().getImplementation(NominasService.class);
+    private final NominasUseCase service = PosDesktopUiModule.getInstance().getImplementation(NominasUseCase.class);
 
     public NominasDetailPresenter() {
         super(new NominasDetailViewModel());
@@ -48,10 +49,12 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
 
     private void onBuscarClick() {
         getBean().getLista_personal().clear();
-        if(getBean().getFecha_desde().after(getBean().getFecha_hasta())){
+        if (getBean().getFecha_desde().after(getBean().getFecha_hasta())) {
             throw new IllegalArgumentException("Rango de fechas incorrecto");
         }
-        getBean().getLista_personal().addAll(service.getPersonalActivo(getBean().getFecha_desde(), getBean().getFecha_hasta()));
+        var desde = utils.toLocalDate(getBean().getFecha_desde());
+        var hasta = utils.toLocalDate(getBean().getFecha_hasta());
+        getBean().getLista_personal().addAll(service.getPersonalActivo(desde, hasta));
 
     }
 
@@ -59,8 +62,8 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
         boolean flag = JOptionPane.showConfirmDialog(null,
                 "Desea imprimir el comprobante de pago", "Comprobante de Pago",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-        service.pagar(getBean().getLista_personal(),getBean().getHasta(), flag);
-        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize()-1);
+        service.pagar(getBean().getLista_personal(), getBean().getHasta(), flag);
+        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize() - 1);
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 

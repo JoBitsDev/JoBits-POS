@@ -1,12 +1,12 @@
 plugins {
     id 'io.freefair.lombok' version '5.3.0' apply true
-    id 'edu.sc.seis.launch4j' version '2.5.2' apply true  
+    id 'edu.sc.seis.launch4j' version '2.5.2' apply true
 }
 
 description = 'JoBits POS:Client-Swing'
 apply plugin: 'application'
 
-application{
+application {
     mainClassName = 'com.jobits.pos.main.Main'
 
 }
@@ -18,13 +18,17 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    
+
     implementation "com.root101.clean:com.root101.clean.core:2.1.6"
-    
-    implementation "org.jobits.db:org.jobits.db.versioncontrol:1.1.10"
-    
-    //    testCompile 'junit:junit:4.12'
-    
+
+    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.1.11-SNAPSHOT'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+
+    //testCompile 'junit:junit:4.12'
+
     // https://mvnrepository.com/artifact/com.toedter/jcalendar
     implementation group: 'com.toedter', name: 'jcalendar', version: '1.4'
 
@@ -37,34 +41,37 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.jpa
     implementation group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.6'
-    
+
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core 
     //Jackson
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
-    
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.2'
+
+
     //Java Persistence API
     implementation group: 'org.datanucleus', name: 'javax.persistence', version: '2.2.2'
-    
+
     //JDBC
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
-    
+
     //SWINGX
     // https://mvnrepository.com/artifact/org.swinglabs/swingx
     implementation group: 'org.swinglabs', name: 'swingx', version: '1.6.1'
-    
+
     //Substance
     // https://mvnrepository.com/artifact/com.github.insubstantial/substance
     implementation group: 'com.github.insubstantial', name: 'substance', version: '7.3'
-    
+
     implementation 'io.github.vincenzopalazzo:material-ui-swing:1.1.1_pre-release_6.1'
 
     implementation 'net.java.timingframework:timingframework-swing:7.3.0'
 
     // https://mvnrepository.com/artifact/com.jidesoft/jide-oss
     implementation group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
-    
+
     // JAX-B dependencies for JDK 9+
     implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
     implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
@@ -72,13 +79,14 @@ dependencies {
 
     implementation 'com.root101.swing:swing-material-standars:2.0.0.RELEASE.20210109'
     implementation 'com.root101.swing:swing-derivable-icons:2.0.0.RELEASE.20210107'
-    implementation(group: 'com.root101.swing', name: 'swing-material-core', version: '6.0.1.SNAPSHOT.20210109')    
-    implementation(group: 'com.root101.swing', name: 'clean-swing', version: '3.0.0.RELEASE.20201230')   
-    
+    implementation(group: 'com.root101.swing', name: 'swing-material-core', version: '6.0.1.SNAPSHOT.20210109')
+    implementation(group: 'com.root101.swing', name: 'clean-swing', version: '3.0.0.RELEASE.20201230')
+
     implementation project(':UIcomponents')
     implementation project(':modulo-reserva')
     implementation project(':cliente')
     implementation project(':posCore')
+    implementation project(':tennant')
 
 
     // https://mvnrepository.com/artifact/com.google.inject/guice
@@ -92,34 +100,33 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-validation
     implementation group: 'com.jgoodies', name: 'jgoodies-validation', version: '2.5.1'
- 
+
     // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-common
     implementation group: 'com.jgoodies', name: 'jgoodies-common', version: '1.8.1'
-        
+
     // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms
     implementation group: 'com.jgoodies', name: 'jgoodies-forms', version: '1.9.0'
 
     // https://mvnrepository.com/artifact/com.lowagie/itext
     implementation group: 'com.lowagie', name: 'itext', version: '2.1.7'
-    
+
     // https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports
-    implementation('net.sf.jasperreports:jasperreports:6.19.0'){
+    implementation('net.sf.jasperreports:jasperreports:6.19.0') {
         exclude group: 'com.lowagie', module: 'itext'
     }
 
 
-    
     //implementation 'org.glassfish.web:javax.el:2.2.6'
-        
+
 }
 
-launch4j{
+launch4j {
     headerType = 'gui'
     outfile = 'JoBits POS.exe'
     mainClassName = 'com.jobits.pos.main.Main'
     bundledJrePath = 'jdk'
-     icon = "${projectDir}/src/main/resources/restManager/resources/logo/icon.ico"
-    
+    icon = "${projectDir}/src/main/resources/restManager/resources/logo/icon.ico"
+
 }
 
 build.finalizedBy(createExe)

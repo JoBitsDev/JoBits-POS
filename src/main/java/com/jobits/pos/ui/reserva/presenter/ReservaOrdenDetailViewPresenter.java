@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.reserva.presenter;
 
-import com.jobits.pos.controller.mesa.MesaService;
+import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Mesa;
