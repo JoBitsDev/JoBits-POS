@@ -431,6 +431,12 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
         firePropertyChange(PROP_CATEGORIA_SELECCIONADA, oldCategoria_seleccionada, categoria_seleccionada, false);
     }
 
+
+    public void setCategoria_seleccionada(Seccion categoria_seleccionada) {
+        setCategoria_seleccionada(categoria_seleccionada.toString());
+    }
+
+
     /**
      * Get the value of lista_categorias
      *
