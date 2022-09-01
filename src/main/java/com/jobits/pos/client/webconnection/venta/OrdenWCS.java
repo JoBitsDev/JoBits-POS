@@ -37,6 +37,11 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
     }
 
     @Override
+    public Orden addProductvOrden(int codProductvOrden, Float cantidad) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public Orden addProductoCompuesto(String codOrden, String producto_agregar, Float cantidad, List<ProductoVentaWrapper> lista_agregos) {
         return handleCall(service.addProductoCompuesto(codOrden, producto_agregar, cantidad, lista_agregos));
     }
