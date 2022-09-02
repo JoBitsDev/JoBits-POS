@@ -6,30 +6,28 @@
 package com.jobits.pos.client.webconnection;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jobits.pos.client.webconnection.exception.ServerErrorException;
 import com.root101.clean.core.app.usecase.AbstractUseCase;
-import java.beans.PropertyChangeListener;
-//import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import org.jboss.logging.Logger;
 import retrofit2.Call;
 import retrofit2.Converter;
-
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 
 public class BaseConnection implements AbstractUseCase {
 
@@ -40,16 +38,15 @@ public class BaseConnection implements AbstractUseCase {
     /**
      * Tiempo maximo esperado para la respuesta del servidor.
      */
-    public static final int MAX_RESPONSE_TIME = 3 * 1000;
+    public static final int MAX_RESPONSE_TIME = 4 * 1000;
     protected static final ObjectMapper oMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    protected static Retrofit retrofit;
-    protected static Converter<ResponseBody, ApiError> converter;
-
     private static final OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new HeaderInterceptor())
             .build();
+    protected static Retrofit retrofit;
+    protected static Converter<ResponseBody, ApiError> converter;
     /**
      * Token para las llamandas seguras al servidor.
      */

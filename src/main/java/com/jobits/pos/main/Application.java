@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.client.webconnection.exception.ServerErrorException;
 import com.jobits.pos.controller.login.AuthorizerHandler;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
@@ -14,6 +15,8 @@ import com.jobits.pos.core.module.UserResolverImpl;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
+import com.jobits.pos.ui.login.ChangeUserView;
+import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.ConfigLoaderController;
@@ -83,6 +86,7 @@ public class Application {
     private MainWindow mainWindow;
     private NavigationService navigator;
     private NotificationService notificationService = new NotificationHandler();
+
     private Application() {
     }
 
@@ -256,10 +260,26 @@ public class Application {
 
     private void setExceptionHandling() {
         Thread.setDefaultUncaughtExceptionHandler((Thread t, Throwable e) -> {
+            if (checkIfIts401(e)) return;
             getNotificationService().showDialog(e.getMessage(), TipoNotificacion.ERROR);
             com.jobits.pos.core.repo.impl.AbstractRepository.transactionErrorListener.propertyChange(new PropertyChangeEvent(this, "ERROR", 0, 1));
             e.printStackTrace();
         });
+    }
+
+    private boolean checkIfIts401(Throwable e) {
+        if (e instanceof ServerErrorException) {
+            ServerErrorException ex = (ServerErrorException) e;
+            if (ex.getApiError().getStatus() == 401) {
+                var presenter = new ChangeUserViewPresenter();
+                presenter.addPropertyChangeListener(ChangeUserViewPresenter.PROP_LOGIN_FAILED, evt ->
+                        getNotificationService().showDialog("Su sesión ha expirado. Por favor ingrese nuevamente.", TipoNotificacion.ERROR));
+                Application.getInstance().getNavigator().navigateTo(
+                        ChangeUserView.VIEW_NAME, presenter, DisplayType.POPUP);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void setLocale() {
