@@ -6,62 +6,45 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.core.domain.models.ProductovOrden;
+import com.jobits.pos.controller.filter.FilterWrapper;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.filter.presenter.FilterViewPresenter;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
- *
  * JoBits
  *
- * @author Jorge
- * @param <Main> la lista que se va a mostrar cuando este en el general
+ * @param <Main>   la lista que se va a mostrar cuando este en el general
  * @param <Detail> la lista que se va a mostrar cuando este en el detail
- *
+ * @author Jorge
  */
 public abstract class AbstractResumenViewModel<Main, Detail> extends AbstractViewModel {
 
-    protected ArrayListModel<Main> listaMain = new ArrayListModel<>();
-
     public static final String PROP_LISTAMAIN = "listaMain";
-
-    protected Main mainSelected;
-
     public static final String PROP_MAINSELECTED = "mainSelected";
-
-    protected ArrayListModel<Detail> listaDetail = new ArrayListModel<>();
-
     public static final String PROP_LISTADETAIL = "listaDetail";
-
-    protected Detail selected_detail;
-
     public static final String PROP_SELECTED_DETAIL = "selected_detail";
-
-    protected boolean detailSelected = false;
-
     public static final String PROP_DETAILSELECTED = "detailSelected";
-
-    protected String titulo_vista;
-
     public static final String PROP_TITULO_VISTA = "titulo_vista";
-
-    private Date since_date = new Date();
-
     public static final String PROP_SINCE_DATE = "since_date";
-
-    private Date to_date = new Date();
-
     public static final String PROP_TO_DATE = "to_date";
-
-    private FilterViewPresenter<Detail> filter_presenter;
-
     public static final String PROP_FILTER_PRESENTER = "filter_presenter";
-
-    private String total_resumen = "0.0" + R.COIN_SUFFIX;
-
     public static final String PROP_TOTAL_RESUMEN = "total_resumen";
+    protected ArrayListModel<Main> listaMain = new ArrayListModel<>();
+    protected Main mainSelected;
+    protected ArrayListModel<Detail> listaDetail = new ArrayListModel<>();
+    protected List<FilterWrapper> filters = new ArrayList<>();
+    protected Detail selected_detail;
+    protected boolean detailSelected = false;
+    protected String titulo_vista;
+    private Date since_date = new Date();
+    private Date to_date = new Date();
+    private FilterViewPresenter<Detail> filter_presenter;
+    private String total_resumen = "0.0" + R.COIN_SUFFIX;
 
     /**
      * Get the value of total_resumen
@@ -265,4 +248,12 @@ public abstract class AbstractResumenViewModel<Main, Detail> extends AbstractVie
         firePropertyChange(PROP_LISTAMAIN, oldListaMain, listaMain);
     }
 
+    public List<FilterWrapper> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<FilterWrapper> filters) {
+        this.filters.clear();
+        this.filters.addAll(filters);
+    }
 }

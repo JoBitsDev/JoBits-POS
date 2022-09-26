@@ -6,17 +6,15 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.resumen.CostosResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.filter.presenter.FilterType;
-import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.utils.utils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
  * @author Home
  */
 public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresenter<DetailResumenCostoViewModel> {
@@ -31,7 +29,7 @@ public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresente
 
     @Override
     protected void setListsToBean() {
-        var ret = service.getCostoResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        var ret = service.getCostoResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()), getBean().getFilters());
         getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
         getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);

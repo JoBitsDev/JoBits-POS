@@ -36,7 +36,7 @@ public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<De
 
     @Override
     protected void setListsToBean() {
-        var ret = service.getVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        var ret = service.getVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()), getBean().getFilters());
         getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
         getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);

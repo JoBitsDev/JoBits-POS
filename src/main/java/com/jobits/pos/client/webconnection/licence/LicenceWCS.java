@@ -8,9 +8,8 @@ package com.jobits.pos.client.webconnection.licence;
 import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.controller.licencia.impl.Licence;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import java.util.Collections;
 
 /**
  * Capa: Services. Esta clase es la encargada del login de un usuario en el
@@ -51,7 +50,7 @@ public class LicenceWCS extends BaseConnection implements LicenceService {
 
     @Override
     public boolean validateAndSafe(String key) {
-        var ret = handleCall(licenceService.renew(TENNANT_TOKEN, TOKEN, key));
+        var ret = handleCall(licenceService.renew(TENNANT_TOKEN, TOKEN, Collections.singletonMap("key", key)));
         return ret.LICENCIA_ACTIVA && ret.LICENCIA_VALIDA;
     }
 

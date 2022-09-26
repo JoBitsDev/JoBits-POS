@@ -6,19 +6,14 @@
 package com.jobits.pos.client.webconnection.licence;
 
 /**
- *
  * @author Jorge
  */
-import com.jobits.pos.controller.licencia.impl.Licence;
-import java.util.Map;
 
+import com.jobits.pos.controller.licencia.impl.Licence;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import retrofit2.http.*;
+
+import java.util.Map;
 
 public interface LicenceWCI {
 
@@ -30,10 +25,10 @@ public interface LicenceWCI {
 
     @GET("licence/uid")
     public Call<Map<String, String>> getUID(@Header("Tennant") String bearerTennantToken,
-            @Header("Authorization") String basicAndToken);
+                                            @Header("Authorization") String basicAndToken);
 
     @PUT("licence/renew")
     public Call<Licence> renew(@Header("Tennant") String bearerTennantToken,
-            @Header("Authorization") String basicAndToken, @Body String key);
+                               @Header("Authorization") String basicAndToken, @Body Map<String, String> key);
 
 }

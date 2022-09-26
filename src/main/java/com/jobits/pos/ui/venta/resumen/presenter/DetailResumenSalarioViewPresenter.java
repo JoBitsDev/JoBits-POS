@@ -6,15 +6,11 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.resumen.SalarioResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.servicios.impresion.Impresion;
-import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.utils.utils;
 
 /**
- *
  * @author Home
  */
 public class DetailResumenSalarioViewPresenter extends AbstractResumenViewPresenter<DetailResumenSalarioViewModel> {
@@ -26,7 +22,7 @@ public class DetailResumenSalarioViewPresenter extends AbstractResumenViewPresen
 
     @Override
     protected void setListsToBean() {
-        var ret = service.getSalarioResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        var ret = service.getSalarioResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()), getBean().getFilters());
         getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
         getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);

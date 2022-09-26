@@ -7,37 +7,33 @@ package com.jobits.pos.ui.filter.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.filter.FilterService;
-import com.jobits.pos.core.domain.FilterBuilder;
-import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter.ACTION_AUTO_ELIMINAR_FILTRO;
-import static com.jobits.pos.ui.filter.presenter.FilterType.COCINA;
+import com.jobits.pos.controller.filter.FilterWrapper;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
+
+import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter.ACTION_AUTO_ELIMINAR_FILTRO;
 
 /**
- *
  * @author Home
  */
 public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewModel> {
-
-    private ArrayListModel<AbstractFilterTypePresenter> lista_presenters = new ArrayListModel<>();
-
-    FilterService service = PosDesktopUiModule.getInstance().getImplementation(FilterService.class);
 
     public static final String ACTION_ADD_FILTER = "Agregar Filtro";
     public static final String ACTION_REMOVE_ALL_FILTERS = "Reiniciar Filtros";
     public static final String ACTION_FILTRAR = "Filtrar";
     public static final String ACTION_SET_PANEL_VISIBLE = "Panel Visible";
-
     public static final String PROP_FILTER_ADDED = "Filtro Agregado";
     public static final String PROP_FILTER_DELETED = "Filtro Eliminado";
     public static final String PROP_FILTERS_RESETED = "Filtros Reiniciados";
     public static final String PROP_FILTERED = "Filtrado";
+    FilterService service = PosDesktopUiModule.getInstance().getImplementation(FilterService.class);
+    private ArrayListModel<AbstractFilterTypePresenter> lista_presenters = new ArrayListModel<>();
 
     public FilterViewPresenter(ArrayList<FilterType> filtrosDisponibles) {
         super(new FilterViewModel());
@@ -81,16 +77,12 @@ public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewMode
     }
 
     private void onFilterClick() {
-        FilterBuilder<T> fb = new FilterBuilder<>();
+        List<FilterWrapper> filters = new ArrayList<>();
         for (AbstractFilterTypePresenter p : lista_presenters) {
-            Predicate predicado = p.createPredicate();
-            if (p.getBean().isTipo_operacion()) {
-                fb.or(predicado);
-            } else {
-                fb.and(predicado);
-            }
+            filters.add(p.createPredicate());
+
         }
-        firePropertyChange(PROP_FILTERED, null, fb.build());
+        firePropertyChange(PROP_FILTERED, null, filters);
     }
 
     private void onAddFilter() {
