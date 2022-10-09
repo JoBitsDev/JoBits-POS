@@ -8,7 +8,6 @@ package com.jobits.pos.ui.venta.orden.presenter;
 import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
-import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.core.domain.models.SeccionAgregada;
@@ -36,7 +35,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     public static final String PROP_PRODUCTO_SELECCIONADO = "PROP_PRODUCTO_SELECCIONADO";
     public static final String PROP_MOSTRAR_SECCIONES = "Mostrar Secciones";
     private OrdenService service;
-    private Mesa mesaSeleccionada;
+    private String codMesaSeleccionada;
     private String codOrdenEnlazada;
     private SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
 
@@ -107,14 +106,14 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         refreshState();
     }
 
-    public Mesa getMesaSeleccionada() {
-        return mesaSeleccionada;
+    public String getCodMesaSeleccionada() {
+        return codMesaSeleccionada;
     }
 
-    public void setMesaSeleccionada(Mesa mesaSeleccionada) {
-        this.mesaSeleccionada = mesaSeleccionada;
+    public void setCodMesaSeleccionada(String codMesaSeleccionada) {
+        this.codMesaSeleccionada = codMesaSeleccionada;
         getBean().setCampo_busqueda_enabled(false);
-        getBean().setCampo_busqueda_enabled(mesaSeleccionada != null);
+        getBean().setCampo_busqueda_enabled(codMesaSeleccionada != null);
         refreshState();
     }
 
@@ -155,8 +154,8 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
     @Override
     public Optional refreshState() {
-        if (mesaSeleccionada != null) {
-            seccionesActivas = seccionService.findSeccionesByMesa(mesaSeleccionada.getCodMesa());
+        if (codMesaSeleccionada != null) {
+            seccionesActivas = seccionService.findSeccionesByMesa(codMesaSeleccionada);
             getBean().setLista_elementos(seccionesActivas);//TODO: pifia logica en los presenters
             getBean().setElemento_seleccionado(null);
             getBean().setListaProductos(new ArrayList());

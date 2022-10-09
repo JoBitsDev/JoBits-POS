@@ -5,22 +5,19 @@
  */
 package com.jobits.pos.ui.reserva.presenter;
 
-import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter;
+
 import java.beans.PropertyChangeEvent;
 import java.util.Optional;
 
 /**
- *
  * @author Home
  */
 public class ReservaOrdenDetailViewPresenter extends AbstractViewPresenter<ReservaOrdenDetailViewModel> {
@@ -95,8 +92,8 @@ public class ReservaOrdenDetailViewPresenter extends AbstractViewPresenter<Reser
         if (this.codOrden != null) {
             Orden o = service.findBy(this.codOrden);
             if (o != null) {
-                if (!o.getMesacodMesa().equals(Mesa.deletedMesa())) {
-                    productoListPresenter.setMesaSeleccionada(o.getMesacodMesa());
+                if (!o.getMesacodMesa().equals(Orden.MESA_INVALIDA)) {
+                    productoListPresenter.setCodMesaSeleccionada(o.getMesacodMesa());
                 }
             }
         }

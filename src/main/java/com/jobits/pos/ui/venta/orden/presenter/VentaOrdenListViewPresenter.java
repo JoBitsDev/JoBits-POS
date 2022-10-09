@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jobits.pos.controller.areaventa.MesaService;
-import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Mesa;
@@ -14,23 +13,19 @@ import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
+import com.root101.swing.material.standards.MaterialIcons;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrdenListViewModel>
         implements PropertyChangeListener {
@@ -38,34 +33,20 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     public static final String ACTION_CREAR_ORDEN = "Nueva Orden";
     public static final String ACTION_ABRIR_ORDEN = "Abrir Orden";
     public static final String ACTION_IMPRIMIR_LISTA_ORDENES = "Imprimir Ordenes";
-
+    int codVenta;
     private VentaDetailService ventaService;
     private MesaService mesaService = PosDesktopUiModule.getInstance().getImplementation(MesaService.class);
     private OrdenDetailViewPresenter ordenPresenter;
     private ProductoVentaSelectorPresenter menuPresenter;
     private OrdenService ordenService;
-    int codVenta;
 
     private VentaOrdenListViewPresenter(VentaDetailService ventaService) {
         super(new VentaOrdenListViewModel());
         this.ventaService = ventaService;
     }
 
-    public void setCodVenta(int codVenta) {
-        this.codVenta = codVenta;
-        refreshState();
-    }
-
-    public OrdenDetailViewPresenter getOrdenPresenter() {
-        return ordenPresenter;
-    }
-
-    public ProductoVentaSelectorPresenter getMenuPresenter() {
-        return menuPresenter;
-    }
-
     public VentaOrdenListViewPresenter(VentaDetailService ventaService,
-            OrdenService ordenService, int codVenta) {
+                                       OrdenService ordenService, int codVenta) {
         this(ventaService);
         this.ordenService = ordenService;
         this.codVenta = codVenta;
@@ -97,6 +78,19 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             }
         });
         refreshState();
+    }
+
+    public void setCodVenta(int codVenta) {
+        this.codVenta = codVenta;
+        refreshState();
+    }
+
+    public OrdenDetailViewPresenter getOrdenPresenter() {
+        return ordenPresenter;
+    }
+
+    public ProductoVentaSelectorPresenter getMenuPresenter() {
+        return menuPresenter;
     }
 
     @Override
@@ -142,7 +136,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     private void onAbrirOrdenAction() {
         if (getBean().getElemento_seleccionado() != null) {
             ordenPresenter.setCodOrden(getBean().getElemento_seleccionado().getCodOrden());
-            menuPresenter.setMesaSeleccionada(getBean().getElemento_seleccionado().getMesacodMesa());
+            menuPresenter.setCodMesaSeleccionada(getBean().getElemento_seleccionado().getMesacodMesa());
             menuPresenter.setCodOrdenEnlazada(getBean().getElemento_seleccionado().getCodOrden());
         }
     }

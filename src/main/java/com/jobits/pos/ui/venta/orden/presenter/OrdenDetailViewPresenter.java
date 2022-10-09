@@ -301,17 +301,17 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             getBean().setEs_autorizo(instance.getDeLaCasa());
             isCardValueTemportal.putIfAbsent(codOrden, instance.isOpen() ? Boolean.FALSE : instance.getPagado_por_tarjeta() != 0);
             getBean().setEs_card(isCardValueTemportal.get(codOrden));
-            getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
+            getBean().setHora_pedido(instance.getHoraComenzada().toString());
             getBean().setOrden_terminada(instance.getHoraTerminada() != null);
             getBean().setId_orden(instance.getCodOrden());
             getBean().setModo_agrego_activado(false);
             getBean().setLista_producto_orden(instance.getProductovOrdenList());
             if (instance.getMesacodMesa() != null) {
-                getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
+                getBean().setMesa_pedido(instance.getMesacodMesa());
             }
             getBean().setPorciento_servicio(instance.getPorciento());
             getBean().setTotal_orden(utils.setDosLugaresDecimales(instance.getOrdenvalorMonetario()));
-            getBean().setUsuario(instance.getPersonalusuario().getUsuario());
+            getBean().setUsuario(instance.getPersonalusuario());
             if (getBean().getPorciento_servicio() == 0) {
                 getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                         "/restManager/resources/icons pack/porciento_gris.png")));

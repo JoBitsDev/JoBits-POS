@@ -6,21 +6,21 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 //import com.jobits.pos.controller.mesa.impl.MesaController;
+
 import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.util.ArrayList;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
 import java.util.Optional;
 
 /**
- *
  * @author Home
  */
 public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailViewModel> {
@@ -74,13 +74,12 @@ public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailVie
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea continuar?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (creatingMode) {
-                Mesa m = new Mesa("M-"+getBean().getCodigo());
+                Mesa m = new Mesa("M-" + getBean().getCodigo());
                 m.setAreacodArea(area);
                 m.setNombre(getBean().getNombre());
                 m.setCapacidadMax(getBean().getCapacidad());
                 m.setEstado("vacia");
                 m.setEstallena(false);
-                m.setOrdenList(new ArrayList<>());
                 areaService.addMesa(area.getCodArea(), m);
             } else {
                 mesa.setNombre(getBean().getNombre());
