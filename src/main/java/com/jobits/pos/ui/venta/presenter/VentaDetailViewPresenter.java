@@ -375,9 +375,11 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
         ConfiguracionService service = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class);
 
-        boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && service.getConfiguracion(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
 
-        firePropertyChange(PROP_HIDE_PANEL, !value, value);
+        boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3 ||
+                service.getConfiguracion(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
+
+        getBean().setPanel_habilitado(value);
 
     }
 

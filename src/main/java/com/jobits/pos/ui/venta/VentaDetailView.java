@@ -132,6 +132,7 @@ public class VentaDetailView extends AbstractViewPanel {
     private javax.swing.JTable jTableVentasPorCocina;
     private javax.swing.JTable jTableVentasPorMesa;
     private javax.swing.JTextField jTextFieldPropina;
+
     public VentaDetailView(VentaDetailViewPresenter presenter) {
         super(presenter);
     }
@@ -783,6 +784,8 @@ public class VentaDetailView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         jTabbedPaneData.setSelectedIndex(1);
+        jTabbedPaneData.setEnabledAt(0, getPresenter().getBean().isPanel_habilitado());
+        initListeners();
         jTabbedPaneResumenD.setUI(MaterialComponentsFactory.UI.getTabbedPaneUI());
         jTabbedPaneData.setUI(MaterialComponentsFactory.UI.getTabbedPaneUI());
         initAreaTableUI();
@@ -790,6 +793,7 @@ public class VentaDetailView extends AbstractViewPanel {
         initPtoElaboracionUI();
         initOrdenTableUI();
         initMesaTableUI();
+
 //        if (UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
 //            jTabbedPaneData.remove(0);
 //        }//TODO autorizacion en el view
@@ -804,7 +808,7 @@ public class VentaDetailView extends AbstractViewPanel {
             jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
             jPanelExtracciones.add(new GastosView((getPresenter()).getGastosPresenter()));
         }
-        initListeners();
+
     }
 
     @Override
@@ -1052,7 +1056,7 @@ public class VentaDetailView extends AbstractViewPanel {
     }
 
     private void initListeners() {
-        getPresenter().addPropertyChangeListener(PROP_HIDE_PANEL, (PropertyChangeEvent evt) -> {
+        getPresenter().getBean().addPropertyChangeListener(PROP_PANEL_HABILITADO, (PropertyChangeEvent evt) -> {
             updateGraficasResumenGeneralVentas();
             boolean value = (boolean) evt.getNewValue();
             jTabbedPaneData.setEnabledAt(0, !value);

@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class VentaDetailViewModel extends AbstractViewModel {
 
+    public static final String PROP_PANEL_HABILITADO = "panel_habilitado";
     //
     // DashBoard
     //
@@ -67,7 +68,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
     public static final String PROP_FILE_FOR_EXPORT = "file_for_export";
 
     private boolean reabrir_ventas_enabled;
-
+    private boolean panel_habilitado = false;
     public static final String PROP_REABRIR_VENTAS_ENABLED = "reabrir_ventas_enabled";
 
     //
@@ -883,6 +884,18 @@ public class VentaDetailViewModel extends AbstractViewModel {
         this.reabrir_ventas_enabled = reabrir_ventas_enabled;
         firePropertyChange(PROP_REABRIR_VENTAS_ENABLED, oldReabrir_ventas_enabled, reabrir_ventas_enabled);
     }
+
+    public boolean isPanel_habilitado() {
+        return panel_habilitado;
+    }
+
+    public void setPanel_habilitado(boolean panel_habilitado) {
+        this.panel_habilitado = panel_habilitado;
+        boolean oldPanel_habilitado = this.panel_habilitado;
+        this.panel_habilitado = panel_habilitado;
+        firePropertyChange(PROP_PANEL_HABILITADO, oldPanel_habilitado, panel_habilitado);
+    }
+
 
     /**
      * Get the value of file_for_export
