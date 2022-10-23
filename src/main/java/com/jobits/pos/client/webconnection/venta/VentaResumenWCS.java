@@ -13,6 +13,7 @@ import com.jobits.pos.core.domain.models.GastoVenta;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.escandallos.InsumoRegistro;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.core.domain.models.temporal.ResumenFacadeRequest;
 import com.jobits.pos.core.domain.models.temporal.ResumenVentaWrapper;
 
 import java.time.LocalDate;
@@ -35,6 +36,11 @@ public class VentaResumenWCS extends BaseConnection implements ResumenFacadeInte
     @Override
     public ResumenVentaWrapper<DayReviewWrapper<ProductovOrden>, ProductovOrden> getAutorizoResumen(LocalDate desde, LocalDate hasta, List<FilterWrapper> filters) {
         return handleCall(service.getAutorizoResumen(desde, hasta, filters));
+    }
+
+    @Override
+    public void printResumen(ResumenFacadeRequest request) {
+        handleCall(service.printResumen(request));
     }
 
     @Override

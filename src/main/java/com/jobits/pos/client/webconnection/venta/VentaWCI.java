@@ -9,6 +9,7 @@ import com.jobits.pos.core.domain.VentaResourcesWrapper;
 import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.ResumenPagoTrabajador;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -61,7 +62,7 @@ public interface VentaWCI {
     public Call<List<Orden>> getOrdenesActivas(@Path("id") int idVenta);
 
     @GET("pos/venta/{id}/get-pago-trabajador/{dividirEntre}/{codPersonal}")
-    public Call<Float> getPagoTrabajador(@Path("id") int idVenta, @Path("dividirEntre") int dividirEntre, @Path("codPersonal") String codPersonal);
+    public Call<ResumenPagoTrabajador> getPagoTrabajador(@Path("id") int idVenta, @Path("dividirEntre") int dividirEntre, @Path("codPersonal") String codPersonal);
 
     @GET("pos/venta/{id}/get-propina-trabajador/{codPersonal}")
     public Call<Float> getPropinaTrabajador(@Path("id") int idVenta, @Path("codPersonal") String codPersonal);

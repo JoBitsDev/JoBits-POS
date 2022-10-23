@@ -11,6 +11,7 @@ import com.jobits.pos.core.domain.models.GastoVenta;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.escandallos.InsumoRegistro;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.core.domain.models.temporal.ResumenFacadeRequest;
 import com.jobits.pos.core.domain.models.temporal.ResumenVentaWrapper;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -31,6 +32,11 @@ public interface VentaResumenWCI {
     public static final String GASTO_RESUMEN = "/gasto";
     public static final String SALARIO_RESUMEN = "/salario";
     public static final String VENTAS_RESUMEN = "/ventas";
+
+    public static final String PRINT_RESUMEN = "pos/venta/resumen/print";
+
+    @PUT(PRINT_RESUMEN)
+    public Call<Void> printResumen(@Body ResumenFacadeRequest request);
 
     @PUT(BASE + AUTORIZO_RESUMEN)
     public Call<ResumenVentaWrapper<DayReviewWrapper<ProductovOrden>, ProductovOrden>> getAutorizoResumen(

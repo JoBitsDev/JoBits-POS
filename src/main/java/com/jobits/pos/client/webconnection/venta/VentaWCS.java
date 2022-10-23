@@ -12,6 +12,7 @@ import com.jobits.pos.core.domain.VentaResourcesWrapper;
 import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.ResumenPagoTrabajador;
 
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
@@ -78,7 +79,7 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public Float getPagoTrabajador(String codPersonal, int codVenta, int dividirEntre) {
+    public ResumenPagoTrabajador getPagoTrabajador(String codPersonal, int codVenta, int dividirEntre) {
         return handleCall(service.getPagoTrabajador(codVenta, dividirEntre, codPersonal));
     }
 
