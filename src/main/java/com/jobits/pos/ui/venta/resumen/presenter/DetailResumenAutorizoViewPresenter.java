@@ -7,10 +7,10 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.core.domain.models.temporal.ResumenFacadeRequest;
+import com.jobits.pos.core.domain.models.temporal.TipoResumen;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.servicios.impresion.Impresion;
-import com.jobits.pos.servicios.impresion.formatter.VentaResumenFormatter;
 import com.jobits.pos.ui.filter.presenter.FilterType;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -36,7 +36,7 @@ public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPrese
 
     @Override
     protected void setListsToBean() {
-        var ret = service.getVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()), getBean().getFilters());
+        var ret = service.getAutorizoResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()), getBean().getFilters());
         getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
         getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);
@@ -54,10 +54,10 @@ public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPrese
 
     @Override
     protected void printToTicketPrinter() {
-        Impresion i = new Impresion();
         Optional<Boolean> precios = Application.getInstance().getNotificationService().showDialog("Desea Imprimir con percios los productos", TipoNotificacion.DIALOG_CONFIRM);
-        i.print(VentaResumenFormatter.of(utils.toLocalDate(getBean().getSince_date()),
-                utils.toLocalDate(getBean().getTo_date()), getBean().getListaDetail(), precios.orElse(true)), null);
+        var request = ResumenFacadeRequest.of(TipoResumen.AUTORIZO, utils.toLocalDate(getBean().getSince_date()),
+                utils.toLocalDate(getBean().getTo_date()), getBean().getFilters(), precios.orElse(true), null);
+        service.printResumen(request);
     }
 
 }

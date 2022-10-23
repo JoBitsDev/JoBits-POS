@@ -7,7 +7,6 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.insumo.InsumoService;
-import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.DisplayType;
@@ -34,20 +33,17 @@ import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
+import com.root101.swing.material.standards.MaterialIcons;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionViewModel> {
 
@@ -349,7 +345,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onOcultarProductosIpv() {
         if (getBean().isCheck_ocultar_productos_ipv()) {
-            for (int i = 0; i < getBean().getLista_ipv_registro().getSize();) {
+            for (int i = 0; i < getBean().getLista_ipv_registro().getSize(); ) {
                 IpvRegistro x = getBean().getLista_ipv_registro().get(i);
                 if (x.getConsumo() == 0 && x.getDisponible() == 0) {
                     getBean().getLista_ipv_registro().remove(i);
@@ -365,7 +361,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onOcultarProductosIpvVentas() {
         if (getBean().isCheck_ocultar_productos_ipv_venta()) {
-            for (int i = 0; i < getBean().getLista_ipv_venta_registro().getSize();) {
+            for (int i = 0; i < getBean().getLista_ipv_venta_registro().getSize(); ) {
                 IpvVentaRegistro x = getBean().getLista_ipv_venta_registro().get(i);
                 if (x.getVenta() == 0 && x.getDisponible() == 0) {
                     getBean().getLista_ipv_venta_registro().remove(i);
@@ -573,7 +569,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 firePropertyChange("ImprimirTablaIPVVentaRegistro", null, null);
                 break;//impresion normal
             case 1:
-                Impresion i = new Impresion();
+                Impresion i = Impresion.getDefaultInstance();
                 i.print(new IPVVentaRegistroFomatter(getBean().getLista_ipv_venta_registro()), null);
                 break;//impresion ticket
             default:
@@ -592,7 +588,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 firePropertyChange("ImprimirTablaIPVRegistro", null, null);
                 break;//impresion normal
             case 1:
-                Impresion i = new Impresion();
+                Impresion i = Impresion.getDefaultInstance();
                 i.print(new IPVRegistroFomatter(getBean().getLista_ipv_registro()), null);
                 break;//impresion ticket
             default:

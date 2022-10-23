@@ -25,10 +25,10 @@ public class AsistenciaPersonalWCS extends CRUDBaseConnection<AsistenciaPersonal
         super();
     }
 
-    @Override
-    public AsistenciaPersonal calcularPagoTrabajador(int idVenta, String usuario) {
-        return handleCall(service.calcularPagoTrabajador(idVenta, usuario));
-    }
+//    @Override
+//    public AsistenciaPersonal calcularPagoTrabajador(int idVenta, String usuario) {
+//        return handleCall(service.calcularPagoTrabajador(idVenta, usuario));
+//    }
 
 
     @Override

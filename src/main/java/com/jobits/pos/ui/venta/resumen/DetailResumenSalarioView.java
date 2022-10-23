@@ -10,14 +10,11 @@ import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenSalarioViewPresenter;
 import com.jobits.pos.utils.utils;
-import java.time.Instant;
+
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
- *
  * @author Home
  */
 public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayReviewWrapper, AsistenciaPersonal> {

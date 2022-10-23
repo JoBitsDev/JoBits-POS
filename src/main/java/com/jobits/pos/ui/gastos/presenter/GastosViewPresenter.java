@@ -151,7 +151,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
 
     private void onImprimirClick() {
         if (!getBean().getLista_gasto_venta().isEmpty()) {
-            Impresion i = new Impresion();
+            Impresion i = Impresion.getDefaultInstance();
             i.print(new GastosFormatter(getBean().getLista_gasto_venta()), null);
         } else {
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "No hay gastos para imprimir");

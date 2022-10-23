@@ -7,34 +7,30 @@ package com.jobits.pos.ui.trabajadores;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.root101.swing.material.standards.MaterialIcons;
-import java.util.ArrayList;
-import java.util.List;
-import org.knowm.xchart.PieChart;
-import org.knowm.xchart.PieChartBuilder;
-import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.style.PieStyler;
-import org.knowm.xchart.style.Styler;
 import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
+import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import static com.jobits.pos.ui.trabajadores.presenter.NominasDetailViewModel.*;
-import java.awt.BorderLayout;
-import javax.swing.ListModel;
+import com.root101.swing.material.standards.MaterialIcons;
+import org.knowm.xchart.*;
+import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.style.Styler;
+
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.jobits.pos.ui.trabajadores.presenter.NominasDetailViewModel.*;
 
 /**
- *
  * @author Jorge
  */
 //TODO: cuando cambias de redio button no actualiza
@@ -42,10 +38,36 @@ import javax.swing.event.TableModelEvent;
 //
 public class NominasDetailView extends AbstractViewPanel {
 
-    BindableTableModel<AsistenciaPersonalEstadisticas> model;
-
     public static final String VIEW_NAME = "Nominas";
-
+    BindableTableModel<AsistenciaPersonalEstadisticas> model;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButtonAcumulado;
+    private javax.swing.JButton jButtonPagar;
+    private javax.swing.JButton jButtonPeriodoSelector;
+    private javax.swing.JCheckBox jCheckBoxseleccionarTodos;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserAl;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabelAcumulado;
+    private javax.swing.JLabel jLabelPeriodoActual;
+    private javax.swing.JLabel jLabelUltimoPago;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanelBotones;
+    private javax.swing.JPanel jPanelData;
+    private javax.swing.JPanel jPanelGrafica;
+    private javax.swing.JPanel jPanelIzq;
+    private javax.swing.JPanel jPanelPeriodChooser;
+    private javax.swing.JPanel jPanelPeriodo;
+    private javax.swing.JPanel jPanelSeleccion;
+    private javax.swing.JRadioButton jRadioButtonPie;
+    private javax.swing.JRadioButton jRadioButtonXY;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableUsuariosActivos;
     public NominasDetailView(AbstractViewPresenter presenter) {
         super(presenter);
     }
@@ -208,19 +230,19 @@ public class NominasDetailView extends AbstractViewPanel {
         jTableUsuariosActivos.setAutoCreateRowSorter(true);
         jTableUsuariosActivos.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jTableUsuariosActivos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "Usuario", "Dias", "Promedio", ""
-            }
+                },
+                new String[]{
+                        "Usuario", "Dias", "Promedio", ""
+                }
         ) {
-            boolean[] canEdit = new boolean [] {
-                true, false, true, true
+            boolean[] canEdit = new boolean[]{
+                    true, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jScrollPane2.setViewportView(jTableUsuariosActivos);
@@ -289,35 +311,6 @@ public class NominasDetailView extends AbstractViewPanel {
 
     private void jRadioButtonPieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPieActionPerformed
     }//GEN-LAST:event_jRadioButtonPieActionPerformed
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButtonAcumulado;
-    private javax.swing.JButton jButtonPagar;
-    private javax.swing.JButton jButtonPeriodoSelector;
-    private javax.swing.JCheckBox jCheckBoxseleccionarTodos;
-    private org.jdesktop.swingx.JXDatePicker jDateChooserAl;
-    private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabelAcumulado;
-    private javax.swing.JLabel jLabelPeriodoActual;
-    private javax.swing.JLabel jLabelUltimoPago;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanelBotones;
-    private javax.swing.JPanel jPanelData;
-    private javax.swing.JPanel jPanelGrafica;
-    private javax.swing.JPanel jPanelIzq;
-    private javax.swing.JPanel jPanelPeriodChooser;
-    private javax.swing.JPanel jPanelPeriodo;
-    private javax.swing.JPanel jPanelSeleccion;
-    private javax.swing.JRadioButton jRadioButtonPie;
-    private javax.swing.JRadioButton jRadioButtonXY;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableUsuariosActivos;
     // End of variables declaration//GEN-END:variables
 
     private void updateDetallesPanel(List<AsistenciaPersonalEstadisticas> displayList, Choice choice) {
@@ -338,7 +331,7 @@ public class NominasDetailView extends AbstractViewPanel {
 
         for (AsistenciaPersonalEstadisticas a : displayList) {
             String label = a.getP().getUsuario() + "(" + a.getCantidadDiasTrabajados() + " Dias) ( " + utils.setDosLugaresDecimales(a.getTotalPago()) + ")";
-            XYSeries serie = chart.addSeries(label, a.getDiasTrabajados(), a.getMontos());
+            XYSeries serie = chart.addSeries(label, a.getDiasTrabajados().stream().map(localDate -> utils.toDate(localDate)).collect(Collectors.toList()), a.getMontos());
             chartPie.addSeries(label, a.getTotalPago());
             acumulado += a.getTotalPago();
             propina += a.getTotalPropina();
@@ -465,10 +458,6 @@ public class NominasDetailView extends AbstractViewPanel {
 
     }
 
-    private enum Choice {
-        PIE, XY, RAW
-    }
-
     void onDetallesClick() {
         if (jTableUsuariosActivos.getModel().getRowCount() > 0) {
             List<AsistenciaPersonalEstadisticas> use = new ArrayList<>();
@@ -488,6 +477,10 @@ public class NominasDetailView extends AbstractViewPanel {
         }
         jPanelGrafica.revalidate();
 
+    }
+
+    private enum Choice {
+        PIE, XY, RAW
     }
 
 }
