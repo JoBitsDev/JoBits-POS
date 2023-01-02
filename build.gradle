@@ -3,7 +3,7 @@ plugins {
     id 'edu.sc.seis.launch4j' version '2.5.2' apply true
 }
 
-description = 'JoBits POS:Client-Swing'
+description = 'app_desktop'
 apply plugin: 'application'
 
 application {
@@ -20,8 +20,6 @@ tasks.withType(JavaCompile) {
 dependencies {
 
     implementation "com.root101.clean:com.root101.clean.core:2.1.6"
-
-    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.1.11-SNAPSHOT'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
@@ -82,11 +80,12 @@ dependencies {
     implementation(group: 'com.root101.swing', name: 'swing-material-core', version: '6.0.1.SNAPSHOT.20210109')
     implementation(group: 'com.root101.swing', name: 'clean-swing', version: '3.0.0.RELEASE.20201230')
 
-    implementation project(':UIcomponents')
-    implementation project(':modulo-reserva')
-    implementation project(':cliente')
-    implementation project(':posCore')
-    implementation project(':tennant')
+    implementation project(':ui_components')
+    implementation('org.jobits.pos:reserva')
+    implementation('org.jobits.pos:cliente')
+    implementation('org.jobits.pos:core')
+    implementation('org.jobits.db:tennant')
+    implementation('org.jobits.db:version_control')
 
 
     // https://mvnrepository.com/artifact/com.google.inject/guice
