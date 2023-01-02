@@ -85,7 +85,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         getBean().getLista_personal_disponible().clear();
         getBean().getLista_personal_disponible().addAll(new ArrayListModel<>(personalService.findAll()));
         getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(asistenciaPersonalService.updateSalaries(idVenta)));
+        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(asistenciaPersonalService.getPersonalTrabajando(idVenta)));
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -94,10 +94,10 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
                 showDialog("Esta seguro que desea eliminar al personal seleccionado?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             AsistenciaPersonal ap = getBean().getPersonal_contenido_selecionado();
-                if (ap != null) {
-                    asistenciaPersonalService.destroy(ap.getAsistenciaPersonalPK().getVentaid(),
-                            ap.getAsistenciaPersonalPK().getPersonalusuario());
-                    refreshState();
+            if (ap != null) {
+                asistenciaPersonalService.destroy(ap.getAsistenciaPersonalPK().getVentaid(),
+                        ap.getAsistenciaPersonalPK().getPersonalusuario());
+                refreshState();
 
             } else {
                 throw new IllegalArgumentException("Seleccione un trabajador primero");
