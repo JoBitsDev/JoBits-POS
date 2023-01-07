@@ -5,18 +5,17 @@
  */
 package com.jobits.pos.ui.puntoelaboracion.presenter;
 
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 
+import javax.swing.*;
 import java.util.Optional;
-import javax.swing.JOptionPane;
-
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 
 /**
  * JoBits

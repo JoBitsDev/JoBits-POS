@@ -14,7 +14,6 @@ import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.*;
-import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
@@ -158,7 +157,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if (productoVenta.getPagoPorVenta() != null) {
             getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoVenta.getPagoPorVenta()));
         }
-        getBean().setElaborado_seleccionado(productoVenta.getCocinacodCocina());
+        getBean().setElaborado_seleccionado(ptoElabService.findBy(productoVenta.getCocinacodCocina()));
         fillInsumoProductoInfo(productoVenta, getBean().getLista_insumos_disponibles());
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoVenta.getProductoInsumoList()));
@@ -208,7 +207,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 productoVenta.setPagoPorVenta(Float.parseFloat(pagoPorVenta));
             }
             productoVenta.setNombre(getBean().getNombre_producto());
-            productoVenta.setCocinacodCocina(getBean().getElaborado_seleccionado());
+            productoVenta.setCocinacodCocina(getBean().getElaborado_seleccionado().getCodCocina());
             productoVenta.setSeccionnombreSeccion(getBean().getCategoria_seleccionada().getNombreSeccion());
             productoVenta.setProductoInsumoList(getBean().getLista_insumos_contenidos());
             productoVenta.setTiempoServicioMin(getBean().getTimepo_elaboracion());

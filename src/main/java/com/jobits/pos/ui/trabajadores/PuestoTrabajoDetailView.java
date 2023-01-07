@@ -13,13 +13,13 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-
-import static com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewModel.*;
-import static com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewPresenter.*;
-
 import com.jobits.ui.components.MaterialComponentsFactory;
 
-import javax.swing.JSpinner;
+import javax.swing.*;
+
+import static com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewModel.*;
+import static com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewPresenter.ACTION_AGREGAR;
+import static com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewPresenter.ACTION_CANCELAR;
 
 /**
  * @author Home
@@ -56,6 +56,7 @@ public class PuestoTrabajoDetailView extends AbstractViewPanel {
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JToggleButton jToggleButtonPagoPorVentas;
     private javax.swing.JToggleButton jToggleButtonPropina;
+
     /**
      * Creates new form NEWPersonalDetailView
      *

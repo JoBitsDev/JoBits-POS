@@ -7,34 +7,31 @@ package com.jobits.pos.ui.almacen.ipv;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.ui.utils.RestManagerCellRender;
-
-import java.awt.Font;
-import java.awt.print.PrinterException;
-import java.text.MessageFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTable;
-
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
 import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
-
-import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
-
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.ExcelAdapter;
+import com.jobits.pos.ui.utils.RestManagerCellRender;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
+import java.text.MessageFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
 
 /**
  * @author Jorge
@@ -84,6 +81,7 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JTextField jTextFieldInsumos;
     private javax.swing.JToggleButton jToggleButtonIpv;
     private javax.swing.JToggleButton jToggleButtonIpvVenta;
+
     public IpvGestionView(AbstractViewPresenter presenter) {
         super(presenter);
     }

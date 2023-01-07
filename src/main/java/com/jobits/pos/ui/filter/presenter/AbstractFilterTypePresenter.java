@@ -7,7 +7,6 @@ package com.jobits.pos.ui.filter.presenter;
 
 import com.jobits.pos.controller.filter.FilterWrapper;
 import com.jobits.pos.core.domain.models.*;
-import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 

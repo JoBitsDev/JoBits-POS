@@ -12,11 +12,7 @@ import com.jobits.pos.client.webconnection.insumo.InsumoWCI;
 import com.jobits.pos.client.webconnection.product.ProductoVentaWCI;
 import com.jobits.pos.client.webconnection.puntoelaboracion.PuntoElaboracionWCI;
 import com.jobits.pos.controller.filter.FilterService;
-import com.jobits.pos.core.domain.models.Area;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.ProductoVenta;
-import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.*;
 
 import java.util.List;
 

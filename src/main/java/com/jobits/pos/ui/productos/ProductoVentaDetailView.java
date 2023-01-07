@@ -8,28 +8,23 @@ package com.jobits.pos.ui.productos;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.ProductoInsumo;
-import com.jobits.pos.core.domain.models.ProductoVenta;
-import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.*;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.AddFromPanel;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 
-import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.*;
-
-import com.jobits.pos.ui.utils.AddFromPanel;
-import com.jobits.pos.ui.swing.utils.BindableTableModel;
-import com.jobits.pos.utils.utils;
-
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
+
+import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.*;
 
 /**
  * @author Jorge
@@ -94,6 +89,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JTextField jTextFieldPrecioCosto;
     private javax.swing.JTextField jTextFieldPrecioVenta;
     private org.jdesktop.swingx.JXLabel jXLabelPCod;
+
     public ProductoVentaDetailView(AbstractViewPresenter presenter) {
         super(presenter);
     }

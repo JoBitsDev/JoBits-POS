@@ -6,13 +6,13 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.root101.swing.material.standards.MaterialIcons;
-import com.jobits.pos.core.repo.impl.VentaDAO;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.core.domain.TransaccionSimple;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.InsumoElaborado;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.inventario.core.almacen.domain.Almacen;
 import com.jobits.pos.inventario.core.almacen.domain.Operacion;
@@ -21,29 +21,22 @@ import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-
-import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
-
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
+import com.root101.swing.material.standards.MaterialIcons;
 
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
+import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 
 /**
  * @author Home
