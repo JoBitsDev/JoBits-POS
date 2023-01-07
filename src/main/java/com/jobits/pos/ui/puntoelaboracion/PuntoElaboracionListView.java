@@ -15,7 +15,6 @@ import com.jobits.pos.ui.swing.utils.BindableTableModel;
  * FirstDream
  *
  * @author Jorge
- *
  */
 public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
 

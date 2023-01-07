@@ -9,165 +9,138 @@ import com.jobits.pos.core.domain.venta.ResumenVentaAreaTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaUsuarioTablaModel;
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.core.domain.models.Area;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.domain.models.ProductovOrden;
-import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.utils.StringsTreatment;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+
 import java.io.File;
 import java.util.List;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class VentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_PANEL_HABILITADO = "panel_habilitado";
+    public static final String PROP_VENTA_NETA = "venta_neta";
+    public static final String PROP_VENTA_TOTAL = "venta_total";
+    public static final String PROP_PROPINA_TOTAL = "propina_total";
+    public static final String PROP_TOTAL_GASTO_INSUMOS = "total_gasto_insumos";
+    public static final String PROP_TOTAL_GASTO_OTROS = "total_gasto_otros";
+    public static final String PROP_TOTAL_GASTO_SALARIO = "total_gasto_salario";
+    public static final String PROP_TOTAL_AUTORIZOS = "total_autorizos";
+    public static final String PROP_FILE_FOR_EXPORT = "file_for_export";
+    public static final String PROP_REABRIR_VENTAS_ENABLED = "reabrir_ventas_enabled";
+    public static final String PROP_LISTA_RESUMEN_AREA_VENTA = "lista_resumen_area_venta";
+    public static final String PROP_RESUMEM_AREA_SELECCIONADA = "resumem_area_seleccionada";
+    public static final String PROP_LISTA_RESUMEN_PERSONAL_VENTA = "lista_resumen_usuario_venta";
+    public static final String PROP_RESUMEN_USUARIO_SELECCIONADO = "resumen_usuario_seleccionado";
+    public static final String PROP_LISTA_MESAS = "lista_mesas";
+    public static final String PROP_MESA_SELECCIONADA = "mesa_seleccionada";
+    public static final String PROP_LISTA_PRODUCTOS_POR_MESA = "lista_productos_por_mesa";
+    public static final String PROP_PRODUCTO_POR_MESA_SELECCIONADO = "producto_por_mesa_seleccionado";
+    public static final String PROP_LISTA_COCINAS = "lista_cocinas";
+    public static final String PROP_COCINA_SELECCIONADA = "cocina_seleccionada";
+    public static final String PROP_LISTA_PRODUCTOS_POR_COCINA = "lista_productos_por_cocina";
+    public static final String PROP_PRODUCTO_POR_COCINA_SELECCIONADO = "producto_por_cocina_seleccionado";
+    public static final String PROP_LISTA_AREAS = "lista_areas";
+    public static final String PROP_AREA_SELECCIONADA = "area_seleccionada";
+    public static final String PROP_LISTA_PRODUCTOS_POR_AREA = "lista_productos_por_area";
+    public static final String PROP_PRODUCTO_POR_AREA_SELECCIONADO = "producto_por_area_seleccionado";
+    public static final String PROP_LISTA_DEPENDIENTES = "lista_dependientes";
+    public static final String PROP_PERSONAL_SELECCIONADO = "personal_seleccionado";
+    public static final String PROP_LISTA_PRODUCTOS_POR_DEPENDIENTES = "lista_productos_por_dependientes";
+    public static final String PROP_PRODUCTO_POR_DEPENDIENTE_SELECCIONADO = "producto_por_dependiente_seleccionado";
+    public static final String PROP_TOTAL_RESUMEN_AREA = "total_resumen_area";
+    public static final String PROP_TOTAL_RESUMEN_COCINA = "total_resumen_cocina";
+    public static final String PROP_TOTAL_RESUMEN_DEPENDIENTE = "total_resumen_dependiente";
+    public static final String PROP_TOTAL_RESUMEN_MESA = "total_resumen_mesa";
+    public static final String PROP_LISTA_RESUMEN_PTO_VENTA = "lista_resumen_pto_venta";
+    public static final String PROP_RESUMEN_PTO_SELECCIONADO = "resumen_pto_seleccionado";
+    public static final String PROP_LISTA_ORDEN = "lista_orden";
+    public static final String PROP_ORDEN_SELECCIONADA = "orden_seleccionada";
+    public static final String PROP_FECHA = "fecha";
+    public static final String PROP_VENTA_SELECCIONADA = "id_venta_seleccionada";
+    public static final String PROP_CAMBIAR_TURNO_ENABLED = "cambiar_turno_enabled";
     //
     // DashBoard
     //
     private String venta_neta;
-
-    public static final String PROP_VENTA_NETA = "venta_neta";
-
     private String venta_total;
-
-    public static final String PROP_VENTA_TOTAL = "venta_total";
-
     private String propina_total = "0";
-
-    public static final String PROP_PROPINA_TOTAL = "propina_total";
-
     private String total_gasto_insumos;
-
-    public static final String PROP_TOTAL_GASTO_INSUMOS = "total_gasto_insumos";
-
     private String total_gasto_otros;
-
-    public static final String PROP_TOTAL_GASTO_OTROS = "total_gasto_otros";
-
     private String total_gasto_salario;
-
-    public static final String PROP_TOTAL_GASTO_SALARIO = "total_gasto_salario";
-
     private String total_autorizos;
-
-    public static final String PROP_TOTAL_AUTORIZOS = "total_autorizos";
-
     private File file_for_export;
-
-    public static final String PROP_FILE_FOR_EXPORT = "file_for_export";
-
     private boolean reabrir_ventas_enabled;
     private boolean panel_habilitado = false;
-    public static final String PROP_REABRIR_VENTAS_ENABLED = "reabrir_ventas_enabled";
-
     //
     // Areas
     //
     private List<ResumenVentaAreaTablaModel> lista_resumen_area_venta = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_RESUMEN_AREA_VENTA = "lista_resumen_area_venta";
-
     private ResumenVentaAreaTablaModel resumem_area_seleccionada;
-
-    public static final String PROP_RESUMEM_AREA_SELECCIONADA = "resumem_area_seleccionada";
-
     //
     // Usuarios Trabajando
     //
     private List<ResumenVentaUsuarioTablaModel> lista_resumen_usuario_venta = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_RESUMEN_PERSONAL_VENTA = "lista_resumen_usuario_venta";
-
     private ResumenVentaUsuarioTablaModel resumen_usuario_seleccionado;
-
-    public static final String PROP_RESUMEN_USUARIO_SELECCIONADO = "resumen_usuario_seleccionado";
-
     //
     //Mesas
     //
     private ArrayListModel<String> lista_mesas = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_MESAS = "lista_mesas";
-
     private String mesa_seleccionada;
-
-    public static final String PROP_MESA_SELECCIONADA = "mesa_seleccionada";
-
     private ArrayListModel lista_productos_por_mesa = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_PRODUCTOS_POR_MESA = "lista_productos_por_mesa";
-
     private ProductovOrden producto_por_mesa_seleccionado;
-
-    public static final String PROP_PRODUCTO_POR_MESA_SELECCIONADO = "producto_por_mesa_seleccionado";
-
-    //    
-    //Punto Elaboracion    
-    //    
+    //
+    //Punto Elaboracion
+    //
     private ArrayListModel<String> lista_cocinas = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_COCINAS = "lista_cocinas";
-
     private String cocina_seleccionada;
-
-    public static final String PROP_COCINA_SELECCIONADA = "cocina_seleccionada";
-
     private ArrayListModel<ProductovOrden> lista_productos_por_cocina = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_PRODUCTOS_POR_COCINA = "lista_productos_por_cocina";
-
     private ProductovOrden producto_por_cocina_seleccionado;
-
-    public static final String PROP_PRODUCTO_POR_COCINA_SELECCIONADO = "producto_por_cocina_seleccionado";
-
     //
     //Area
     //
     private ArrayListModel<String> lista_areas = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_AREAS = "lista_areas";
-
     private String area_seleccionada;
-
-    public static final String PROP_AREA_SELECCIONADA = "area_seleccionada";
-
     private ArrayListModel<ProductovOrden> lista_productos_por_area = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_PRODUCTOS_POR_AREA = "lista_productos_por_area";
-
     private ProductovOrden producto_por_area_seleccionado;
-
-    public static final String PROP_PRODUCTO_POR_AREA_SELECCIONADO = "producto_por_area_seleccionado";
-
     //
     //Dependientes
     //
     private ArrayListModel<String> lista_dependientes = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_DEPENDIENTES = "lista_dependientes";
-
     private String personal_seleccionado;
-
-    public static final String PROP_PERSONAL_SELECCIONADO = "personal_seleccionado";
-
     private ArrayListModel<ProductovOrden> lista_productos_por_dependientes = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_PRODUCTOS_POR_DEPENDIENTES = "lista_productos_por_dependientes";
-
     private ProductovOrden producto_por_dependiente_seleccionado;
-
-    public static final String PROP_PRODUCTO_POR_DEPENDIENTE_SELECCIONADO = "producto_por_dependiente_seleccionado";
+    //
+    //Totales Resumen
+    //
+    private String total_resumen_area = "xx.xx " + R.COIN_SUFFIX;
+    private String total_resumen_cocina = "xx.xx " + R.COIN_SUFFIX;
+    private String total_resumen_dependiente = "xx.xx " + R.COIN_SUFFIX;
+    private String total_resumen_mesa = "xx.xx " + R.COIN_SUFFIX;
+    //
+    // Pto Elab
+    //
+    private List<ResumenVentaPtoElabTablaModel> lista_resumen_pto_venta = new ArrayListModel<>();
+    private ResumenVentaPtoElabTablaModel resumen_pto_seleccionado;
+    //
+    //Odenes
+    //
+    private List<Orden> lista_orden = new ArrayListModel<>();
+    private Orden orden_seleccionada;
+    //
+    //General
+    //
+    private String fecha;
+    //Turnos
+    private int id_venta_seleccionada = -1;
+    private boolean cambiar_turno_enabled;
 
     /**
      * Get the value of producto_por_dependiente_seleccionado
@@ -182,7 +155,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      * Set the value of producto_por_dependiente_seleccionado
      *
      * @param producto_por_dependiente_seleccionado new value of
-     * producto_por_dependiente_seleccionado
+     *                                              producto_por_dependiente_seleccionado
      */
     public void setProducto_por_dependiente_seleccionado(ProductovOrden producto_por_dependiente_seleccionado) {
         ProductovOrden oldProducto_por_dependiente_seleccionado = this.producto_por_dependiente_seleccionado;
@@ -203,7 +176,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      * Set the value of lista_productos_por_dependientes
      *
      * @param lista_productos_por_dependientes new value of
-     * lista_productos_por_dependientes
+     *                                         lista_productos_por_dependientes
      */
     public void setLista_productos_por_dependientes(ArrayListModel<ProductovOrden> lista_productos_por_dependientes) {
         ArrayListModel<ProductovOrden> oldLista_productos_por_dependientes = this.lista_productos_por_dependientes;
@@ -266,7 +239,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      * Set the value of producto_por_area_seleccionado
      *
      * @param producto_por_area_seleccionado new value of
-     * producto_por_area_seleccionado
+     *                                       producto_por_area_seleccionado
      */
     public void setProducto_por_area_seleccionado(ProductovOrden producto_por_area_seleccionado) {
         ProductovOrden oldProducto_por_area_seleccionado = this.producto_por_area_seleccionado;
@@ -335,63 +308,6 @@ public class VentaDetailViewModel extends AbstractViewModel {
         this.lista_areas.addAll(lista_areas);
         firePropertyChange(PROP_LISTA_AREAS, oldLista_areas, lista_areas);
     }
-
-    //
-    //Totales Resumen
-    //
-    private String total_resumen_area = "xx.xx " + R.COIN_SUFFIX;
-
-    public static final String PROP_TOTAL_RESUMEN_AREA = "total_resumen_area";
-
-    private String total_resumen_cocina = "xx.xx " + R.COIN_SUFFIX;
-
-    public static final String PROP_TOTAL_RESUMEN_COCINA = "total_resumen_cocina";
-
-    private String total_resumen_dependiente = "xx.xx " + R.COIN_SUFFIX;
-
-    public static final String PROP_TOTAL_RESUMEN_DEPENDIENTE = "total_resumen_dependiente";
-
-    private String total_resumen_mesa = "xx.xx " + R.COIN_SUFFIX;
-
-    public static final String PROP_TOTAL_RESUMEN_MESA = "total_resumen_mesa";
-
-    //
-    // Pto Elab
-    //
-    private List<ResumenVentaPtoElabTablaModel> lista_resumen_pto_venta = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_RESUMEN_PTO_VENTA = "lista_resumen_pto_venta";
-
-    private ResumenVentaPtoElabTablaModel resumen_pto_seleccionado;
-
-    public static final String PROP_RESUMEN_PTO_SELECCIONADO = "resumen_pto_seleccionado";
-
-    //
-    //Odenes
-    //
-    private List<Orden> lista_orden = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_ORDEN = "lista_orden";
-
-    private Orden orden_seleccionada;
-
-    public static final String PROP_ORDEN_SELECCIONADA = "orden_seleccionada";
-
-    //
-    //General
-    //
-    private String fecha;
-
-    public static final String PROP_FECHA = "fecha";
-
-    //Turnos 
-    private int id_venta_seleccionada = -1;
-
-    public static final String PROP_VENTA_SELECCIONADA = "id_venta_seleccionada";
-
-    private boolean cambiar_turno_enabled;
-
-    public static final String PROP_CAMBIAR_TURNO_ENABLED = "cambiar_turno_enabled";
 
     /**
      * Get the value of cambiar_turno_enabled
@@ -526,7 +442,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      * Set the value of producto_por_cocina_seleccionado
      *
      * @param producto_por_cocina_seleccionado new value of
-     * producto_por_cocina_seleccionado
+     *                                         producto_por_cocina_seleccionado
      */
     public void setProducto_por_cocina_seleccionado(ProductovOrden producto_por_cocina_seleccionado) {
         ProductovOrden oldProducto_por_cocina_seleccionado = this.producto_por_cocina_seleccionado;
@@ -609,7 +525,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      * Set the value of producto_por_mesa_seleccionado
      *
      * @param producto_por_mesa_seleccionado new value of
-     * producto_por_mesa_seleccionado
+     *                                       producto_por_mesa_seleccionado
      */
     public void setProducto_por_mesa_seleccionado(ProductovOrden producto_por_mesa_seleccionado) {
         ProductovOrden oldProducto_por_mesa_seleccionado = this.producto_por_mesa_seleccionado;
@@ -794,7 +710,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      * Set the value of resumen_usuario_seleccionado
      *
      * @param resumen_usuario_seleccionado new value of
-     * resumen_usuario_seleccionado
+     *                                     resumen_usuario_seleccionado
      */
     public void setResumen_usuario_seleccionado(ResumenVentaUsuarioTablaModel resumen_usuario_seleccionado) {
         ResumenVentaUsuarioTablaModel oldResumen_usuario_seleccionado = this.resumen_usuario_seleccionado;
@@ -815,7 +731,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
      * Set the value of lista_resumen_usuario_venta
      *
      * @param lista_resumen_usuario_venta new value of
-     * lista_resumen_usuario_venta
+     *                                    lista_resumen_usuario_venta
      */
     public void setLista_resumen_usuario_venta(List<ResumenVentaUsuarioTablaModel> lista_resumen_usuario_venta) {
         List<ResumenVentaUsuarioTablaModel> oldLista_resumen_personal_venta = this.lista_resumen_usuario_venta;

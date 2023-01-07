@@ -7,17 +7,16 @@ package com.jobits.pos.client.webconnection.configuracion;
 
 import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
-import com.jobits.pos.core.domain.models.Configuracion;
+import com.jobits.pos.core.domain.models.configuracion.Configuracion;
 import com.jobits.pos.core.usecase.algoritmo.ParametrosConfiguracion;
 import com.jobits.pos.recursos.R;
+
 import java.util.Map;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ConfiguracionWCS extends BaseConnection implements ConfiguracionService {
 

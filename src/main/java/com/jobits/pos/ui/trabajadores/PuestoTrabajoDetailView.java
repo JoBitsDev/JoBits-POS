@@ -13,19 +13,49 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+
 import static com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewModel.*;
 import static com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewPresenter.*;
+
 import com.jobits.ui.components.MaterialComponentsFactory;
+
 import javax.swing.JSpinner;
 
 /**
- *
  * @author Home
  */
 public class PuestoTrabajoDetailView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Crear Puesto de Trabajo";
-
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCrear;
+    private javax.swing.JComboBox<Cocina> jComboBoxAreaPago;
+    private javax.swing.JComboBox<Area> jComboBoxAreaTrabajo;
+    private javax.swing.JComboBox<R.NivelAcceso> jComboBoxNivelAccesso;
+    private javax.swing.JLabel jLabelPuestosDisponibles;
+    private javax.swing.JLabel jLabelSalarioFijo;
+    private javax.swing.JLabel jLabelSalarioFijo1;
+    private javax.swing.JLabel jLabelSalarioFijo2;
+    private javax.swing.JLabel jLabelSalarioFijo3;
+    private javax.swing.JLabel jLabelSalarioFijo4;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelAvanzado;
+    private javax.swing.JPanel jPanelBasico;
+    private javax.swing.JPanel jPanelMainData;
+    private javax.swing.JPanel jPanelOtros;
+    private javax.swing.JPanel jPanelcentro;
+    private javax.swing.JPanel jPanelopciones;
+    private javax.swing.JPanel jPanelpuesto;
+    private javax.swing.JSpinner jSpinnerAPartir;
+    private javax.swing.JSpinner jSpinnerPorcientoAPartirDe;
+    private javax.swing.JSpinner jSpinnerPorcientoVenta;
+    private javax.swing.JSpinner jSpinnerPuestosDisponibles;
+    private javax.swing.JSpinner jSpinnerSalarioFijo;
+    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JToggleButton jToggleButtonPagoPorVentas;
+    private javax.swing.JToggleButton jToggleButtonPropina;
     /**
      * Creates new form NEWPersonalDetailView
      *
@@ -263,36 +293,6 @@ public class PuestoTrabajoDetailView extends AbstractViewPanel {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
 
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JButton jButtonCrear;
-    private javax.swing.JComboBox<Cocina> jComboBoxAreaPago;
-    private javax.swing.JComboBox<Area> jComboBoxAreaTrabajo;
-    private javax.swing.JComboBox<R.NivelAcceso> jComboBoxNivelAccesso;
-    private javax.swing.JLabel jLabelPuestosDisponibles;
-    private javax.swing.JLabel jLabelSalarioFijo;
-    private javax.swing.JLabel jLabelSalarioFijo1;
-    private javax.swing.JLabel jLabelSalarioFijo2;
-    private javax.swing.JLabel jLabelSalarioFijo3;
-    private javax.swing.JLabel jLabelSalarioFijo4;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanelAvanzado;
-    private javax.swing.JPanel jPanelBasico;
-    private javax.swing.JPanel jPanelMainData;
-    private javax.swing.JPanel jPanelOtros;
-    private javax.swing.JPanel jPanelcentro;
-    private javax.swing.JPanel jPanelopciones;
-    private javax.swing.JPanel jPanelpuesto;
-    private javax.swing.JSpinner jSpinnerAPartir;
-    private javax.swing.JSpinner jSpinnerPorcientoAPartirDe;
-    private javax.swing.JSpinner jSpinnerPorcientoVenta;
-    private javax.swing.JSpinner jSpinnerPuestosDisponibles;
-    private javax.swing.JSpinner jSpinnerSalarioFijo;
-    private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JToggleButton jToggleButtonPagoPorVentas;
-    private javax.swing.JToggleButton jToggleButtonPropina;
     // End of variables declaration//GEN-END:variables
 
     @Override

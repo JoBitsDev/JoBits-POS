@@ -12,74 +12,42 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 
 /**
- *
  * @author Home
  */
 public class PuestoTrabajoDetailViewModel extends AbstractViewModel {
 
-    private String nombre_puesto_trabajo;
-
     public static final String PROP_NOMBRE_PUESTO_TRABAJO = "nombre_puesto_trabajo";
-
-    private ArrayListModel<Area> area_trabajo_list = new ArrayListModel<>();
-
     public static final String PROP_AREA_TRABAJO_LIST = "area_trabajo_list";
-
-    private Area area_trabajo_seleccionada;
-
     public static final String PROP_AREA_TRABAJO_SELECCIONADA = "area_trabajo_seleccionada";
-
-    private int puestos_disponibles = 0;
-
     public static final String PROP_PUESTOS_DISPONIBLES = "puestos_disponibles";
-
-    private ArrayListModel<R.NivelAcceso> nivel_acceso_list = new ArrayListModel<>();
-
     public static final String PROP_NIVEL_ACCESO_LIST = "nivel_acceso_list";
-
-    private R.NivelAcceso nivel_acceso_seleccionado;
-
     public static final String PROP_NIVEL_ACCESO_SELECCIONADO = "nivel_acceso_seleccionado";
-
-    private float salario_fijo = 0;
-
     public static final String PROP_SALARIO_FIJO = "salario_fijo";
-
-    private float salario_venta = 0;
-
     public static final String PROP_SALARIO_VENTA = "salario_venta";
-
-    private ArrayListModel<Cocina> area_pago_list = new ArrayListModel<>();
-
     public static final String PROP_AREA_PAGO_LIST = "area_pago_list";
-
-    private Cocina area_pago_seleccionada;
-
     public static final String PROP_AREA_PAGO_SELECCIONADA = "area_pago_seleccionada";
-
-    private float pago_a_partir = 0;
-
     public static final String PROP_PAGO_A_PARTIR = "pago_a_partir";
-
-    private float pago_porciento_a_partir = 0;
-
     public static final String PROP_PAGO_PORCIENTO_A_PARTIR = "pago_porciento_a_partir";
-
-    private boolean pago_por_ventas;
-
     public static final String PROP_PAGO_POR_VENTAS = "pago_por_ventas";
-
-    private boolean propina;
-
     public static final String PROP_PROPINA = "propina";
-
-    private String crear_editar_button_text;
-
     public static final String PROP_CREAR_EDITAR_BUTTON_TEXT = "crear_editar_button_text";
-
-    private boolean nombre_enabled = true;
-
     public static final String PROP_NOMBRE_ENABLED = "nombre_enabled";
+    private String nombre_puesto_trabajo;
+    private ArrayListModel<Area> area_trabajo_list = new ArrayListModel<>();
+    private Area area_trabajo_seleccionada;
+    private int puestos_disponibles = 0;
+    private ArrayListModel<R.NivelAcceso> nivel_acceso_list = new ArrayListModel<>();
+    private R.NivelAcceso nivel_acceso_seleccionado;
+    private float salario_fijo = 0;
+    private float salario_venta = 0;
+    private ArrayListModel<Cocina> area_pago_list = new ArrayListModel<>();
+    private Cocina area_pago_seleccionada;
+    private float pago_a_partir = 0;
+    private float pago_porciento_a_partir = 0;
+    private boolean pago_por_ventas;
+    private boolean propina;
+    private String crear_editar_button_text;
+    private boolean nombre_enabled = true;
 
     /**
      * Get the value of nombre_enabled

@@ -8,14 +8,13 @@ package com.jobits.pos.client.webconnection.puntoelaboracion;
 import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.core.domain.models.Cocina;
+
 import java.util.List;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class PuntoElaboracionWCS extends BaseConnection implements PuntoElaboracionService {
 

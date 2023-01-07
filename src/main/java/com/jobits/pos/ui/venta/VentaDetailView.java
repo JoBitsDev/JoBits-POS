@@ -10,6 +10,7 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.core.domain.models.*;
+import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;

@@ -19,18 +19,19 @@ import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
+
 import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.*;
+
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
+
 import java.awt.BorderLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
- *
  * @author Jorge
  */
 public class ProductoVentaDetailView extends AbstractViewPanel {
@@ -39,7 +40,60 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
     private AddFromPanel<ProductoInsumo, Insumo> crossReferencePanel;
     private ProductoVenta instance;
-
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
+    private javax.swing.JButton jButtonAddCocina;
+    private javax.swing.JButton jButtonAddInsumo;
+    private javax.swing.JButton jButtonAddSeccion;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCrear;
+    private javax.swing.JCheckBox jCheckBoxExentoAImpuestos;
+    private javax.swing.JCheckBox jCheckBoxInventariarProducto;
+    private javax.swing.JCheckBox jCheckBoxProductoElaborado;
+    private javax.swing.JComboBox<Cocina> jComboBoxCOCINA;
+    private javax.swing.JComboBox<Seccion> jComboBoxSECCION;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelGasto;
+    private javax.swing.JLabel jLabelIProductImage;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelCosto;
+    private javax.swing.JPanel jPanelCrossRef;
+    private javax.swing.JPanel jPanelInputs;
+    private javax.swing.JPanel jPanelInventario;
+    private javax.swing.JPanel jPanelTable;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinnerComisionVentaPorcentual;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldPagoPorVenta;
+    private javax.swing.JTextField jTextFieldPrecioCosto;
+    private javax.swing.JTextField jTextFieldPrecioVenta;
+    private org.jdesktop.swingx.JXLabel jXLabelPCod;
     public ProductoVentaDetailView(AbstractViewPresenter presenter) {
         super(presenter);
     }
@@ -68,9 +122,9 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jLabelIProductImage = new javax.swing.JLabel();
         jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel19 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Precio venta",R.COIN_SUFFIX);
+        jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Precio venta", R.COIN_SUFFIX);
         jPanel20 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Precio de costo",R.COIN_SUFFIX);
+        jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Precio de costo", R.COIN_SUFFIX);
         jPanel21 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAddCocina = MaterialComponentsFactory.Buttons.getAddButton();
         jComboBoxCOCINA = MaterialComponentsFactory.Displayers.getComboBox("Elaborado en:");
@@ -92,7 +146,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", java.util.ResourceBundle.getBundle("Strings").getString("label_comision_por_venta"),R.COIN_SUFFIX);
+        jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", java.util.ResourceBundle.getBundle("Strings").getString("label_comision_por_venta"), R.COIN_SUFFIX);
         jPanel16 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel5 = new javax.swing.JLabel();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
@@ -414,61 +468,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private void jCheckBoxExentoAImpuestosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxExentoAImpuestosStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxExentoAImpuestosStateChanged
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
-    private javax.swing.Box.Filler filler3;
-    private javax.swing.Box.Filler filler6;
-    private javax.swing.Box.Filler filler7;
-    private javax.swing.JButton jButtonAddCocina;
-    private javax.swing.JButton jButtonAddInsumo;
-    private javax.swing.JButton jButtonAddSeccion;
-    private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JButton jButtonCrear;
-    private javax.swing.JCheckBox jCheckBoxExentoAImpuestos;
-    private javax.swing.JCheckBox jCheckBoxInventariarProducto;
-    private javax.swing.JCheckBox jCheckBoxProductoElaborado;
-    private javax.swing.JComboBox<Cocina> jComboBoxCOCINA;
-    private javax.swing.JComboBox<Seccion> jComboBoxSECCION;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabelGasto;
-    private javax.swing.JLabel jLabelIProductImage;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel26;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JPanel jPanelCosto;
-    private javax.swing.JPanel jPanelCrossRef;
-    private javax.swing.JPanel jPanelInputs;
-    private javax.swing.JPanel jPanelInventario;
-    private javax.swing.JPanel jPanelTable;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinnerComisionVentaPorcentual;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPagoPorVenta;
-    private javax.swing.JTextField jTextFieldPrecioCosto;
-    private javax.swing.JTextField jTextFieldPrecioVenta;
-    private org.jdesktop.swingx.JXLabel jXLabelPCod;
     // End of variables declaration//GEN-END:variables
 
     @Override

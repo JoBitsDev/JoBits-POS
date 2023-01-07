@@ -6,18 +6,17 @@
 package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.binding.value.AbstractValueModel;
-import com.jobits.pos.core.domain.models.Configuracion;
+import com.jobits.pos.core.domain.models.configuracion.Configuracion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ConfiguracionViewModel extends AbstractViewModel {
 
@@ -65,7 +64,7 @@ public class ConfiguracionViewModel extends AbstractViewModel {
             public void setValue(Object newValue) {
                 setConfiguration(settingId, newValue);
             }
-            
+
         };
         valueModelMap.put(settingId, newValueModel);
         return newValueModel;

@@ -12,17 +12,16 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
-import java.util.ArrayList;
+
 import java.util.Optional;
 import javax.swing.JOptionPane;
+
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter<PuntoElaboracionListViewModel> {
 
@@ -99,13 +98,13 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar: " + selected,
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                if ((boolean) Application.getInstance().getNotificationService().showDialog(
-                        "El punto de elaboracion " + selected
-                        + " contiene "
-                        + " productos de venta enlazados \n"
-                        + "presione si para ocultar los productos de venta asociados, no para cancelar",
-                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                    service.destroyInCascade(selected.getCodCocina());
+            if ((boolean) Application.getInstance().getNotificationService().showDialog(
+                    "El punto de elaboracion " + selected
+                            + " contiene "
+                            + " productos de venta enlazados \n"
+                            + "presione si para ocultar los productos de venta asociados, no para cancelar",
+                    TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                service.destroyInCascade(selected.getCodCocina());
             } else {
                 service.destroy(selected);
             }

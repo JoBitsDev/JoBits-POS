@@ -20,20 +20,18 @@ import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.ENTRADA;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.REBAJA;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.SALIDA;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.TRANSFORMAR;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.TRASPASO;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
+
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
+
 import java.beans.PropertyChangeEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,32 +42,26 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 
 /**
- *
  * @author Home
  */
 public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel> {
 
-    private AlmacenManageService service;
-    private PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
-
-    private Operacion operationToAccept;
-
     public static final String ACTION_AGREGAR_INSUMO = "Agregar Insumo";
     public static final String ACTION_ELIMINAR_INSUMO = "Eliminar Insumo";
-
     public static final String ACTION_CERRAR_POPUP = "Cerrar Popup";
     public static final String ACTION_CONFIRMAR_TRANSACCION = "Confirmar";
-
     public static final String ACTION_ELIMINAR_INSUMO_TRANSFORMADO = "Agregar Insumo Transformado";
     public static final String ACTION_AGREGAR_INSUMO_TRANSFORMADO = "Eliminar Insumo Transformado";
-
     public static final String PROP_SWAP_TO_ENTRADAS = "Entradas";
     public static final String PROP_SWAP_TO_TRANSFORMAR = "Transformar";
-
     public static final String ACTION_SET_IS_MERMA = "Set Merma";
+    private AlmacenManageService service;
+    private PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
+    private Operacion operationToAccept;
 
     public FacturaViewPresenter(AlmacenManageService controller, Almacen almacen) {
         super(new FacturaViewModel());
@@ -161,29 +153,29 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             }
         });
         registerOperation(new AbstractViewAction(ACTION_AGREGAR_INSUMO_TRANSFORMADO) {
-            @Override
-            public Optional doAction() {
-                if (getBean().getInsumo_elaborado_disponible_seleccionado() == null) {
-                    JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un Insumo primero derivado");
-                } else {
-                    TransaccionTransformacion nueva = new TransaccionTransformacion();
-                    nueva.setCantidadCreada((float) 0);
-                    nueva.setCantidadUsada((float) 0);
-                    nueva.setDireccionInversa(false);
-                    nueva.setInsumo(getBean().getInsumo_elaborado_disponible_seleccionado());
-                    getBean().getLista_insumos_transformados_contenidos().add(nueva);
-                }
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  if (getBean().getInsumo_elaborado_disponible_seleccionado() == null) {
+                                      JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un Insumo primero derivado");
+                                  } else {
+                                      TransaccionTransformacion nueva = new TransaccionTransformacion();
+                                      nueva.setCantidadCreada((float) 0);
+                                      nueva.setCantidadUsada((float) 0);
+                                      nueva.setDireccionInversa(false);
+                                      nueva.setInsumo(getBean().getInsumo_elaborado_disponible_seleccionado());
+                                      getBean().getLista_insumos_transformados_contenidos().add(nueva);
+                                  }
+                                  return Optional.empty();
+                              }
+                          }
         );
         registerOperation(new AbstractViewAction(ACTION_SET_IS_MERMA) {
-            @Override
-            public Optional doAction() {
-                getBean().setRebaja_merma(!getBean().isRebaja_merma());
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  getBean().setRebaja_merma(!getBean().isRebaja_merma());
+                                  return Optional.empty();
+                              }
+                          }
         );
 
     }
@@ -368,10 +360,10 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                     } else {
                         TransaccionSimple transaccionRebaja
                                 = new TransaccionSimple(
-                                        getBean().getInsumo_selecionado(),
-                                        getBean().getCantidad_entrada(),
-                                        getBean().getCausa_rebaja(),
-                                        getBean().isRebaja_merma());
+                                getBean().getInsumo_selecionado(),
+                                getBean().getCantidad_entrada(),
+                                getBean().getCausa_rebaja(),
+                                getBean().isRebaja_merma());
                         getBean().getLista_elementos().add(transaccionRebaja);
                         setDefaultValues(currentOperation, false);
                     }
@@ -513,7 +505,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         } else {
                             if (JOptionPane.showConfirmDialog(null,
                                     "La venta se encuentra cerrada \n "
-                                    + "Desea relizar aun la transaccion?") == JOptionPane.YES_OPTION) {
+                                            + "Desea relizar aun la transaccion?") == JOptionPane.YES_OPTION) {
                                 return ((Venta) jList.getSelectedValue()).getId();
                             } else {
                                 return null;

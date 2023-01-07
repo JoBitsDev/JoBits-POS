@@ -8,22 +8,21 @@ package com.jobits.pos.ui.configuracion.presenter;
 import com.jgoodies.binding.value.AbstractValueModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Configuracion;
+import com.jobits.pos.core.domain.models.configuracion.Configuracion;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
 import java.util.HashMap;
 import java.util.Optional;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ConfigurationViewPresenter extends AbstractViewPresenter<ConfiguracionViewModel> {
 

@@ -6,7 +6,9 @@
 package com.jobits.pos.client.webconnection.puntoelaboracion;
 
 import com.jobits.pos.core.domain.models.Cocina;
+
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -16,7 +18,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
- *
  * @author Jorge
  */
 public interface PuntoElaboracionWCI {

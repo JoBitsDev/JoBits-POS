@@ -11,7 +11,6 @@ import com.jobits.pos.core.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
-import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
 import com.jobits.pos.inventario.core.almacen.domain.wrapper.PedidoIpvWrapper;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
@@ -23,12 +22,12 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.root101.clean.core.domain.services.ResourceHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- *
  * @author Home
  */
 public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedidoVentasViewModel> {
@@ -57,38 +56,38 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     @Override
     protected void registerOperations() {
         registerOperation(new AbstractViewAction(ACTION_AGREGAR_IPV) {
-            @Override
-            public Optional doAction() {
-                onAgregarIPVClick();
-                actualizarTablaPedido();
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  onAgregarIPVClick();
+                                  actualizarTablaPedido();
+                                  return Optional.empty();
+                              }
+                          }
         );
         registerOperation(new AbstractViewAction(ACTION_ELIMINAR_IPV) {
-            @Override
-            public Optional doAction() {
-                onEliminarIPVClick();
-                actualizarTablaPedido();
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  onEliminarIPVClick();
+                                  actualizarTablaPedido();
+                                  return Optional.empty();
+                              }
+                          }
         );
         registerOperation(new AbstractViewAction(ACTION_CANCELAR) {
-            @Override
-            public Optional doAction() {
-                Application.getInstance().getNavigator().navigateUp();
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  Application.getInstance().getNavigator().navigateUp();
+                                  return Optional.empty();
+                              }
+                          }
         );
         registerOperation(new AbstractViewAction(ACTION_ACEPTAR) {
-            @Override
-            public Optional doAction() {
-                onAceptarClick();
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  onAceptarClick();
+                                  return Optional.empty();
+                              }
+                          }
         );
     }
 

@@ -6,18 +6,18 @@
 package com.jobits.pos.client.webconnection.configuracion;
 
 /**
- *
  * @author Jorge
  */
-import com.jobits.pos.core.domain.models.Configuracion;
+
+import com.jobits.pos.core.domain.models.configuracion.Configuracion;
 import com.jobits.pos.core.usecase.algoritmo.ParametrosConfiguracion;
-import com.jobits.pos.recursos.R;
-import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+
+import java.util.Map;
 
 public interface ConfiguracionWCI {
 
@@ -29,7 +29,7 @@ public interface ConfiguracionWCI {
 
     @PUT("pos/configuration/update/{settingId}/{newValue}")
     public Call<Configuracion> updateConfiguracion(@Path("settingId") String settingId,
-            @Path("newValue") Object configuration);
+                                                   @Path("newValue") Object configuration);
 
     @GET("pos/configuration/y")
     public Call<ParametrosConfiguracion> cargarConfiguracionY();

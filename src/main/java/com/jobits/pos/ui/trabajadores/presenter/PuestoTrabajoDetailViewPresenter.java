@@ -17,14 +17,15 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.root101.clean.core.domain.services.ResourceHandler;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoUseCase;
 
 /**
- *
  * @author Home
  */
 public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<PuestoTrabajoDetailViewModel> {
