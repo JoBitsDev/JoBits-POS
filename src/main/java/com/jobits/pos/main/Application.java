@@ -12,6 +12,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.module.UserResolverImpl;
+import com.jobits.pos.core.repo.impl.TransactionCounter;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
@@ -262,7 +263,7 @@ public class Application {
         Thread.setDefaultUncaughtExceptionHandler((Thread t, Throwable e) -> {
             if (checkIfIts401(e)) return;
             getNotificationService().showDialog(e.getMessage(), TipoNotificacion.ERROR);
-            com.jobits.pos.core.repo.impl.AbstractRepository.transactionErrorListener.propertyChange(new PropertyChangeEvent(this, "ERROR", 0, 1));
+            TransactionCounter.errorListener().propertyChange(new PropertyChangeEvent(this, "ERROR", 0, 1));
             e.printStackTrace();
         });
     }

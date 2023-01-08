@@ -82,9 +82,6 @@ public class AbstractFilterTypePresenter extends AbstractViewPresenter<AbstractF
             case IPV_E:
                 ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.IPV_E, ((Cocina) getBean().getElemento_seleccionado()).getCodCocina());
                 break;
-            case PRODUCTO_E:
-                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.PRODUCTO_E, ((ProductoVenta) getBean().getElemento_seleccionado()).getCodigoProducto());
-                break;
         }
         return ret;
     }

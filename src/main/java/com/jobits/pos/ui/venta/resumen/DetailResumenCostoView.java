@@ -11,11 +11,11 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenCostoViewPresenter;
 import com.jobits.pos.utils.utils;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
  * @author Home
  */
 public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayReviewWrapper, InsumoRegistro> {
@@ -120,19 +120,13 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
                     case 1:
                         return i.getUM();
                     case 2:
-                        return i.getCantidad() != 0 ? utils.setDosLugaresDecimalesFloat(i.getCosto()/i.getCantidad()) : 0;
+                        return i.getCantidad() != 0 ? utils.setDosLugaresDecimalesFloat(i.getCosto() / i.getCantidad()) : 0;
                     case 3:
                         return utils.setDosLugaresDecimalesFloat(i.getCantidad());
                     case 4:
                         return utils.setDosLugaresDecimalesFloat(i.getCosto());
                     case 5:
-                        if (i.getProductoInsumo() == null) {
-                            return "Ficha eliminada";
-                        }
-                        if (i.getProductoInsumo().getInsumo() == null ) {
-                            return "Insumo Eliminado";
-                        }
-                        return i.getProductoInsumo().getInsumo().getIdentificador();
+                        return i.getIdentificadorInsumo();
                 }
                 return null;
             }
@@ -140,7 +134,7 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
-                    case 0,1,5:
+                    case 0, 1, 5:
                         return String.class;
                     default:
                         return Float.class;
