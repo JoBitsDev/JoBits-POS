@@ -157,7 +157,9 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if (productoVenta.getPagoPorVenta() != null) {
             getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoVenta.getPagoPorVenta()));
         }
-        getBean().setElaborado_seleccionado(ptoElabService.findBy(productoVenta.getCocinacodCocina()));
+        if (productoVenta.getCocinacodCocina() != null) {
+            getBean().setElaborado_seleccionado(ptoElabService.findBy(productoVenta.getCocinacodCocina()));
+        }
         fillInsumoProductoInfo(productoVenta, getBean().getLista_insumos_disponibles());
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoVenta.getProductoInsumoList()));
