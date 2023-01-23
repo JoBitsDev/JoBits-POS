@@ -35,4 +35,7 @@ public interface CartaWCI {
     @POST("pos/carta/{cod}/add-seccion")
     public Call<Carta> addSeccion(@Path("cod") String codCarta, @Body Seccion codSeccion);
 
+    @DELETE("pos/carta/{cod}/delete-seccion/{nombre}")
+    public Call<Carta> removeSeccion(@Path("cod") String codCarta, @Path("nombre") String codSeccion);
+
 }

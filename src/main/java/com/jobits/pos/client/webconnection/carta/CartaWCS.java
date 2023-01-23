@@ -9,14 +9,13 @@ import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Seccion;
+
 import java.util.List;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class CartaWCS extends BaseConnection implements CartaListService {
 
@@ -60,6 +59,11 @@ public class CartaWCS extends BaseConnection implements CartaListService {
     @Override
     public Carta addSeccion(String codCarta, Seccion codSeccion) {
         return handleCall(service.addSeccion(codCarta, codSeccion));
+    }
+
+    @Override
+    public Carta deleteSeccion(String codCarta, String nombreSeccion) {
+        return handleCall(service.removeSeccion(codCarta, nombreSeccion));
     }
 
 }

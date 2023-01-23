@@ -265,7 +265,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                     newSeccion.setDescripcion("");
                     newSeccion.setNombreSeccion(nombre);
                     newSeccion.setProductoVentaList(new ArrayList<>());
-                    newSeccion.setCartacodCarta((Carta) jComboBox1.getSelectedItem());
+                    newSeccion.setCartacodCarta(((Carta) jComboBox1.getSelectedItem()).getCodCarta());
                     cartaService.addSeccion(((Carta) jComboBox1.getSelectedItem()).getCodCarta(), newSeccion);
                     getBean().setLista_categorias(new ArrayListModel<>(seccionService.findAll()));
                 }

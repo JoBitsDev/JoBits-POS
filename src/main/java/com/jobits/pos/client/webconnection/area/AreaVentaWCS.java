@@ -9,14 +9,13 @@ import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
+
 import java.util.List;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class AreaVentaWCS extends BaseConnection implements AreaVentaService {
 
@@ -55,6 +54,11 @@ public class AreaVentaWCS extends BaseConnection implements AreaVentaService {
     public List<Area> findAll() throws RuntimeException {
         return handleCall(service.findAll());
 
+    }
+
+    @Override
+    public Area removeMesa(String codArea, String codMesa) {
+        return handleCall(service.removeMesa(codArea, codMesa));
     }
 
     @Override

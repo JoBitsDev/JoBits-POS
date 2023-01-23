@@ -75,7 +75,7 @@ public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailVie
                 showDialog("Esta seguro que desea continuar?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (creatingMode) {
                 Mesa m = new Mesa("M-" + getBean().getCodigo());
-                m.setAreacodArea(area);
+                m.setAreacodArea(area.getCodArea());
                 m.setNombre(getBean().getNombre());
                 m.setCapacidadMax(getBean().getCapacidad());
                 m.setEstado("vacia");

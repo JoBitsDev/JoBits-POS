@@ -31,16 +31,6 @@ public class MesaWCS extends BaseConnection implements MesaService {
     }
 
     @Override
-    public Mesa destroy(Mesa t) throws RuntimeException {
-        return destroyById(t.getCodMesa());
-    }
-
-    @Override
-    public Mesa destroyById(Object o) throws RuntimeException {
-        return handleCall(service.destroyById(o));
-    }
-
-    @Override
     public Mesa findBy(Object o) throws RuntimeException {
         return handleCall(service.findBy(o));
     }

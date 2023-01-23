@@ -7,17 +7,12 @@ package com.jobits.pos.client.webconnection.area;
 
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
-import java.util.List;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
+import retrofit2.http.*;
+
+import java.util.List;
 
 /**
- *
  * @author Jorge
  */
 public interface AreaVentaWCI {
@@ -39,5 +34,8 @@ public interface AreaVentaWCI {
 
     @POST("pos/area-venta/{cod}/add-mesa")
     public Call<Area> addMesa(@Path("cod") String codArea, @Body Mesa newmesa);
+
+    @DELETE("pos/area-venta/{cod}/remove-mesa/{cod-mesa}")
+    public Call<Area> removeMesa(@Path("cod") String codArea, @Path("cod-mesa") String newmesa);
 
 }

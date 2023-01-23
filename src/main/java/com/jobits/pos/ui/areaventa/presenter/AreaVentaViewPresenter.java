@@ -6,35 +6,28 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-//import com.jobits.pos.controller.areaventa.impl.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
+
 import java.util.Optional;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewModel> {
-
-    private AreaVentaService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaVentaService.class);
-
-    private MesaService mesaService = PosDesktopUiModule.getInstance().getImplementation(MesaService.class);
 
     public static final String ACTION_AGREGAR_AREA = "Nueva area";
     public static final String ACTION_EDITAR_AREA = "Editar";
@@ -42,6 +35,8 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
     public static final String ACTION_AGREGAR_MESA = "Nueva mesa";
     public static final String ACTION_ELIMINAR_MESA = "Eliminar mesa";
     public static final String ACTION_EDITAR_MESA = "Editar mesa";
+    private AreaVentaService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaVentaService.class);
+    private MesaService mesaService = PosDesktopUiModule.getInstance().getImplementation(MesaService.class);
 
     public AreaVentaViewPresenter() {
         super(new AreaVentaViewModel());
@@ -180,7 +175,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar: " + selected,
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            mesaService.destroy(selected);
+            areaService.removeMesa(selected.getAreacodArea(), selected.getCodMesa());
             refreshState();
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
