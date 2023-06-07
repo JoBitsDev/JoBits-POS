@@ -8,33 +8,25 @@ package com.jobits.pos.ui.login.presenter;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class UbicacionViewModel extends AbstractViewModel {
 
     public static final String PROP_NOMBRE_UBICACION = "nombre_ubicacion";
-    private String nombre_ubicacion;
-
     public static final String PROP_IP = "ip";
-    private String ip;
-
     public static final String PROP_USUARIO = "usuario";
-    private String usuario;
-
     public static final String PROP_PUERTO = "puerto";
-    private String puerto;
-
     public static final String PROP_PASSWORD = "password";
-    private String password;
-
     public static final String PROP_ID_USUARIO = "idUsuario";
-    private String idUsuario;
-
     public static final String PROP_ID_DB = "idBaseDatos";
+    private String nombre_ubicacion;
+    private String ip;
+    private String usuario;
+    private String puerto;
+    private String password;
+    private String idUsuario;
     private String idBaseDatos;
 
     public UbicacionViewModel() {
@@ -67,7 +59,7 @@ public class UbicacionViewModel extends AbstractViewModel {
     public void setIdBaseDatos(String idBaseDatos) {
         String oldidBaseDatos = this.idBaseDatos;
         this.idBaseDatos = idBaseDatos;
-        firePropertyChange(PROP_ID_DB, oldidBaseDatos, idUsuario, false);
+        firePropertyChange(PROP_ID_DB, oldidBaseDatos, idBaseDatos, false);
     }
 
     /**
