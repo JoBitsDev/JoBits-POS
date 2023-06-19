@@ -238,9 +238,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     private void onImprimirResumenVentaAreaClick() {
         var area = getBean().getArea_seleccionada();
-        area = area.split("\\[")[1].trim();
-        area = area.substring(0, area.length() - 1);
-        area = area.trim();
+//        area = area.split("\\[")[1].trim();
+//        area = area.substring(0, area.length() - 1);
+//        area = area.trim();
         ventaResumenService.printAreaResumen(area, getBean().getVenta_seleccionada());
     }
 
