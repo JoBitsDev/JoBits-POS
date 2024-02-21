@@ -12,6 +12,7 @@ import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.awt.Color;
@@ -28,7 +29,7 @@ import java.util.Optional;
  */
 public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel> {
 
-    private final LicenceService service = Application.getInstance().getLicenceController();
+    private final LicenceService service = PosDesktopUiModule.getInstance().getImplementation(LicenceService.class);
     public static final String ACTION_LICENCIA = "";
     public static final String ACTION_REFRESH_BEAN = "Refresh";
 

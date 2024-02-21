@@ -523,8 +523,8 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Direcciones de Env&#xed;o">
-                    <Property name="tabTitle" type="java.lang.String" value="Direcciones de Env&#xed;o"/>
+                  <JTabbedPaneConstraints tabName="Direcciones de Env&#xed;os">
+                    <Property name="tabTitle" type="java.lang.String" value="Direcciones de Env&#xed;os"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>

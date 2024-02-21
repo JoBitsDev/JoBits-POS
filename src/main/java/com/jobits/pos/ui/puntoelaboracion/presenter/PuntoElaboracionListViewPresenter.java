@@ -5,31 +5,29 @@
  */
 package com.jobits.pos.ui.puntoelaboracion.presenter;
 
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
-import java.util.ArrayList;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
+import javax.swing.*;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter<PuntoElaboracionListViewModel> {
 
     public static String ACTION_CHANGE_RECIBIR_NOTIFICACION = "Recibir notificaciones";
     public static String ACTION_CHANGE_LIMITAR_VENTA = "Limitar ventas";
 
-    private final PuntoElaboracionListService service = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private final PuntoElaboracionService service = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
 
     public PuntoElaboracionListViewPresenter() {
         super(new PuntoElaboracionListViewModel(), PuntoElaboracionListView.VIEW_NAME);
@@ -69,7 +67,6 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
         if (nombre != null) {
             Cocina c = new Cocina();
             c.setNombreCocina(nombre);
-            c.setProductoVentaList(new ArrayList<>());
             service.create(c);
             setListToBean();
         }
@@ -86,7 +83,7 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
                 getBean().getElemento_seleccionado().getNombreCocina());
         if (nombre != null) {
 //            cocina.setNombreCocina(nombre);
-            service.edit(cocina, nombre);
+            service.edit(cocina.getCodCocina(), nombre);
             setListToBean();
         }
     }
@@ -100,15 +97,13 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar: " + selected,
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            if (!selected.getProductoVentaList().isEmpty()) {
-                if ((boolean) Application.getInstance().getNotificationService().showDialog(
-                        "El punto de elaboracion " + selected
-                        + " contiene " + selected.getProductoVentaList().size()
-                        + " productos de venta enlazados \n"
-                        + "presione si para borrar los productos de venta, no para cancelar",
-                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                    service.destroyInCascade(selected);
-                }
+            if ((boolean) Application.getInstance().getNotificationService().showDialog(
+                    "El punto de elaboracion " + selected
+                            + " contiene "
+                            + " productos de venta enlazados \n"
+                            + "presione si para ocultar los productos de venta asociados, no para cancelar",
+                    TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                service.destroyInCascade(selected.getCodCocina());
             } else {
                 service.destroy(selected);
             }

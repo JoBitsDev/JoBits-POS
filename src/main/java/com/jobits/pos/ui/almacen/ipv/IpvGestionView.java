@@ -7,37 +7,80 @@ package com.jobits.pos.ui.almacen.ipv;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.ui.utils.RestManagerCellRender;
-import java.awt.Font;
-import java.awt.print.PrinterException;
-import java.text.MessageFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTable;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
 import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
-import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.ExcelAdapter;
+import com.jobits.pos.ui.utils.RestManagerCellRender;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
+import java.text.MessageFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
 
 /**
- *
  * @author Jorge
  */
 public class IpvGestionView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "IPV";
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAgregarInsumo;
+    private javax.swing.JButton jButtonAjustarConsumo;
+    private javax.swing.JButton jButtonAjustarConsumoIpvVenta;
+    private javax.swing.JButton jButtonAjustarCosto;
+    private javax.swing.JButton jButtonDarEntradaIpv;
+    private javax.swing.JButton jButtonDarEntradaIpvVenta;
+    private javax.swing.JButton jButtonEliminarIPV;
+    private javax.swing.JButton jButtonEnviarToAlmacen;
+    private javax.swing.JButton jButtonEnviarToIPV;
+    private javax.swing.JButton jButtonImprimirIpv;
+    private javax.swing.JButton jButtonPedido;
+    private javax.swing.JButton jButtonRefrescar;
+    private javax.swing.JButton jButtonimprimirIpvRegistro;
+    private javax.swing.JComboBox<Cocina> jComboBoxPtoElabSelec;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserIpv;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserIpvVentas;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTotalIpvRegistro;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelIPV;
+    private javax.swing.JPanel jPanelOpciones;
+    private javax.swing.JPanel jPanelRegistros;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTableIPV;
+    private javax.swing.JTable jTableRegistro;
+    private javax.swing.JTextField jTextFieldInsumos;
+    private javax.swing.JToggleButton jToggleButtonIpv;
+    private javax.swing.JToggleButton jToggleButtonIpvVenta;
 
     public IpvGestionView(AbstractViewPresenter presenter) {
         super(presenter);
@@ -158,12 +201,12 @@ public class IpvGestionView extends AbstractViewPanel {
         jTableRegistro.setAutoCreateRowSorter(true);
         jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 0, 22)); // NOI18N
         jTableRegistro.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
+                },
+                new String[]{
 
-            }
+                }
         ));
         jTableRegistro.setRowHeight(25);
         jTableRegistro.setRowMargin(4);
@@ -272,19 +315,19 @@ public class IpvGestionView extends AbstractViewPanel {
         jTableIPV.setAutoCreateRowSorter(true);
         jTableIPV.setFont(new java.awt.Font("Lucida Grande", 0, 22)); // NOI18N
         jTableIPV.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "Producto Venta", "Inicio", "Entrada", "Disponible", "Autorizo", "Venta", "Precio Venta", "Importe", "Final"
-            }
+                },
+                new String[]{
+                        "Producto Venta", "Inicio", "Entrada", "Disponible", "Autorizo", "Venta", "Precio Venta", "Importe", "Final"
+                }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class
+            Class[] types = new Class[]{
+                    java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
         });
         jTableIPV.setRowHeight(35);
@@ -345,49 +388,6 @@ public class IpvGestionView extends AbstractViewPanel {
     private void jButtonAjustarConsumoIpvVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjustarConsumoIpvVentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAjustarConsumoIpvVentaActionPerformed
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAgregarInsumo;
-    private javax.swing.JButton jButtonAjustarConsumo;
-    private javax.swing.JButton jButtonAjustarConsumoIpvVenta;
-    private javax.swing.JButton jButtonAjustarCosto;
-    private javax.swing.JButton jButtonDarEntradaIpv;
-    private javax.swing.JButton jButtonDarEntradaIpvVenta;
-    private javax.swing.JButton jButtonEliminarIPV;
-    private javax.swing.JButton jButtonEnviarToAlmacen;
-    private javax.swing.JButton jButtonEnviarToIPV;
-    private javax.swing.JButton jButtonImprimirIpv;
-    private javax.swing.JButton jButtonPedido;
-    private javax.swing.JButton jButtonRefrescar;
-    private javax.swing.JButton jButtonimprimirIpvRegistro;
-    private javax.swing.JComboBox<Cocina> jComboBoxPtoElabSelec;
-    private org.jdesktop.swingx.JXDatePicker jDateChooserIpv;
-    private org.jdesktop.swingx.JXDatePicker jDateChooserIpvVentas;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelTotalIpvRegistro;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JPanel jPanelIPV;
-    private javax.swing.JPanel jPanelOpciones;
-    private javax.swing.JPanel jPanelRegistros;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTableIPV;
-    private javax.swing.JTable jTableRegistro;
-    private javax.swing.JTextField jTextFieldInsumos;
-    private javax.swing.JToggleButton jToggleButtonIpv;
-    private javax.swing.JToggleButton jToggleButtonIpvVenta;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -396,8 +396,8 @@ public class IpvGestionView extends AbstractViewPanel {
         Bindings.bind(jLabelTotalIpvRegistro, getPresenter().getModel(PROP_TOTAL_IPV_REGISTRO));
         Bindings.bind(jToggleButtonIpvVenta, getPresenter().getModel(PROP_CHECK_OCULTAR_PRODUCTOS_IPV_VENTA));
         Bindings.bind(jComboBoxPtoElabSelec, new SelectionInList<Cocina>(
-                getPresenter().getModel(PROP_LISTA_PUNTO_ELABORACION),
-                getPresenter().getModel(PROP_PUNTO_ELABORACION_SELECCIONADO)),
+                        getPresenter().getModel(PROP_LISTA_PUNTO_ELABORACION),
+                        getPresenter().getModel(PROP_PUNTO_ELABORACION_SELECCIONADO)),
                 "Punto Elaboración");
         Bindings.bind(jDateChooserIpv, "date", getPresenter().getModel(PROP_FECHA_SELECCIONADA));
         Bindings.bind(jDateChooserIpvVentas, "date", getPresenter().getModel(PROP_FECHA_IPV_VENTAS_SELECCIONADA));
@@ -461,7 +461,7 @@ public class IpvGestionView extends AbstractViewPanel {
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 //TODO: calcular el total de la tabla y mostrarlo al final
-                if (rowIndex == getRowCount()-1 && totalRowShowing) {
+                if (rowIndex == getRowCount() - 1 && totalRowShowing) {
                     if (columnIndex == 0) {
                         return "Total";
                     }
@@ -579,7 +579,7 @@ public class IpvGestionView extends AbstractViewPanel {
                     case 7:
                         return utils.setDosLugaresDecimalesFloat(
                                 getRow(rowIndex).getConsumoUnico()
-                                * getRow(rowIndex).getPrecioCosto());
+                                        * getRow(rowIndex).getPrecioCosto());
                     case 8:
                         float consumo = getRow(rowIndex).getPrecioCosto() * getRow(rowIndex).getConsumo();
                         float consumoReal = getRow(rowIndex).getPrecioCosto() * getRow(rowIndex).getConsumoReal();

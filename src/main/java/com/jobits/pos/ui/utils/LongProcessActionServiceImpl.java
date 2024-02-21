@@ -18,6 +18,11 @@ import com.jobits.ui.swing.LongProcessActionService;
 import com.jobits.ui.swing.LongProcessMethod;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Dimension;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingConstants;
 
 /**
@@ -32,7 +37,7 @@ public abstract class LongProcessActionServiceImpl implements LongProcessActionS
     private SwingWorker.StateValue state = SwingWorker.StateValue.PENDING;
     private static final JLabel LABEL_CARGANDO = new JLabel("Ejecutando Operacion.......");
     protected static final JDialog LOADING_DIALOG = createLoadingDialog();
-
+    private static transient Queue<RuntimeException> pendingExceptions = new ArrayDeque<>();
     private static LongProcessActionServiceImpl INSTANCE = null;
 
     public LongProcessActionServiceImpl() {
@@ -57,7 +62,7 @@ public abstract class LongProcessActionServiceImpl implements LongProcessActionS
 
     /**
      *
-     * @Deprecated 
+     * @Deprecated
      */
     protected abstract void longProcessMethod();
 
@@ -65,40 +70,7 @@ public abstract class LongProcessActionServiceImpl implements LongProcessActionS
     }
 
     public void performAction() {
-        SwingWorker<Void, Void> backgroundWorker = new SwingWorker<Void, Void>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                try {
-                    longProcessMethod();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-                return null;
-            }
-
-            @Override
-            protected void done() {
-                super.done(); //To change body of generated methods, choose Tools | Templates.
-                whenDone();
-            }
-
-        };
-
-        window = Application.getInstance().getMainWindow();
-
-        backgroundWorker.addPropertyChangeListener((PropertyChangeEvent evt1) -> {
-            if (evt1.getPropertyName().equals("state")) {
-                if (evt1.getNewValue() == SwingWorker.StateValue.DONE) {
-                    LOADING_DIALOG.dispose();
-                    state = SwingWorker.StateValue.DONE;
-                }
-            }
-        });
-        backgroundWorker.execute();
-
-        mostrarDialogoCargando();
-
+        performAction(null);
     }
 
     public void performAction(Component c) {
@@ -107,9 +79,10 @@ public abstract class LongProcessActionServiceImpl implements LongProcessActionS
             protected Void doInBackground() throws Exception {
                 try {
                     longProcessMethod();
+                } catch (RuntimeException ex) {
+                    pendingExceptions.add(ex);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return null;
                 }
                 return null;
             }
@@ -133,6 +106,9 @@ public abstract class LongProcessActionServiceImpl implements LongProcessActionS
                 if (evt1.getNewValue() == SwingWorker.StateValue.DONE) {
                     LOADING_DIALOG.dispose();
                     state = SwingWorker.StateValue.DONE;
+                    while (pendingExceptions.peek() != null) {
+                        throw pendingExceptions.remove();
+                    }
                 }
             }
         });

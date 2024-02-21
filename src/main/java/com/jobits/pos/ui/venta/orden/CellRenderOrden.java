@@ -6,12 +6,11 @@
 package com.jobits.pos.ui.venta.orden;
 
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.utils.utils;
-import java.awt.Color;
+
+import java.awt.*;
 
 /**
- *
  * @author Jorge
  */
 public class CellRenderOrden extends javax.swing.JPanel implements Comparable<CellRenderOrden> {
@@ -20,19 +19,30 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
      * Creates new form CellRenderPedido
      */
     private Orden o;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelCodMesa;
+    private javax.swing.JLabel jLabelDelivery;
+    private javax.swing.JLabel jLabelGratis;
+    private javax.swing.JLabel jLabelNombreMesa;
+    private javax.swing.JLabel jLabelOrden;
+    private javax.swing.JLabel jLabelPorciento;
+    private javax.swing.JLabel jLabelPrecio;
+    private javax.swing.JLabel jLabelTerminada;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
 
     public CellRenderOrden(Orden o, boolean selected) {
         initComponents();
         this.o = o;
         if (o.getMesacodMesa() != null) {
-            jLabelCodMesa.setText(o.getMesacodMesa().getCodMesa());
-            if (o.getMesacodMesa().getNombre() == null) {
-                jLabelNombreMesa.setVisible(false);
-            }
+            jLabelCodMesa.setText(o.getMesacodMesa());
+//            if (o.getMesacodMesa().getNombre() == null) {
+            jLabelNombreMesa.setVisible(false);//TODO: no se manaje el nombre de la mesa
+//            }
             if (selected) {
                 jLabelNombreMesa.setForeground(Color.white);
             }
-            jLabelNombreMesa.setText(o.getMesacodMesa().getNombre());
+//            jLabelNombreMesa.setText(o.getMesacodMesa().getNombre());
         }
         jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
         jLabelOrden.setText(o.getCodOrden());
@@ -134,18 +144,5 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         jLabelTerminada.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(jLabelTerminada, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabelCodMesa;
-    private javax.swing.JLabel jLabelDelivery;
-    private javax.swing.JLabel jLabelGratis;
-    private javax.swing.JLabel jLabelNombreMesa;
-    private javax.swing.JLabel jLabelOrden;
-    private javax.swing.JLabel jLabelPorciento;
-    private javax.swing.JLabel jLabelPrecio;
-    private javax.swing.JLabel jLabelTerminada;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

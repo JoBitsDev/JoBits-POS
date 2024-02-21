@@ -6,34 +6,43 @@
 package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.binding.value.AbstractValueModel;
+import com.jobits.pos.core.domain.models.configuracion.Configuracion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ConfiguracionViewModel extends AbstractViewModel {
 
-    private Map<R.SettingID, Object> configurationMap = new HashMap<>();
+    private Map<R.SettingID, Configuracion> configurationMap = new HashMap<>();
 
     private Map<R.SettingID, AbstractValueModel> valueModelMap = new HashMap<>();
 
     public ConfiguracionViewModel() {
     }
 
-    public void setConfiguration(R.SettingID settingId, Object wrapper) {
+    private void setConfiguration(R.SettingID settingId, Object wrapper) {
+        Configuracion oldValue = configurationMap.get(settingId);
+        if (oldValue != null) {
+            oldValue.setValue(wrapper);
+            setConfiguration(settingId, oldValue);
+        }
+
+    }
+
+    public void setConfiguration(R.SettingID settingId, Configuracion wrapper) {
         Object oldValue = configurationMap.get(settingId);
         configurationMap.put(settingId, wrapper);
         firePropertyChange(settingId.toString(), oldValue, wrapper, false);
     }
 
-    public Object getConfiguration(R.SettingID settingId) {
+    public Configuracion getConfiguration(R.SettingID settingId) {
         return configurationMap.get(settingId) != null
                 ? configurationMap.get(settingId)
                 : null;
@@ -48,13 +57,14 @@ public class ConfiguracionViewModel extends AbstractViewModel {
         AbstractValueModel newValueModel = new AbstractValueModel() {
             @Override
             public Object getValue() {
-                return getConfiguration(settingId);
+                return getConfiguration(settingId).resolveValue();
             }
 
             @Override
             public void setValue(Object newValue) {
                 setConfiguration(settingId, newValue);
             }
+
         };
         valueModelMap.put(settingId, newValueModel);
         return newValueModel;

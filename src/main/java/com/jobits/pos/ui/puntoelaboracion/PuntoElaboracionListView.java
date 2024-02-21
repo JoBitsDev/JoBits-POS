@@ -15,7 +15,6 @@ import com.jobits.pos.ui.swing.utils.BindableTableModel;
  * FirstDream
  *
  * @author Jorge
- *
  */
 public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
 
@@ -30,7 +29,7 @@ public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
         return new BindableTableModel<Cocina>(jTableList) {
             @Override
             public int getColumnCount() {
-                return 5;
+                return 4;
             }
 
             @Override
@@ -41,10 +40,8 @@ public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
                     case 1:
                         return getRow(rowIndex).getNombreCocina();
                     case 2:
-                        return getRow(rowIndex).getProductoVentaList().size();
-                    case 3:
                         return getRow(rowIndex).getRecibirNotificacion();
-                    case 4:
+                    case 3:
                         return getRow(rowIndex).getLimitarVentaInsumoAgotado();
                     default:
                         return null;
@@ -53,12 +50,12 @@ public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 3 || columnIndex == 4;
+                return columnIndex == 2 || columnIndex == 3;
             }
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 3 || columnIndex == 4) {
+                if (columnIndex == 2 || columnIndex == 3) {
                     return Boolean.class;
                 } else {
                     return super.getColumnClass(columnIndex);
@@ -68,10 +65,10 @@ public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                if (columnIndex == 3) {
+                if (columnIndex == 2) {
                     getPresenter().getOperation(PuntoElaboracionListViewPresenter.ACTION_CHANGE_RECIBIR_NOTIFICACION).doAction();
                 }
-                if (columnIndex == 4) {
+                if (columnIndex == 3) {
                     getPresenter().getOperation(PuntoElaboracionListViewPresenter.ACTION_CHANGE_LIMITAR_VENTA).doAction();
                 }
             }
@@ -84,10 +81,8 @@ public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
                     case 1:
                         return "Nombre";
                     case 2:
-                        return "Productos";
-                    case 3:
                         return "Notificaciones";
-                    case 4:
+                    case 3:
                         return "Restringir Ventas";
                     default:
                         return null;

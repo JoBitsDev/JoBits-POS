@@ -6,30 +6,25 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.resumen.SalarioResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.servicios.impresion.Impresion;
-import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.utils.utils;
 
 /**
- *
  * @author Home
  */
-public class DetailResumenSalarioViewPresenter extends AbstractResumenViewPresenter<DetailResumenAutorizoViewModel> {
+public class DetailResumenSalarioViewPresenter extends AbstractResumenViewPresenter<DetailResumenSalarioViewModel> {
 
-    SalarioResumenService service = PosDesktopUiModule.getInstance().getImplementation(SalarioResumenService.class);
 
     public DetailResumenSalarioViewPresenter() {
-        super(new DetailResumenAutorizoViewModel(), false, "Resumen de Salarios General", "Resumen de Salarios Detallado");
+        super(new DetailResumenSalarioViewModel(), false, "Resumen de Salarios General", "Resumen de Salarios Detallado");
     }
 
     @Override
     protected void setListsToBean() {
-        service.createVentaResumen(getBean().getSince_date(), getBean().getTo_date());
-        getBean().setListaMain(new ArrayListModel<>(service.getResumenGeneral()));
-        getBean().setListaDetail(new ArrayListModel<>(service.getResumenDetallado()));
+        var ret = service.getSalarioResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()), getBean().getFilters());
+        getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
+        getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);
         setView(getBean().getListaMain().size() == 1);
     }

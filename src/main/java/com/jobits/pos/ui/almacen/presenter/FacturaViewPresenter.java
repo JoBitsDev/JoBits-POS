@@ -6,14 +6,13 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.root101.swing.material.standards.MaterialIcons;
-import com.jobits.pos.core.repo.impl.VentaDAO;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.core.domain.TransaccionSimple;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.InsumoElaborado;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.inventario.core.almacen.domain.Almacen;
 import com.jobits.pos.inventario.core.almacen.domain.Operacion;
@@ -21,55 +20,41 @@ import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.ENTRADA;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.REBAJA;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.SALIDA;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.TRANSFORMAR;
-import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.TRASPASO;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
+import com.root101.swing.material.standards.MaterialIcons;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
+
+import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 
 /**
- *
  * @author Home
  */
 public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel> {
 
-    private AlmacenManageService service;
-    private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
-
-    private Operacion operationToAccept;
-
     public static final String ACTION_AGREGAR_INSUMO = "Agregar Insumo";
     public static final String ACTION_ELIMINAR_INSUMO = "Eliminar Insumo";
-
     public static final String ACTION_CERRAR_POPUP = "Cerrar Popup";
     public static final String ACTION_CONFIRMAR_TRANSACCION = "Confirmar";
-
     public static final String ACTION_ELIMINAR_INSUMO_TRANSFORMADO = "Agregar Insumo Transformado";
     public static final String ACTION_AGREGAR_INSUMO_TRANSFORMADO = "Eliminar Insumo Transformado";
-
     public static final String PROP_SWAP_TO_ENTRADAS = "Entradas";
     public static final String PROP_SWAP_TO_TRANSFORMAR = "Transformar";
-
     public static final String ACTION_SET_IS_MERMA = "Set Merma";
+    private AlmacenManageService service;
+    private PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
+    private Operacion operationToAccept;
 
     public FacturaViewPresenter(AlmacenManageService controller, Almacen almacen) {
         super(new FacturaViewModel());
@@ -161,29 +146,29 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             }
         });
         registerOperation(new AbstractViewAction(ACTION_AGREGAR_INSUMO_TRANSFORMADO) {
-            @Override
-            public Optional doAction() {
-                if (getBean().getInsumo_elaborado_disponible_seleccionado() == null) {
-                    JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un Insumo primero derivado");
-                } else {
-                    TransaccionTransformacion nueva = new TransaccionTransformacion();
-                    nueva.setCantidadCreada((float) 0);
-                    nueva.setCantidadUsada((float) 0);
-                    nueva.setDireccionInversa(false);
-                    nueva.setInsumo(getBean().getInsumo_elaborado_disponible_seleccionado());
-                    getBean().getLista_insumos_transformados_contenidos().add(nueva);
-                }
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  if (getBean().getInsumo_elaborado_disponible_seleccionado() == null) {
+                                      JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un Insumo primero derivado");
+                                  } else {
+                                      TransaccionTransformacion nueva = new TransaccionTransformacion();
+                                      nueva.setCantidadCreada((float) 0);
+                                      nueva.setCantidadUsada((float) 0);
+                                      nueva.setDireccionInversa(false);
+                                      nueva.setInsumo(getBean().getInsumo_elaborado_disponible_seleccionado());
+                                      getBean().getLista_insumos_transformados_contenidos().add(nueva);
+                                  }
+                                  return Optional.empty();
+                              }
+                          }
         );
         registerOperation(new AbstractViewAction(ACTION_SET_IS_MERMA) {
-            @Override
-            public Optional doAction() {
-                getBean().setRebaja_merma(!getBean().isRebaja_merma());
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  getBean().setRebaja_merma(!getBean().isRebaja_merma());
+                                  return Optional.empty();
+                              }
+                          }
         );
 
     }
@@ -368,10 +353,10 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                     } else {
                         TransaccionSimple transaccionRebaja
                                 = new TransaccionSimple(
-                                        getBean().getInsumo_selecionado(),
-                                        getBean().getCantidad_entrada(),
-                                        getBean().getCausa_rebaja(),
-                                        getBean().isRebaja_merma());
+                                getBean().getInsumo_selecionado(),
+                                getBean().getCantidad_entrada(),
+                                getBean().getCausa_rebaja(),
+                                getBean().isRebaja_merma());
                         getBean().getLista_elementos().add(transaccionRebaja);
                         setDefaultValues(currentOperation, false);
                     }
@@ -415,7 +400,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                                         (Almacen) getBean().getDestino_seleccionado(),
                                         getBean().getLista_insumos_transformados_contenidos())),
                         getBean().getNumero_recibo(),
-                        getBean().getFecha_factura(),
+                        utils.toLocalDate(getBean().getFecha_factura()),
                         getBean().getAlmacen().getCodAlmacen(),
                         0
                 );
@@ -425,26 +410,26 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 switch (currentOperation) {
                     case ENTRADA:
                         service.crearOperacion(Operacion.Tipo.ENTRADA, getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), -1);
+                                getBean().getNumero_recibo(), utils.toLocalDate(getBean().getFecha_factura()), getBean().getAlmacen().getCodAlmacen(), -1);
                         break;
                     case SALIDA:
                         Date fecha = getBean().getFecha_factura();
                         service.crearOperacion(Operacion.Tipo.SALIDA, getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), fecha, getBean().getAlmacen().getCodAlmacen(), selectIdFecha(fecha));
+                                getBean().getNumero_recibo(), utils.toLocalDate(fecha), getBean().getAlmacen().getCodAlmacen(), selectIdFecha(fecha));
                         break;
                     case REBAJA:
                         service.crearOperacion(
                                 Operacion.Tipo.REBAJA,
                                 getBean().getLista_elementos(),
                                 getBean().getNumero_recibo(),
-                                getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), 0);
+                                utils.toLocalDate(getBean().getFecha_factura()), getBean().getAlmacen().getCodAlmacen(), 0);
                         break;
                     case TRASPASO:
                         service.crearOperacion(
                                 Operacion.Tipo.TRASPASO,
                                 getBean().getLista_elementos(),
                                 getBean().getNumero_recibo(),
-                                getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), 0);
+                                utils.toLocalDate(getBean().getFecha_factura()), getBean().getAlmacen().getCodAlmacen(), 0);
                         break;
                     default:
                         throw new UnExpectedErrorException("Tipo de operacion no soportada");
@@ -488,7 +473,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     }
 
     private Integer selectIdFecha(Date fecha) {
-        List<Venta> list = VentaDAO.getInstance().find(fecha);
+        List<Venta> list = VentaDAO.getInstance().find(utils.toLocalDate(fecha));
         if (!list.isEmpty()) {
             if (list.size() > 1) {
                 JList<Venta> jList = new JList<>(list.toArray(new Venta[list.size()]));
@@ -513,7 +498,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         } else {
                             if (JOptionPane.showConfirmDialog(null,
                                     "La venta se encuentra cerrada \n "
-                                    + "Desea relizar aun la transaccion?") == JOptionPane.YES_OPTION) {
+                                            + "Desea relizar aun la transaccion?") == JOptionPane.YES_OPTION) {
                                 return ((Venta) jList.getSelectedValue()).getId();
                             } else {
                                 return null;
@@ -539,7 +524,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             throw new IllegalArgumentException("Bad Call");
         }
         var o = operationToAccept;
-        getBean().setFecha_factura(o.getFecha());
+        getBean().setFecha_factura(utils.toDate(o.getFecha()));
         OperationType opType = getTipoOperacionAndFillData(o);
         getBean().setOperacion_selected(opType);
         getBean().setNumero_recibo(o.getNoRecibo());

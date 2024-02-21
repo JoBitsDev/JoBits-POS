@@ -7,47 +7,37 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
-import com.jobits.pos.controller.imagemanager.ImageManagerService;
-import com.jobits.pos.controller.insumo.InsumoListService;
-import com.jobits.pos.controller.productos.ProductoVentaDetailService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
+import com.jobits.pos.controller.insumo.InsumoService;
+import com.jobits.pos.controller.productos.ProductoVentaService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Carta;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.ProductoInsumo;
-import com.jobits.pos.core.domain.models.ProductoVenta;
-import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.*;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.PROP_RUTA_IMAGEN_PRODUCTO;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
-import java.awt.Dimension;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+
+import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.PROP_RUTA_IMAGEN_PRODUCTO;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ProductoVentaDetailPresenter extends AbstractViewPresenter<ProductoVentaDetailViewModel> {
 
@@ -60,11 +50,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static String ACTION_ELIMINAR_INSUMO_FICHA = "Eliminar";
     public static String ACTION_EDITAR_IMAGEN = "Editar Imagen";
 
-    private final ProductoVentaDetailService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaDetailService.class);
-    private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
-    private final PuntoElaboracionListService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private final ProductoVentaService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaService.class);
+    //private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
+    private final PuntoElaboracionService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
     private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
-    private final InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
+    private final InsumoService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
     private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
 
     private final boolean creatingMode;
@@ -79,9 +69,9 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         super(new ProductoVentaDetailViewModel());
         this.creatingMode = productoVenta == null;
         if (creatingMode) {
-            String value = (String) PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class).getConfiguracion(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO);
+            int value = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class).getConfiguracion(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO).getValor();
             this.productoVenta = new ProductoVenta();
-            this.productoVenta.setTiempoServicioMin(Integer.parseInt(value));
+            this.productoVenta.setTiempoServicioMin(value);
             this.productoVenta.setProductoInsumoList(new ArrayList<>());
 //            this.productoVenta.setProductovOrdenList(new ArrayList<>());
         } else {
@@ -167,7 +157,10 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if (productoVenta.getPagoPorVenta() != null) {
             getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoVenta.getPagoPorVenta()));
         }
-        getBean().setElaborado_seleccionado(productoVenta.getCocinacodCocina());
+        if (productoVenta.getCocinacodCocina() != null) {
+            getBean().setElaborado_seleccionado(ptoElabService.findBy(productoVenta.getCocinacodCocina()));
+        }
+        fillInsumoProductoInfo(productoVenta, getBean().getLista_insumos_disponibles());
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoVenta.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
@@ -190,9 +183,10 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAddIngredienteClick() {
-        service.registrarNuevoInsumo();
-        getBean().getLista_insumos_disponibles().clear();
-        getBean().getLista_insumos_disponibles().addAll(insumoService.findAll());
+        throw new UnsupportedOperationException("En Desarrollo");
+        //service.registrarNuevoInsumo();
+        //getBean().getLista_insumos_disponibles().clear();
+        //getBean().getLista_insumos_disponibles().addAll(insumoService.findAll());
     }
 
     private void onAceptarClick() {
@@ -204,11 +198,6 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             String precioVenta = getBean().getPrecio_venta();
             String pagoPorVenta = getBean().getComision_por_venta();
 
-            if (precioCosto == null || precioCosto.equals("")) {
-                productoVenta.setGasto(0f);
-            } else {
-                productoVenta.setGasto(Float.valueOf(precioCosto));
-            }
             if (precioVenta == null || precioVenta.equals("")) {
                 productoVenta.setPrecioVenta(0f);
             } else {
@@ -220,8 +209,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 productoVenta.setPagoPorVenta(Float.parseFloat(pagoPorVenta));
             }
             productoVenta.setNombre(getBean().getNombre_producto());
-            productoVenta.setCocinacodCocina(getBean().getElaborado_seleccionado());
-            productoVenta.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
+            productoVenta.setCocinacodCocina(getBean().getElaborado_seleccionado().getCodCocina());
+            productoVenta.setSeccionnombreSeccion(getBean().getCategoria_seleccionada().getNombreSeccion());
             productoVenta.setProductoInsumoList(getBean().getLista_insumos_contenidos());
             productoVenta.setTiempoServicioMin(getBean().getTimepo_elaboracion());
             productoVenta.setDescripcion(getBean().getRuta_imagen_producto());
@@ -276,8 +265,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                     newSeccion.setDescripcion("");
                     newSeccion.setNombreSeccion(nombre);
                     newSeccion.setProductoVentaList(new ArrayList<>());
-                    newSeccion.setCartacodCarta((Carta) jComboBox1.getSelectedItem());
-                    seccionService.create(newSeccion);
+                    newSeccion.setCartacodCarta(((Carta) jComboBox1.getSelectedItem()).getCodCarta());
+                    cartaService.addSeccion(((Carta) jComboBox1.getSelectedItem()).getCodCarta(), newSeccion);
                     getBean().setLista_categorias(new ArrayListModel<>(seccionService.findAll()));
                 }
                 break;
@@ -292,7 +281,6 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 "Nuevo Punto de Elaboracion", JOptionPane.QUESTION_MESSAGE);
         Cocina c = new Cocina();
         c.setNombreCocina(nombre);
-        c.setProductoVentaList(new ArrayList<>());
         ptoElabService.create(c);
         getBean().setLista_elaborado(new ArrayListModel<>(ptoElabService.findAll()));
     }
@@ -301,7 +289,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             Insumo inSel = getBean().getInsumo_disponible_sel();
-            service.agregarInsumoaProducto(productoVenta, inSel, cantidad);
+            productoVenta.agregarInsumo(inSel, cantidad);
             getBean().setInsumo_disponible_sel(null);
             getBean().getLista_insumos_contenidos().clear();
             getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
@@ -321,7 +309,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void onEliminarInsumoFichaClick() {
         ProductoInsumo inSel = getBean().getInsumo_contenido_seleccionado();
-        service.eliminarInsumoProducto(productoVenta, inSel);
+        productoVenta.eliminarInsumo(inSel);
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
@@ -336,8 +324,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void refreshProductImage() {
         String path = getBean().getRuta_imagen_producto();
-        ImageIcon image = imageService.loadImageIcon(path, new Dimension(70, 70));
-        getBean().setImagen_producto(image);
+        //ImageIcon image = imageService.loadImageIcon(path, new Dimension(70, 70));
+        //getBean().setImagen_producto(image);
     }
 
     private void addListteners() {
@@ -347,4 +335,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     }
 
+    private void fillInsumoProductoInfo(ProductoVenta producto, ArrayListModel<Insumo> lista_productos_disponibles) {
+        for (ProductoInsumo p : producto.getProductoInsumoList()) {
+            var aux = new Insumo(p.getProductoInsumoPK().getInsumocodInsumo());
+            p.setInsumo(lista_productos_disponibles.get(lista_productos_disponibles.indexOf(aux)));
+            p.setProductoVenta(producto);
+        }
+    }
 }

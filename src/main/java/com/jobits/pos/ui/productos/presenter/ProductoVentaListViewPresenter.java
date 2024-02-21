@@ -5,8 +5,7 @@
  */
 package com.jobits.pos.ui.productos.presenter;
 
-import com.jobits.pos.controller.productos.impl.ProductoVentaDetailController;
-import com.jobits.pos.controller.productos.ProductoVentaListService;
+import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.ProductoVenta;
@@ -18,7 +17,6 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,7 +29,7 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
 
     public static String ACTION_CHANGE_VISIBLE;
 
-    private final ProductoVentaListService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
+    private final ProductoVentaService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaService.class);
 
     public ProductoVentaListViewPresenter() {
         super(new ProductoVentaListViewModel(), ProductoVentaListView.VIEW_NAME);

@@ -98,7 +98,7 @@ public class ViewFacade {
             case ChangeUserView.VIEW_NAME:
                 return new ChangeUserView(p);
             case MainMenuView.VIEW_NAME:
-                return new MainMenuView(p);
+                return new MainMenuView();
             case DashBoardView.VIEW_NAME:
                 return new DashBoardView(p);
             case ProductoVentaListView.VIEW_NAME:
@@ -190,10 +190,10 @@ public class ViewFacade {
             case AgregarProductoView.VIEW_NAME:
                 return new AgregarProductoView(p);
             case LicenceDialogView.VIEW_NAME:
-                return new LicenceDialogView(
-                        Application.getInstance().getLicenceController());
+                return new LicenceDialogView();
             case MesaListView.VIEW_NAME:
                 return new MesaListView(p);
+            
 
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);

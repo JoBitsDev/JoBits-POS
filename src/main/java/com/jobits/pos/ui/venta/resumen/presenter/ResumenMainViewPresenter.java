@@ -9,27 +9,23 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.core.domain.models.temporal.GeneralReviewWrapper;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.*;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Optional;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+
+import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.PROP_FECHA_DESDE;
+import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.PROP_FECHA_HASTA;
 
 /**
- *
  * @author Home
  */
 public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainViewModel> {
@@ -185,8 +181,10 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
 
     @Override
     protected Optional refreshState() {
-        return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
+        //refreshPresenters();
+        return Optional.empty();
     }
+
 
     private void cargarResumen() {
         Application.getInstance().getBackgroundWorker().processInBackground("Cargando Resumen...", () -> {

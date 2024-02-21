@@ -8,20 +8,21 @@ package com.jobits.pos.ui.configuracion.presenter;
 import com.jgoodies.binding.value.AbstractValueModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.configuracion.Configuracion;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
+
+import java.util.HashMap;
 import java.util.Optional;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ConfigurationViewPresenter extends AbstractViewPresenter<ConfiguracionViewModel> {
 
@@ -66,23 +67,25 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea confirmar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            var map = new HashMap<String, Configuracion>();
             for (R.SettingID v : R.SettingID.values()) {
                 Object config = getBean().getConfiguration(v);
                 if (config != null) {
-                    service.updateConfiguracion(v, getBean().getConfiguration(v));
+                    map.put(v.getValue(), getBean().getConfiguration(v));
                 }
             }
+            service.guardarConfiguracion(map);
             Application.getInstance().getNotificationService().notify("Propiedades guardadas exitosamente", TipoNotificacion.SUCCESS);
-            service.cargarConfiguracion();
             NavigationService.getInstance().navigateUp();
         }
     }
 
     private void updateBeanConfig() {
+        var map = service.cargarConfiguracion();
         for (R.SettingID v : R.SettingID.values()) {
-            Object o = service.getConfiguracion(v);
-            if (o != null) {
-                getBean().setConfiguration(v, o);
+            var c = map.get(v.getValue());
+            if (c != null) {
+                getBean().setConfiguration(v, c);
             }
         }
     }

@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
@@ -23,6 +22,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+import com.jobits.pos.controller.venta.VentaCalendarResumeUseCase;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -30,7 +31,7 @@ import javax.swing.JOptionPane;
  */
 public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<VentaStatisticsViewModel> {
 
-    private final VentaListService service;
+    private final VentaCalendarResumeUseCase service;
 
     public static final String ACTION_DESPLEGAR_OPCIONES = "Desplegar opciones",
             ACTION_RESTABLECER = "Restablecer",
@@ -42,17 +43,17 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
 
     int periodDays = 0;
 
-    private Calendar fecha_inicio_actual,
+    private LocalDate fecha_inicio_actual,
             fecha_final_actual,
             fecha_inicio_anterior,
             fecha_final_anterior;
 
-    public VentaStatisticsViewPresenter(VentaListService controller) {
+    public VentaStatisticsViewPresenter(VentaCalendarResumeUseCase controller) {
         super(new VentaStatisticsViewModel(), "Ventas");
-        this.fecha_final_anterior = Calendar.getInstance();
-        this.fecha_inicio_anterior = Calendar.getInstance();
-        this.fecha_final_actual = Calendar.getInstance();
-        this.fecha_inicio_actual = Calendar.getInstance();
+        this.fecha_final_anterior = LocalDate.now();
+        this.fecha_inicio_anterior = LocalDate.now();
+        this.fecha_final_actual = LocalDate.now();
+        this.fecha_inicio_actual = LocalDate.now();
         this.service = controller;
         addListeners();
     }
@@ -136,6 +137,7 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
 
     @Override
     protected void setListToBean() {
+
         getBean().setLista_elementos(service.findVentasInRange(fecha_inicio_actual, fecha_final_actual));
         getBean().setLista_elementos_anterior(new ArrayListModel<>(service.findVentasInRange(fecha_inicio_anterior, fecha_final_anterior)));
     }
@@ -181,22 +183,11 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
     }
 
     private void setPeriodo() {
-        int dia = getBean().getResumen_desde().getDate(),
-                mes = getBean().getResumen_desde().getMonth(),
-                anno = getBean().getResumen_desde().getYear() + 1900;
+        fecha_inicio_actual.adjustInto(utils.toLocalDate(getBean().getResumen_desde()));
 
-        fecha_inicio_actual.set(anno, mes, dia);
+        fecha_final_actual.adjustInto(utils.toLocalDate(getBean().getResumen_hasta()));
 
-        String inicio = dia + "-" + months[mes] + "-" + anno;
-
-        dia = getBean().getResumen_hasta().getDate();
-        mes = getBean().getResumen_hasta().getMonth();
-        anno = getBean().getResumen_hasta().getYear() + 1900;
-
-        fecha_final_actual.set(anno, mes, dia);
-        String fin = dia + "-" + months[mes] + "-" + anno;
-
-        getBean().setRango_fechas_text("De: " + inicio + " / " + fin);
+        getBean().setRango_fechas_text("De: " + fecha_inicio_actual.format(DateTimeFormatter.ISO_DATE) + " / " + fecha_final_actual.format(DateTimeFormatter.ISO_DATE));
     }
 
     private void updateBeanDataActual() {
@@ -231,152 +222,78 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
         getBean().setGasto_otros_intervalo_actual(utils.setDosLugaresDecimales((float) gGastos));
         int hora_pico_promedio = VentaDAO1.getModalPickHour(getBean().getLista_elementos());
         getBean().setHora_pico_intervalo_actual(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
+        List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos(), fecha_inicio_actual, fecha_final_actual);
 
-        Calendar inicio = Calendar.getInstance(),
-                fin = Calendar.getInstance();
-        inicio.setTime(fecha_inicio_actual.getTime());
-        fin.setTime(fecha_final_actual.getTime());
-        List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos(), inicio, fin);
-
-        //List< Date> dias = service.getFechaVentas(ventas);
-        List< Date> dias = new ArrayList<>();
-        service.getFechaVentas(ventas).stream().map((date) -> {
-            Calendar a = Calendar.getInstance();
-            a.clear();
-            a.set(Calendar.HOUR, 0);
-            a.set(Calendar.MINUTE, 0);
-            a.set(Calendar.SECOND, 0);
-            a.setTime(date);
-            date = a.getTime();
-            return date;
-        }).forEachOrdered((date) -> {
-            dias.add(date);
-        });
+        var dias = toNextYearDateList(ventas);
 
         getBean().setLista_dias_actual(new ArrayListModel<>(dias));
 
-        getBean().setLista_total_actual(new ArrayListModel<>(service.getTotalVentas(ventas)));
-        getBean().setLista_gastos_actual(new ArrayListModel<>(service.getTotalGastos(ventas)));
-        getBean().setList_ordenes_actual(new ArrayListModel<>(service.getTotalOrden(ventas)));
-
+        //  getBean().setLista_total_actual(new ArrayListModel<>(service.getTotalVentas(ventas)));
+        // getBean().setLista_gastos_actual(new ArrayListModel<>(service.getTotalGastos(ventas)));
+//        getBean().setList_ordenes_actual(new ArrayListModel<>(service.getTotalOrden(ventas)));
     }
 
     private void setPeriodoAnterior() {
-        LocalDate fechaDel = fecha_inicio_actual.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fechaAl = fecha_final_actual.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaDel = LocalDate.from(fecha_inicio_actual);
+        LocalDate fechaAl = LocalDate.from(fecha_final_actual);
 
         periodDays = (int) ChronoUnit.DAYS.between(fechaDel, fechaAl);
 
-        int dia = getBean().getResumen_desde().getDate(),
-                mes = getBean().getResumen_desde().getMonth(),
-                anno = getBean().getResumen_desde().getYear() + 1900;
-        fecha_inicio_anterior.set(anno, mes, dia);
+        fecha_inicio_anterior.adjustInto(utils.toLocalDate(getBean().getResumen_desde()));
 
-        dia = getBean().getResumen_hasta().getDate();
-        mes = getBean().getResumen_hasta().getMonth();
-        anno = getBean().getResumen_hasta().getYear() + 1900;
-        fecha_final_anterior.set(anno, mes, dia);
+        fecha_final_anterior.adjustInto(utils.toLocalDate(getBean().getResumen_hasta()));
 
-        fecha_inicio_anterior.add(Calendar.DAY_OF_MONTH, -(periodDays + 1));
-        fecha_final_anterior.add(Calendar.DAY_OF_MONTH, -(periodDays + 1));
+        fecha_inicio_anterior.minusDays(periodDays + 1);
+        fecha_final_anterior.minusDays(periodDays + 1);
 
-        dia = fecha_inicio_anterior.get(Calendar.DAY_OF_MONTH);
-        mes = fecha_inicio_anterior.get(Calendar.MONTH);
-        anno = fecha_inicio_anterior.get(Calendar.YEAR);
-        String inicio = dia + "-" + months[mes] + "-" + anno;
-
-        dia = fecha_final_anterior.get(Calendar.DAY_OF_MONTH);
-        mes = fecha_final_anterior.get(Calendar.MONTH);
-        anno = fecha_final_anterior.get(Calendar.YEAR);
-        String fin = dia + "-" + months[mes] + "-" + anno;
-
-        getBean().setRango_fechas_anterior_text("Contra: " + inicio + " / " + fin);
+        getBean().setRango_fechas_anterior_text("Contra: " + fecha_inicio_anterior.format(DateTimeFormatter.ISO_DATE) + " / " + fecha_final_anterior.format(DateTimeFormatter.ISO_DATE));
 
     }
 
     private void updateListPeriodoAnterior() {
-        Calendar inicio = Calendar.getInstance(),
-                fin = Calendar.getInstance();
-        inicio.setTime(fecha_inicio_anterior.getTime());
-        fin.setTime(fecha_final_anterior.getTime());
 
-        List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos_anterior(), inicio, fin);
+        List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos_anterior(), fecha_inicio_anterior, fecha_final_anterior);
 
-        getBean().setLista_total_anterior(new ArrayListModel<>(service.getTotalVentas(ventas)));
-        getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
-        getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
+//        getBean().setLista_total_anterior(new ArrayListModel<>(service.getTotalVentas(ventas)));
+//        getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
+//        getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
 
-        List< Date> dias = new ArrayList<>();
-        service.getFechaVentas(ventas).stream().map((date) -> {
-            Calendar a = Calendar.getInstance();
-            a.clear();
-            a.set(Calendar.HOUR, 0);
-            a.set(Calendar.MINUTE, 0);
-            a.set(Calendar.SECOND, 0);
-            a.setTime(date);
-            a.add(Calendar.DAY_OF_MONTH, (periodDays + 1));
-            date = a.getTime();
-            return date;
-        }).forEachOrdered((date) -> {
-            dias.add(date);
-        });
+        var dias = toNextYearDateList(ventas);
+
         getBean().setLista_dias_anterior(new ArrayListModel<>(dias));
     }
 
     private void setAnnoAnterior() {
-        int dia = getBean().getResumen_desde().getDate(),
-                mes = getBean().getResumen_desde().getMonth(),
-                anno = getBean().getResumen_desde().getYear() + 1900;
-        fecha_inicio_anterior.set(anno, mes, dia);
+        fecha_inicio_anterior.adjustInto(utils.toLocalDate(getBean().getResumen_desde()));
 
-        dia = getBean().getResumen_hasta().getDate();
-        mes = getBean().getResumen_hasta().getMonth();
-        anno = getBean().getResumen_hasta().getYear() + 1900;
-        fecha_final_anterior.set(anno, mes, dia);
+        fecha_final_anterior.adjustInto(utils.toLocalDate(getBean().getResumen_hasta()));
 
-        fecha_inicio_anterior.add(Calendar.YEAR, -1);
-        fecha_final_anterior.add(Calendar.YEAR, -1);
+        fecha_inicio_anterior.minusYears(1);
+        fecha_final_anterior.minusYears(1);
 
-        dia = fecha_inicio_anterior.get(Calendar.DAY_OF_MONTH);
-        mes = fecha_inicio_anterior.get(Calendar.MONTH);
-        anno = fecha_inicio_anterior.get(Calendar.YEAR);
-        String inicio = dia + "-" + months[mes] + "-" + anno;
-
-        dia = fecha_final_anterior.get(Calendar.DAY_OF_MONTH);
-        mes = fecha_final_anterior.get(Calendar.MONTH);
-        anno = fecha_final_anterior.get(Calendar.YEAR);
-        String fin = dia + "-" + months[mes] + "-" + anno;
-
-        getBean().setRango_fechas_anterior_text("Contra: " + inicio + " / " + fin);
+        getBean().setRango_fechas_anterior_text("Contra: " + fecha_inicio_actual.format(DateTimeFormatter.ISO_DATE) + " / " + fecha_final_anterior.format(DateTimeFormatter.ISO_DATE));
     }
 
     private void updateListAnnoAnterior() {
-        Calendar inicio = Calendar.getInstance(),
-                fin = Calendar.getInstance();
-        inicio.setTime(fecha_inicio_anterior.getTime());
-        fin.setTime(fecha_final_anterior.getTime());
 
-        List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos_anterior(), inicio, fin);
+        List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos_anterior(), fecha_inicio_anterior, fecha_final_anterior);
 
-        getBean().setLista_total_anterior(new ArrayListModel<>(service.getTotalVentas(ventas)));
-        getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
-        getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
+//        getBean().setLista_total_anterior(new ArrayListModel<>(service.getTotalVentas(ventas)));
+//        getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
+//        getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
 
-        List< Date> dias = new ArrayList<>();
-        service.getFechaVentas(ventas).stream().map((date) -> {
-            Calendar a = Calendar.getInstance();
-            a.clear();
-            a.set(Calendar.HOUR, 0);
-            a.set(Calendar.MINUTE, 0);
-            a.set(Calendar.SECOND, 0);
-            a.setTime(date);
-            a.add(Calendar.YEAR, 1);
-            date = a.getTime();
-            return date;
-        }).forEachOrdered((date) -> {
-            dias.add(date);
-        });
+        var dias = toNextYearDateList(ventas);
         getBean().setLista_dias_anterior(new ArrayListModel<>(dias));
+    }
+
+    private List<Date> toNextYearDateList(List<Venta> ventas) {
+        List< Date> dias = new ArrayList<>();
+//        service.getFechaVentas(ventas).stream().map((date) -> {
+//            return date.plusYears(1);
+//        }).forEachOrdered((date) -> {
+//            dias.add(utils.toDate(date));
+//        });
+        return dias;
     }
 
     private void updateBeanDataAnterior() {
@@ -414,37 +331,33 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
 
     }
 
-    private List<Venta> cambiarVentasNull(ArrayListModel<Venta> ventasList, Calendar startDate, Calendar endDate) {
+    /**
+     * Algoritmo indefinido
+     *
+     * @param ventasList
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    private List<Venta> cambiarVentasNull(ArrayListModel<Venta> ventasList, LocalDate startDate, LocalDate endDate) {
         List<Venta> ret = new ArrayList<>();
-        Calendar fechaPuntero = startDate;
-        fechaPuntero.set(Calendar.HOUR_OF_DAY, 0);
-        fechaPuntero.set(Calendar.MINUTE, 0);
-        fechaPuntero.set(Calendar.SECOND, 0);
+        LocalDate fechaPuntero = LocalDate.from(startDate);
         int i = 0;
-        int dia = -1, mes = -1, anno = -1,
-                punteroDia, punteroMes, punteroAnno;
+        LocalDate currentVenta = null;
 
         while (fechaPuntero.compareTo(endDate) <= 0) {
             if (!ventasList.isEmpty()) {
                 if (i < ventasList.size()) {
-                    dia = ventasList.get(i).getFecha().getDate();
-                    mes = ventasList.get(i).getFecha().getMonth();
-                    anno = ventasList.get(i).getFecha().getYear() + 1900;
+                    currentVenta = ventasList.get(i).getFecha();
                 }
             }
-            punteroDia = fechaPuntero.get(Calendar.DAY_OF_MONTH);
-            punteroMes = fechaPuntero.get(Calendar.MONTH);
-            punteroAnno = fechaPuntero.get(Calendar.YEAR);
 
-            if ((dia > punteroDia && mes >= punteroMes && anno >= punteroAnno)
-                    || (dia < punteroDia && mes >= punteroMes && anno >= punteroAnno)
-                    || (dia < punteroDia && mes <= punteroMes && anno <= punteroAnno)
-                    || (dia > punteroDia && mes <= punteroMes && anno <= punteroAnno)) {
+            if (!currentVenta.isEqual(fechaPuntero)) {
                 Venta a = new Venta();
                 a.setVentaTotal(0.0);
-                a.setFecha(fechaPuntero.getTime());
+                a.setFecha(fechaPuntero);
                 ret.add(a);
-            } else if (dia == punteroDia && mes == punteroMes && anno == punteroAnno) {
+            } else {
                 boolean flag = false;
                 Venta a = ventasList.get(i);
                 if ((ventasList.get(i).getVentaTotal() == null)
@@ -469,7 +382,7 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
                 }
                 i++;
             }
-            fechaPuntero.add(Calendar.DAY_OF_MONTH, 1);
+            fechaPuntero.plusDays(1);
         }
         return ret;
     }
@@ -489,10 +402,10 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
         getBean().setPeriodo_selected(false);
         getBean().setAnno_selected(false);
 
-        fecha_inicio_actual = Calendar.getInstance();
-        fecha_final_actual = Calendar.getInstance();
-        fecha_inicio_anterior = Calendar.getInstance();
-        fecha_final_anterior = Calendar.getInstance();
+        this.fecha_final_anterior = LocalDate.now();
+        this.fecha_inicio_anterior = LocalDate.now();
+        this.fecha_final_actual = LocalDate.now();
+        this.fecha_inicio_actual = LocalDate.now();
 
     }
 

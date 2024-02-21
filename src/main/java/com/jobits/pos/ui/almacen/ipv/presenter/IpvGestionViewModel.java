@@ -8,80 +8,49 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
 import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+
 import java.util.Date;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class IpvGestionViewModel extends AbstractViewModel {
 
-    private ArrayListModel<IpvRegistro> lista_ipv_registro = new ArrayListModel<>();
-
     public static final String PROP_LISTA_IPV_REGISTRO = "lista_ipv_registro";
-
-    private IpvRegistro ipv_registro_seleciconado;
-
     public static final String PROP_IPV_REGISTRO_SELECICONADO = "ipv_registro_seleciconado";
-
-    private ArrayListModel<IpvVentaRegistro> lista_ipv_venta_registro = new ArrayListModel<>();
-
     public static final String PROP_LISTA_IPV_VENTA_REGISTRO = "lista_ipv_venta_registro";
-
-    private IpvVentaRegistro ipv_venta_registro_seleccionado;
-
     public static final String PROP_IPV_VENTA_REGISTRO_SELECCIONADO = "ipv_venta_registro_seleccionado";
-
-    private boolean check_ocultar_productos_ipv = false;
-
     public static final String PROP_CHECK_OCULTAR_PRODUCTOS = "check_ocultar_productos_ipv";
-
-    private Cocina punto_elaboracion_seleccionado;
-
     public static final String PROP_PUNTO_ELABORACION_SELECCIONADO = "punto_elaboracion_seleccionado";
-
-    private Date fecha_ipv_seleccionada;
-
     public static final String PROP_FECHA_SELECCIONADA = "fecha_ipv_seleccionada";
-
-    private ArrayListModel<Cocina> lista_punto_elaboracion = new ArrayListModel<>();
-
     public static final String PROP_LISTA_PUNTO_ELABORACION = "lista_punto_elaboracion";
-
-    private Date fecha_ipv_ventas_seleccionada;
-
     public static final String PROP_FECHA_IPV_VENTAS_SELECCIONADA = "fecha_ipv_ventas_seleccionada";
-
-    private boolean check_ocultar_productos_ipv_venta = false;
-
     public static final String PROP_CHECK_OCULTAR_PRODUCTOS_IPV_VENTA = "check_ocultar_productos_ipv_venta";
-
-    private Venta venta_ipv_ventas_seleccionada;
-
     public static final String PROP_VENTA_IPV_VENTAS_SELECCIONADA = "venta_ipv_ventas_seleccionada";
-
-    private Venta venta_ipv_seleccionada;
-
     public static final String PROP_VENTA_IPV_SELECCIONADA = "venta_ipv_seleccionada";
-
-    private Insumo insumo_seleccionado;
-
     public static final String PROP_INSUMO_SELECCIONADO = "insumo_seleccionado";
-
-    private ArrayListModel<Insumo> lista_insumos = new ArrayListModel<>();
-
     public static final String PROP_LISTA_INSUMOS = "lista_insumos";
-
-    private String total_ipv_registro = "xx.xx MN";
-
     public static final String PROP_TOTAL_IPV_REGISTRO = "total_ipv_registro";
+    private ArrayListModel<IpvRegistro> lista_ipv_registro = new ArrayListModel<>();
+    private IpvRegistro ipv_registro_seleciconado;
+    private ArrayListModel<IpvVentaRegistro> lista_ipv_venta_registro = new ArrayListModel<>();
+    private IpvVentaRegistro ipv_venta_registro_seleccionado;
+    private boolean check_ocultar_productos_ipv = false;
+    private Cocina punto_elaboracion_seleccionado;
+    private Date fecha_ipv_seleccionada;
+    private ArrayListModel<Cocina> lista_punto_elaboracion = new ArrayListModel<>();
+    private Date fecha_ipv_ventas_seleccionada;
+    private boolean check_ocultar_productos_ipv_venta = false;
+    private Integer venta_ipv_ventas_seleccionada;
+    private Integer venta_ipv_seleccionada;
+    private Insumo insumo_seleccionado;
+    private ArrayListModel<Insumo> lista_insumos = new ArrayListModel<>();
+    private String total_ipv_registro = "xx.xx MN";
 
     /**
      * Get the value of total_ipv_registro
@@ -148,7 +117,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      *
      * @return the value of venta_ipv_seleccionada
      */
-    public Venta getVenta_ipv_seleccionada() {
+    public Integer getVenta_ipv_seleccionada() {
         return venta_ipv_seleccionada;
     }
 
@@ -157,8 +126,8 @@ public class IpvGestionViewModel extends AbstractViewModel {
      *
      * @param venta_ipv_seleccionada new value of venta_ipv_seleccionada
      */
-    public void setVenta_ipv_seleccionada(Venta venta_ipv_seleccionada) {
-        Venta oldVenta_ipv_seleccionada = this.venta_ipv_seleccionada;
+    public void setVenta_ipv_seleccionada(Integer venta_ipv_seleccionada) {
+        Integer oldVenta_ipv_seleccionada = this.venta_ipv_seleccionada;
         this.venta_ipv_seleccionada = venta_ipv_seleccionada;
         firePropertyChange(PROP_VENTA_IPV_SELECCIONADA, oldVenta_ipv_seleccionada, venta_ipv_seleccionada);
     }
@@ -168,7 +137,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      *
      * @return the value of venta_ipv_ventas_seleccionada
      */
-    public Venta getVenta_ipv_ventas_seleccionada() {
+    public Integer getVenta_ipv_ventas_seleccionada() {
         return venta_ipv_ventas_seleccionada;
     }
 
@@ -176,10 +145,10 @@ public class IpvGestionViewModel extends AbstractViewModel {
      * Set the value of venta_ipv_ventas_seleccionada
      *
      * @param venta_ipv_ventas_seleccionada new value of
-     * venta_ipv_ventas_seleccionada
+     *                                      venta_ipv_ventas_seleccionada
      */
-    public void setVenta_ipv_ventas_seleccionada(Venta venta_ipv_ventas_seleccionada) {
-        Venta oldVenta_ipv_ventas_seleccionada = this.venta_ipv_ventas_seleccionada;
+    public void setVenta_ipv_ventas_seleccionada(Integer venta_ipv_ventas_seleccionada) {
+        Integer oldVenta_ipv_ventas_seleccionada = this.venta_ipv_ventas_seleccionada;
         this.venta_ipv_ventas_seleccionada = venta_ipv_ventas_seleccionada;
         firePropertyChange(PROP_VENTA_IPV_VENTAS_SELECCIONADA, oldVenta_ipv_ventas_seleccionada, venta_ipv_ventas_seleccionada);
     }
@@ -197,7 +166,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      * Set the value of check_ocultar_productos_ipv_venta
      *
      * @param check_ocultar_productos_ipv_venta new value of
-     * check_ocultar_productos_ipv_venta
+     *                                          check_ocultar_productos_ipv_venta
      */
     public void setCheck_ocultar_productos_ipv_venta(boolean check_ocultar_productos_ipv_venta) {
         boolean oldCheck_ocultar_productos_ipv_venta = this.check_ocultar_productos_ipv_venta;
@@ -218,7 +187,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      * Set the value of fecha_ipv_ventas_seleccionada
      *
      * @param fecha_ipv_ventas_seleccionada new value of
-     * fecha_ipv_ventas_seleccionada
+     *                                      fecha_ipv_ventas_seleccionada
      */
     public void setFecha_ipv_ventas_seleccionada(Date fecha_ipv_ventas_seleccionada) {
         Date oldFecha_ipv_ventas_seleccionada = this.fecha_ipv_ventas_seleccionada;
@@ -279,7 +248,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      * Set the value of punto_elaboracion_seleccionado
      *
      * @param punto_elaboracion_seleccionado new value of
-     * punto_elaboracion_seleccionado
+     *                                       punto_elaboracion_seleccionado
      */
     public void setPunto_elaboracion_seleccionado(Cocina punto_elaboracion_seleccionado) {
         Cocina oldPunto_elaboracion_seleccionado = this.punto_elaboracion_seleccionado;
@@ -300,7 +269,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      * Set the value of check_ocultar_productos_ipv
      *
      * @param check_ocultar_productos_ipv new value of
-     * check_ocultar_productos_ipv
+     *                                    check_ocultar_productos_ipv
      */
     public void setCheck_ocultar_productos_ipv(boolean check_ocultar_productos_ipv) {
         boolean oldCheck_ocultar_productos = this.check_ocultar_productos_ipv;
@@ -321,7 +290,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      * Set the value of ipv_venta_registro_seleccionado
      *
      * @param ipv_venta_registro_seleccionado new value of
-     * ipv_venta_registro_seleccionado
+     *                                        ipv_venta_registro_seleccionado
      */
     public void setIpv_venta_registro_seleccionado(IpvVentaRegistro ipv_venta_registro_seleccionado) {
         IpvVentaRegistro oldIpv_venta_registro_seleccionado = this.ipv_venta_registro_seleccionado;

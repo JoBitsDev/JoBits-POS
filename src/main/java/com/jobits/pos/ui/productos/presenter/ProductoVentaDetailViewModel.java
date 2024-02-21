@@ -11,99 +11,77 @@ import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
-import java.awt.Dimension;
-import javax.swing.ImageIcon;
+
+import javax.swing.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
+    public static final String PROP_NOMBRE_PRODUCTO = "nombre_producto";
+    public static final String PROP_PRECIO_VENTA = "precio_venta";
+    public static final String PROP_CODIGO_PRODUCTO = "codigo_producto";
+    public static final String PROP_LISTA_CATEGORIAS = "lista_categorias";
+    public static final String PROP_CATEGORIA_SELECCIONADA = "categoria_seleccionada";
+    public static final String PROP_LISTA_ELABORADO = "lista_elaborado";
+    public static final String PROP_ELABORADO_SELECCIONADO = "elaborado_seleccionado";
+    public static final String PROP_PRECIO_COSTO = "precio_costo";
+    public static final String PROP_CHECKBOX_INVENTARIAR_PRODUCTO = "checkbox_inventariar_producto";
+    public static final String PROP_CHECKBOX_PRODUCTO_ELABORADO = "checkbox_producto_elaborado";
+    public static final String PROP_CHECKBOX_PRODUCTO_LIBRE_IMPUESTOS = "checkbox_producto_libre_impuestos";
+    public static final String PROP_LISTA_INSUMOS_DISPONIBLES = "lista_insumos_disponibles";
+    public static final String PROP_INSUMO_DISPONIBLE_SEL = "insumo_disponible_sel";
+    public static final String PROP_LISTA_INSUMOS_CONTENIDOS = "lista_insumos_contenidos";
+    public static final String PROP_INSUMO_SELECCIONADO = "insumo_contenido_seleccionado";
+    public static final String PROP_TIMEPO_ELABORACION = "timepo_elaboracion";
+    public static final String PROP_COMISION_POR_VENTA_PORCENTUAL = "comision_por_venta_porcentual";
+    public static final String PROP_COMISION_POR_VENTA = "comision_por_venta";
+    public static final String PROP_IMAGEN_PRODUCTO = "imagen_producto";
+    public static final String PROP_RUTA_IMAGEN_PRODUCTO = "ruta_imagen_producto";
+    public static final String PROP_IMAGE_PRODUCT_VISIBLE = "image_product_visible";
+    public static final String PROP_CREAR_EDITAR_BUTTON_TEXT = "crear_editar_button_text";
     //
     //Basico
     //
     @NotBlank
     private String nombre_producto;
-
-    public static final String PROP_NOMBRE_PRODUCTO = "nombre_producto";
-
     @NotBlank
     private String precio_venta;
-
-    public static final String PROP_PRECIO_VENTA = "precio_venta";
-
     private String codigo_producto;
-
-    public static final String PROP_CODIGO_PRODUCTO = "codigo_producto";
-
     private ArrayListModel<Seccion> lista_categorias = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_CATEGORIAS = "lista_categorias";
-
     @NotNull
     private Seccion categoria_seleccionada;
-
-    public static final String PROP_CATEGORIA_SELECCIONADA = "categoria_seleccionada";
-
     private ArrayListModel<Cocina> lista_elaborado = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_ELABORADO = "lista_elaborado";
-
     @NotNull
     private Cocina elaborado_seleccionado;
-
-    public static final String PROP_ELABORADO_SELECCIONADO = "elaborado_seleccionado";
-
     @NotEmpty
     private String precio_costo;
-
-    public static final String PROP_PRECIO_COSTO = "precio_costo";
-
     //
     // Inventario
     //
     private boolean checkbox_inventariar_producto;
-
-    public static final String PROP_CHECKBOX_INVENTARIAR_PRODUCTO = "checkbox_inventariar_producto";
-
     private boolean checkbox_producto_elaborado;
-
-    public static final String PROP_CHECKBOX_PRODUCTO_ELABORADO = "checkbox_producto_elaborado";
-
     private boolean checkbox_producto_libre_impuestos;
-
-    public static final String PROP_CHECKBOX_PRODUCTO_LIBRE_IMPUESTOS = "checkbox_producto_libre_impuestos";
-
     private ArrayListModel<Insumo> lista_insumos_disponibles = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_INSUMOS_DISPONIBLES = "lista_insumos_disponibles";
-
     private Insumo insumo_disponible_sel;
-
-    public static final String PROP_INSUMO_DISPONIBLE_SEL = "insumo_disponible_sel";
-
     private ArrayListModel<ProductoInsumo> lista_insumos_contenidos = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_INSUMOS_CONTENIDOS = "lista_insumos_contenidos";
-
     private ProductoInsumo insumo_contenido_seleccionado;
-
-    public static final String PROP_INSUMO_SELECCIONADO = "insumo_contenido_seleccionado";
-
     private int timepo_elaboracion = 0;
-
-    public static final String PROP_TIMEPO_ELABORACION = "timepo_elaboracion";
-
     private float comision_por_venta_porcentual = 0;
-
-    public static final String PROP_COMISION_POR_VENTA_PORCENTUAL = "comision_por_venta_porcentual";
+    //
+    // Otros
+    //
+    private String comision_por_venta;
+    private ImageIcon imagen_producto;
+    private String ruta_imagen_producto;
+    private boolean image_product_visible = true;
+    private String crear_editar_button_text;
 
     /**
      * Get the value of comision_por_venta_porcentual
@@ -118,7 +96,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      * Set the value of comision_por_venta_porcentual
      *
      * @param comision_por_venta_porcentual new value of
-     * comision_por_venta_porcentual
+     *                                      comision_por_venta_porcentual
      */
     public void setComision_por_venta_porcentual(float comision_por_venta_porcentual) {
         float oldComision_por_venta_porcentual = this.comision_por_venta_porcentual;
@@ -179,36 +157,13 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      * Set the value of insumo_contenido_seleccionado
      *
      * @param insumo_contenido_seleccionado new value of
-     * insumo_contenido_seleccionado
+     *                                      insumo_contenido_seleccionado
      */
     public void setInsumo_contenido_seleccionado(ProductoInsumo insumo_contenido_seleccionado) {
         ProductoInsumo oldInsumo_seleccionado = this.insumo_contenido_seleccionado;
         this.insumo_contenido_seleccionado = insumo_contenido_seleccionado;
         firePropertyChange(PROP_INSUMO_SELECCIONADO, oldInsumo_seleccionado, insumo_contenido_seleccionado, false);
     }
-
-    //
-    // Otros
-    //
-    private String comision_por_venta;
-
-    public static final String PROP_COMISION_POR_VENTA = "comision_por_venta";
-
-    private ImageIcon imagen_producto;
-
-    public static final String PROP_IMAGEN_PRODUCTO = "imagen_producto";
-
-    private String ruta_imagen_producto;
-
-    public static final String PROP_RUTA_IMAGEN_PRODUCTO = "ruta_imagen_producto";
-
-    private boolean image_product_visible = true;
-
-    public static final String PROP_IMAGE_PRODUCT_VISIBLE = "image_product_visible";
-
-    private String crear_editar_button_text;
-
-    public static final String PROP_CREAR_EDITAR_BUTTON_TEXT = "crear_editar_button_text";
 
     /**
      * Get the value of crear_editar_button_text
@@ -363,7 +318,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      * Set the value of checkbox_producto_elaborado
      *
      * @param checkbox_producto_elaborado new value of
-     * checkbox_producto_elaborado
+     *                                    checkbox_producto_elaborado
      */
     public void setCheckbox_producto_elaborado(boolean checkbox_producto_elaborado) {
         boolean oldCheckbox_producto_elaborado = this.checkbox_producto_elaborado;
@@ -404,7 +359,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      * Set the value of checkbox_inventariar_producto
      *
      * @param checkbox_inventariar_producto new value of
-     * checkbox_inventariar_producto
+     *                                      checkbox_inventariar_producto
      */
     public void setCheckbox_inventariar_producto(boolean checkbox_inventariar_producto) {
         boolean oldCheckbox_inventariar_producto = this.checkbox_inventariar_producto;
@@ -466,11 +421,21 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @param categoria_seleccionada new value of categoria_seleccionada
      */
-    public void setCategoria_seleccionada(Seccion categoria_seleccionada) {
+    public void setCategoria_seleccionada(String categoria_seleccionada) {
         Seccion oldCategoria_seleccionada = this.categoria_seleccionada;
-        this.categoria_seleccionada = categoria_seleccionada;
+        for (Seccion s : lista_categorias) {
+            if (s.getNombreSeccion().equals(categoria_seleccionada)) {
+                this.categoria_seleccionada = s;
+            }
+        }
         firePropertyChange(PROP_CATEGORIA_SELECCIONADA, oldCategoria_seleccionada, categoria_seleccionada, false);
     }
+
+
+    public void setCategoria_seleccionada(Seccion categoria_seleccionada) {
+        setCategoria_seleccionada(categoria_seleccionada.toString());
+    }
+
 
     /**
      * Get the value of lista_categorias

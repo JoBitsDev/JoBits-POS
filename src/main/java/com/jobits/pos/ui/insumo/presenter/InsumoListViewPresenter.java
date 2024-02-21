@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.insumo.presenter;
 
-import com.jobits.pos.controller.insumo.InsumoListService;
+import com.jobits.pos.controller.insumo.InsumoService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Insumo;
@@ -14,7 +14,6 @@ import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
-import com.root101.clean.core.app.services.NotificationService;
 
 /**
  *
@@ -25,7 +24,7 @@ import com.root101.clean.core.app.services.NotificationService;
  */
 public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoListViewModel> {
 
-    private final InsumoListService controller = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
+    private final InsumoService controller = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
 
     public InsumoListViewPresenter() {
         super(new InsumoListViewModel(), "Insumos");

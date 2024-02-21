@@ -5,15 +5,13 @@
  */
 package com.jobits.pos.ui.login.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.client.webconnection.login.model.UbicacionModel;
+import com.jobits.pos.client.webconnection.login.model.UbicacionModelWrapper;
+import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.util.Arrays;
 import java.util.Optional;
-import org.jobits.db.core.domain.ConexionPropertiesModel;
-import org.jobits.db.core.domain.TipoConexion;
-import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
@@ -26,47 +24,29 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
 
     public static final String ACTION_ACEPTAR_EDICION = "Editar ubicación";
     public static String ACTION_CANCELAR_EDICION = "Cancelar";
-    private final UbicacionConexionService service;
+    UbicacionService service;
 
-    public UbicacionViewPresenter(UbicacionConexionService controller) {
+    public UbicacionViewPresenter(UbicacionService service) {
         super(new UbicacionViewModel());
-        this.service = controller;
-        loadFormData(this.service.getUbicaciones().getUbicacionActiva());
+        this.service = service;
+        var ubicaciones = service.loadLocations();
+        loadFormData(ubicaciones.getUbicaciones().get(ubicaciones.getUbicacionSeleccionada()));
     }
 
     private void onEditarUbicacionCLick() {
-        ConexionPropertiesModel uc = new ConexionPropertiesModel() {
-            @Override
-            public String getContrasena() {
-                return getBean().getPassword();
-            }
+        var ubicacion = UbicacionModel.builder()
+                .nombre(getBean().getNombre_ubicacion())
+                .ip(getBean().getIp())
+                .puerto(getBean().getPuerto())
+                .usuario(getBean().getUsuario())
+                .password(getBean().getPassword())
+                .usuarioId(Integer.parseInt(getBean().getIdUsuario()))
+                .baseDatosId(Integer.parseInt(getBean().getIdBaseDatos())).build();
 
-            @Override
-            public String getDriver() {
-                return getBean().getDriver();
-            }
-
-            @Override
-            public String getNombreUbicacion() {
-                return getBean().getNombre_ubicacion();
-            }
-
-            @Override
-            public TipoConexion getTipoUbicacion() {
-                return getBean().getTipo_servidor_seleccionado();
-            }
-
-            @Override
-            public String getUrl() {
-                return getBean().getUrl();
-            }
-
-            @Override
-            public String getUsuario() {
-                return getBean().getUsuario();
-            }
-        };
-        service.editConexion(uc, service.getUbicaciones().getSelectedUbicacion());
+        var ubicaciones = service.loadLocations();
+        var ubicacionesList = ubicaciones.getUbicaciones();
+        ubicacionesList.set(ubicaciones.getUbicacionSeleccionada(), ubicacion);
+        service.saveLocations(new UbicacionModelWrapper(ubicacionesList, ubicaciones.getUbicacionSeleccionada()));
         NavigationService.getInstance().navigateUp();//TODO: codigo de navegacion
     }
 
@@ -94,14 +74,14 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
 
     }
 
-    private void loadFormData(ConexionPropertiesModel ubicacionActiva) {
+    private void loadFormData(UbicacionModel ubicacionActiva) {
         getBean().setUsuario(ubicacionActiva.getUsuario());
-        getBean().setDriver(ubicacionActiva.getDriver());
-        getBean().setLista_tipo_servidor(new ArrayListModel<>(Arrays.asList(TipoConexion.values())));
-        getBean().setNombre_ubicacion(ubicacionActiva.getNombreUbicacion());
-        getBean().setPassword(ubicacionActiva.getContrasena());
-        getBean().setTipo_servidor_seleccionado(ubicacionActiva.getTipoUbicacion());
-        getBean().setUrl(ubicacionActiva.getUrl());
+        getBean().setIdBaseDatos("" + ubicacionActiva.getBaseDatosId());
+        getBean().setIdUsuario("" + ubicacionActiva.getUsuarioId());
+        getBean().setNombre_ubicacion(ubicacionActiva.getNombre());
+        getBean().setPassword(ubicacionActiva.getPassword());
+        getBean().setIp(ubicacionActiva.getIp());
+        getBean().setPuerto(ubicacionActiva.getPuerto());
     }
 
 }

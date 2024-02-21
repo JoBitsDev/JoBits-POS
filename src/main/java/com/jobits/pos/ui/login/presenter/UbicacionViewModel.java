@@ -5,86 +5,61 @@
  */
 package com.jobits.pos.ui.login.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
-import org.jobits.db.core.domain.TipoConexion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
-import java.util.List;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class UbicacionViewModel extends AbstractViewModel {
 
-    private String nombre_ubicacion;
-
     public static final String PROP_NOMBRE_UBICACION = "nombre_ubicacion";
-
-    private String url;
-
-    public static final String PROP_URL = "url";
-
-    private String usuario;
-
+    public static final String PROP_IP = "ip";
     public static final String PROP_USUARIO = "usuario";
-
-    private String password;
-
+    public static final String PROP_PUERTO = "puerto";
     public static final String PROP_PASSWORD = "password";
+    public static final String PROP_ID_USUARIO = "idUsuario";
+    public static final String PROP_ID_DB = "idBaseDatos";
+    private String nombre_ubicacion;
+    private String ip;
+    private String usuario;
+    private String puerto;
+    private String password;
+    private String idUsuario;
+    private String idBaseDatos;
 
-    private String driver;
-
-    public static final String PROP_DRIVER = "driver";
-
-    private TipoConexion tipo_servidor_seleccionado;
-
-    public static final String PROP_TIPO_SERVIDOR_SELECCIONADO = "tipo_servidor_seleccionado";
-
-    private ArrayListModel<TipoConexion> lista_tipo_servidor;
-
-    public static final String PROP_LISTA_TIPO_SERVIDOR = "lista_tipo_servidor";
-
-    /**
-     * Get the value of lista_tipo_servidor
-     *
-     * @return the value of lista_tipo_servidor
-     */
-    public List<TipoConexion> getLista_tipo_servidor() {
-        return lista_tipo_servidor;
+    public UbicacionViewModel() {
     }
 
-    /**
-     * Set the value of lista_tipo_servidor
-     *
-     * @param lista_tipo_servidor new value of lista_tipo_servidor
-     */
-    public void setLista_tipo_servidor(ArrayListModel<TipoConexion> lista_tipo_servidor) {
-        ArrayListModel<TipoConexion> oldLista_tipo_servidor = this.lista_tipo_servidor;
-        this.lista_tipo_servidor = lista_tipo_servidor;
-        firePropertyChange(PROP_LISTA_TIPO_SERVIDOR, oldLista_tipo_servidor, lista_tipo_servidor, false);
+    public String getPuerto() {
+        return puerto;
     }
 
-    /**
-     * Get the value of tipo_servidor_seleccionado
-     *
-     * @return the value of tipo_servidor_seleccionado
-     */
-    public TipoConexion getTipo_servidor_seleccionado() {
-        return tipo_servidor_seleccionado;
+    public void setPuerto(String puerto) {
+        String oldpuerto = this.puerto;
+        this.puerto = puerto;
+        firePropertyChange(PROP_PUERTO, oldpuerto, password, false);
     }
 
-    /**
-     * Set the value of tipo_servidor_seleccionado
-     *
-     * @param tipo_servidor_seleccionado new value of tipo_servidor_seleccionado
-     */
-    public void setTipo_servidor_seleccionado(TipoConexion tipo_servidor_seleccionado) {
-        TipoConexion oldLista_tipo_servidor = this.tipo_servidor_seleccionado;
-        this.tipo_servidor_seleccionado = tipo_servidor_seleccionado;
-        firePropertyChange(PROP_TIPO_SERVIDOR_SELECCIONADO, oldLista_tipo_servidor, tipo_servidor_seleccionado, false);
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        String oldIdUsuario = this.idUsuario;
+        this.idUsuario = idUsuario;
+        firePropertyChange(PROP_ID_USUARIO, oldIdUsuario, idUsuario, false);
+    }
+
+    public String getIdBaseDatos() {
+        return idBaseDatos;
+    }
+
+    public void setIdBaseDatos(String idBaseDatos) {
+        String oldidBaseDatos = this.idBaseDatos;
+        this.idBaseDatos = idBaseDatos;
+        firePropertyChange(PROP_ID_DB, oldidBaseDatos, idBaseDatos, false);
     }
 
     /**
@@ -105,26 +80,6 @@ public class UbicacionViewModel extends AbstractViewModel {
         String oldPassword = this.password;
         this.password = password;
         firePropertyChange(PROP_PASSWORD, oldPassword, password, false);
-    }
-
-    /**
-     * Get the value of driver
-     *
-     * @return the value of driver
-     */
-    public String getDriver() {
-        return "org.postgresql.Driver";
-    }
-
-    /**
-     * Set the value of driver
-     *
-     * @param driver new value of driver
-     */
-    public void setDriver(String driver) {
-        String oldLista_drivers = this.driver;
-        this.driver = driver;
-        firePropertyChange(PROP_DRIVER, oldLista_drivers, driver, false);
     }
 
     /**
@@ -152,19 +107,19 @@ public class UbicacionViewModel extends AbstractViewModel {
      *
      * @return the value of url
      */
-    public String getUrl() {
-        return url;
+    public String getIp() {
+        return ip;
     }
 
     /**
      * Set the value of url
      *
-     * @param url new value of url
+     * @param ip new value of url
      */
-    public void setUrl(String url) {
-        String oldUrl = this.url;
-        this.url = url;
-        firePropertyChange(PROP_URL, oldUrl, url, false);
+    public void setIp(String ip) {
+        String oldUrl = this.ip;
+        this.ip = ip;
+        firePropertyChange(PROP_IP, oldUrl, ip, false);
     }
 
     /**

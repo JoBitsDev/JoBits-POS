@@ -5,32 +5,36 @@
  */
 package com.jobits.pos.ui.trabajadores;
 
-import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter.*;
-import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalViewModel.*;
-import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.clean.core.app.services.UserResolver;
-import java.awt.BorderLayout;
+import com.root101.swing.material.standards.MaterialIcons;
+
+import java.awt.*;
+
+import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter.*;
+import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalViewModel.*;
 
 /**
- *
  * @author Home
  */
 public class AsistenciaPersonalView extends AbstractViewPanel {
 
-    private AddFromPanel<AsistenciaPersonal, Personal> tablePagoTrabajadores;
     public static final String VIEW_NAME = "Asistencia Personal";
+    private AddFromPanel<AsistenciaPersonal, Personal> tablePagoTrabajadores;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonImprimir;
+    private javax.swing.JButton jButtonAMayores;
 
     /**
      * Creates new form AsistenciaPersonalView
+     *
      * @param presenter
      */
     public AsistenciaPersonalView(AbstractViewPresenter presenter) {
@@ -47,7 +51,7 @@ public class AsistenciaPersonalView extends AbstractViewPanel {
     private void initComponents() {
 
         setLayout(new java.awt.BorderLayout());
-        
+
         jButtonImprimir = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonImprimir.setIcon(MaterialIcons.PRINT);
         jButtonImprimir.setText("Asistencia");
@@ -91,9 +95,9 @@ public class AsistenciaPersonalView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return R.DATE_FORMAT.format(getRow(rowIndex).getVenta().getFecha());
+                        return getRow(rowIndex).getAsistenciaPersonalPK().getVentaid();
                     case 1:
-                        return getRow(rowIndex).getPersonal().getUsuario();
+                        return getRow(rowIndex).getAsistenciaPersonalPK().getPersonalusuario();
                     case 2:
                         return getRow(rowIndex).getPago();
                     case 3:
@@ -137,10 +141,5 @@ public class AsistenciaPersonalView extends AbstractViewPanel {
     public String getViewName() {
         return VIEW_NAME;
     }
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonImprimir;
-    private javax.swing.JButton jButtonAMayores;
     // End of variables declaration//GEN-END:variables
 }

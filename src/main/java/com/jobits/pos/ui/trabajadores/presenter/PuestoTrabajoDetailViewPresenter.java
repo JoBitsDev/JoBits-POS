@@ -6,26 +6,25 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.areaventa.AreaDetailService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailService;
+import com.jobits.pos.controller.areaventa.AreaVentaService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoUseCase;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.PuestoTrabajo;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 /**
- *
  * @author Home
  */
 public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<PuestoTrabajoDetailViewModel> {
@@ -33,9 +32,9 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
 
-    private final PuestoTrabajoDetailService service = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoDetailService.class);
-    private final AreaDetailService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaDetailService.class);
-    private final PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private final PuestoTrabajoUseCase service = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoUseCase.class);
+    private final AreaVentaService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaVentaService.class);
+    private final PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
     private final boolean creatingMode;
 
     PuestoTrabajo puesto;

@@ -5,20 +5,14 @@
  */
 package com.jobits.pos.ui.filter.presenter;
 
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.core.domain.VentaDAO1Filters;
-import com.jobits.pos.core.domain.models.Area;
-import com.jobits.pos.core.domain.models.ProductoVenta;
-import com.jobits.pos.core.domain.models.Seccion;
-import static com.jobits.pos.ui.filter.presenter.FilterViewPresenter.ACTION_ADD_FILTER;
+import com.jobits.pos.controller.filter.FilterWrapper;
+import com.jobits.pos.core.domain.models.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+
 import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
- *
  * @author Home
  */
 public class AbstractFilterTypePresenter extends AbstractViewPresenter<AbstractFilterTypeModel> {
@@ -57,35 +51,36 @@ public class AbstractFilterTypePresenter extends AbstractViewPresenter<AbstractF
         getBean().setTipo_operacion(!getBean().isTipo_operacion());
     }
 
-    public Predicate createPredicate() {
-        Predicate ret = null;
+    public FilterType getTipoFiltro() {
+        return getBean().getTipo_filtro();
+    }
+
+    public FilterWrapper createPredicate() {
+        FilterWrapper ret = null;
         switch (getBean().getTipo_filtro()) {
             case COCINA:
-                ret = VentaDAO1Filters.filtroCocina((Cocina) getBean().getElemento_seleccionado());
+                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.COCINA, ((Cocina) getBean().getElemento_seleccionado()).getCodCocina());
                 break;
             case INSUMO:
-                ret = VentaDAO1Filters.filtroInsumo((Insumo) getBean().getElemento_seleccionado());
+                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.INSUMO, ((Insumo) getBean().getElemento_seleccionado()).getCodInsumo());
                 break;
             case AREA:
-                ret = VentaDAO1Filters.filtroArea((Area) getBean().getElemento_seleccionado());
+                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.AREA, ((Area) getBean().getElemento_seleccionado()).getCodArea());
                 break;
             case IPV:
-                ret = VentaDAO1Filters.filtroIPV((Cocina) getBean().getElemento_seleccionado());
+                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.IPV, ((Cocina) getBean().getElemento_seleccionado()).getCodCocina());
                 break;
             case PRODUCTO:
-                ret = VentaDAO1Filters.filtroProducto((ProductoVenta) getBean().getElemento_seleccionado());
+                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.PRODUCTO, ((ProductoVenta) getBean().getElemento_seleccionado()).getCodigoProducto());
                 break;
             case SECCION:
-                ret = VentaDAO1Filters.filtroSeccion((Seccion) getBean().getElemento_seleccionado());
+                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.SECCION, ((Seccion) getBean().getElemento_seleccionado()).getNombreSeccion());
                 break;
             case COCINA_E:
-                ret = VentaDAO1Filters.filtroCocinaEscandallo((Cocina) getBean().getElemento_seleccionado());
+                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.COCINA_E, ((Cocina) getBean().getElemento_seleccionado()).getCodCocina());
                 break;
             case IPV_E:
-                ret = VentaDAO1Filters.filtroIPVEscandallo((Cocina) getBean().getElemento_seleccionado());
-                break;
-            case PRODUCTO_E:
-                ret = VentaDAO1Filters.filtroProductoEscandallo((ProductoVenta) getBean().getElemento_seleccionado());
+                ret = new FilterWrapper(com.jobits.pos.controller.filter.FilterType.IPV_E, ((Cocina) getBean().getElemento_seleccionado()).getCodCocina());
                 break;
         }
         return ret;

@@ -13,27 +13,26 @@ import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.core.domain.models.SeccionAgregada;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
-import static com.jobits.pos.ui.cartas.presenter.SeccionDetailViewModel.*;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JOptionPane;
+
+import static com.jobits.pos.ui.cartas.presenter.SeccionDetailViewModel.PROP_SECCION_AGREGADA_SELECCIONADA;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDetailViewModel> {
 
@@ -44,11 +43,9 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
 
     private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
     private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
-
+    private final boolean creatingMode;
     Seccion seccion;
     Carta carta;
-
-    private final boolean creatingMode;
 
     public SeccionDetailViewPresenter(Seccion seccion, Carta carta) {
         super(new SeccionDetailViewModel());
@@ -134,8 +131,8 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
             seccion.setNombreSeccion(getBean().getNombre_seccion());
             seccion.setAgregadoEn(getBean().getLista_secciones_agregadas());
             if (creatingMode) {
-                seccion.setCartacodCarta(carta);
-                seccionService.create(seccion);
+                seccion.setCartacodCarta(carta.getCodCarta());
+                cartaService.addSeccion(carta.getCodCarta(), seccion);
             } else {
                 seccionService.edit(seccion);
             }

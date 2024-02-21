@@ -9,37 +9,26 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.inventario.core.almacen.domain.Almacen;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+
 import java.util.Date;
 
 /**
- *
  * @author Home
  */
 public class ReiniciarDatosViewModel extends AbstractViewModel {
 
-    private ArrayListModel<Almacen> lista_almacen = new ArrayListModel<>();
-
     public static final String PROP_LISTA_ALMACEN = "lista_almacen";
-
-    private Almacen almacen_seleccionado;
-
     public static final String PROP_ALMACEN_SELECCIONADO = "almacen_seleccionado";
-
-    private Date fecha_venta_seleccionada = new Date();
-
     public static final String PROP_FECHA_VENTA_SELECCIONADA = "fecha_venta_seleccionada";
-
-    private String id_venta = "<ID Venta>";
-
     public static final String PROP_ID_VENTA = "id_venta";
-
-    private ArrayListModel<Cocina> lista_cocinas = new ArrayListModel<>();
-
     public static final String PROP_LISTA_COCINAS = "lista_cocinas";
-
-    private Cocina cocina_seleccionada;
-
     public static final String PROP_COCINA_SELECCIONADA = "cocina_seleccionada";
+    private ArrayListModel<Almacen> lista_almacen = new ArrayListModel<>();
+    private Almacen almacen_seleccionado;
+    private Date fecha_venta_seleccionada = new Date();
+    private String id_venta = "<ID Venta>";
+    private ArrayListModel<Cocina> lista_cocinas = new ArrayListModel<>();
+    private Cocina cocina_seleccionada;
 
     /**
      * Get the value of cocina_seleccionada

@@ -10,14 +10,11 @@ import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenSalarioViewPresenter;
 import com.jobits.pos.utils.utils;
-import java.time.Instant;
+
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
- *
  * @author Home
  */
 public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayReviewWrapper, AsistenciaPersonal> {
@@ -106,11 +103,9 @@ public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayRe
                 AsistenciaPersonal p = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        Date d = p.getVenta().getFecha();
-                        return Instant.ofEpochMilli(d.getTime()).atZone(ZoneId.systemDefault()).toLocalDate()
-                                .format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
+                        return p.getAsistenciaPersonalPK().getVentaid();
                     case 1:
-                        return p.getPersonal().getUsuario();
+                        return p.getAsistenciaPersonalPK().getPersonalusuario();
                     case 2:
                         if (p.getPago() != null) {
                             return utils.setDosLugaresDecimalesFloat(p.getPago());
