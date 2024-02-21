@@ -58,7 +58,9 @@ public class Application {
 
     public static final int MAJOR_VERSION = 4;
     public static final int MINOR_VERSION = 0;
-    public static final int PATCH_VERSION = 0;
+    public static final int PATCH_VERSION = 1;
+
+    public static final String VERSION_NOTE = "(BETA)";
     //
     //Log
     //
@@ -67,7 +69,7 @@ public class Application {
     private static final String ERR_FILE_PATH = "LOGS/AppLogsErr/";
     private static final String LOG_ERR_FILE_NAME = CURRENT_DATE + ".log";
     public static String PROP_LOGGED_USER = "Logged User";
-    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION + "(BETA)";
+    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION + " " + VERSION_NOTE;
     private static Application application;
     //
     // Name
